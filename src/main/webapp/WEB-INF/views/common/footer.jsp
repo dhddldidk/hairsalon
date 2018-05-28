@@ -12,7 +12,7 @@
 }
 
 #footer {
-	background: #2F9D27;
+	background: #FFBB00;
 	width: 100%;
 	margin: 0 auto;
 	height: 30px;
