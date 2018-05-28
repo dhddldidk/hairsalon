@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+  <h1>고객센터 페이지 입니다.</h1>
 </body>
 </html>
 <%@ include file="../common/footer.jsp" %>
