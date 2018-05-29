@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.mapper.MemberMapper">
+	<!-- 아이디 중복확인  -->
+	<select id="selectedById" resultType="String">
+		select u_id from user where u_id=#{u_id} 
+	</select>
+	<insert id="registerMember">
+		insert into user(u_id, u_name, u_pw, u_phone, u_email, u_address, u_regdate) values
+		(#{u_id}, #{u_name}, #{u_pw}, #{u_phone},#{u_email}, #{u_address}, #{u_regdate})
+	</insert>
+</mapper>
