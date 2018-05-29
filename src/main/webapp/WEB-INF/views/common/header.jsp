@@ -21,32 +21,85 @@
 		margin:0 auto;
 		/* border:1px solid red; */
 	}
+	/* #mainLogo #mainHeader{
+		width:100%;
+		margin:0 auto;
+		height: 320px;
+		background: url("hairsalon/resources/images/header.jpg") repeat center ;
+		background-size: cover;
+		position: relative;
+	}   
+	#mainLogo #bgOpacity{
+		width:100%;
+		height:100%;
+		background-color: rgba(0,0,0,0.5);
+		
+	}*/
 	#mainLogo h1{
-		padding-left: 15px;
+		padding-left: 50px;
 		letter-spacing: 5px;
+		font-weight:bolder;
+		color:#848B79;
+		font-style: italic;
 	}
+	#mainLogo h1 a{
+		color:#848B79;
+		text-decoration: none;
+	}
+	/* #mainLogo h1 span{
+		color:#667C26;
+	} */
 	#navBg{
-		background: #FFBB00;
-		border:1px solid #FFBB00;
+		background: #E5BFB4;
+		border:1px solid #E5BFB4;
+	}
+	#introLi{
+		width:50%;
+		/* border:1px solid red;  */
+	}
+	#introLi li{
+		width:24.9%;
+		/* border:1px solid red; */
+		text-align: center;
+		border:1px solid #E5BFB4; 
+	}
+	#introLi li:hover{
+		border:1px solid #848B79;
+	}
+	#introLi li a{
+		width:100%;
+		color:white !important;
+		font-weight:bolder;
+		letter-spacing:3px;
+		font-size:16px;
+		text-align: center;
+	}
+	#introLi li a:hover{
+		color:#848B79 !important;
+		background: white;
+		/* border:1px solid red; */
 	}
 </style>
 <body>
 <div id="mainLogo">
-	<h1>NekoSalon</h1>
+	<div id="mainHeader">
+		<h1><a href="${pageContext.request.contextPath }/board/mainPage"><span>Neko</span>Salon</a></h1>
+	</div>
+	
 </div>
 <nav class="navbar navbar-inverse" id="navBg">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
+      <a class="navbar-brand" href="#"></a>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">HairSalon 소개</a></li>
+    <ul class="nav navbar-nav" id="introLi">
+      <li><a href="${pageContext.request.contextPath }/board/mainPage">HairSalon 소개</a></li>
       <li><a href="#">예약</a></li>
       <li><a href="#">헤어스타일</a></li>
       <li><a href="${pageContext.request.contextPath }/board/listPage">고객센터</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> 로그인</a></li>
+      <li><a href="${pageContext.request.contextPath }/member/login"><span class="glyphicon glyphicon-user"></span> 로그인</a></li>
       <li><a href="${pageContext.request.contextPath }/member/register"><span class="glyphicon glyphicon-log-in"></span> 회원가입</a></li>
     </ul>
   </div>
