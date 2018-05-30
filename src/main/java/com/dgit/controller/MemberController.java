@@ -47,13 +47,6 @@ public class MemberController {
 		return "redirect:/member/login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public void loginGet(){
-		logger.info("login Get ......");
-		
-		
-	}
-	
 	//아이디 중복 조회
 	@ResponseBody
 	@RequestMapping(value="/chkDuplication", method=RequestMethod.GET)
