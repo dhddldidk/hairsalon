@@ -59,22 +59,29 @@ th {
 	var dateToday = new Date();
 	var theDate = new Date();
 	var start = null;
+	var last = null;
+	var m =null;
+	var nextDay = 1;
+	var y = null;
+	var d = null;
+	
 	function printCalendar(date) {
 		//date = new Date)(2016,4,1);
-		var y = date.getFullYear();
-		var m = date.getMonth();
-		var d = date.getDate();
+		y = date.getFullYear();
+		m = date.getMonth();
+		d = date.getDate();
 
-		theDate = new Date(y, m, 1);
-		var theDay = theDate.getDay();
+		/* theDate = new Date(y, m, 1); 
+		
+		var theDay = theDate.getDay();*/
 
 		/* alert("theDay"+date.getDay()); */
-		var last = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+		last = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
 		if (y % 4 == 0 && y % 100 !== 0 || y % 400 == 0)
 			last[4] = 29;
 
-		var row = Math.ceil(theDay + last[m]) / 7;
+		/* var row = Math.ceil(theDay + last[m]) / 7; */
 		var span =document.getElementsByTagName("span");
 		span[0].innerHTML = y + "." + (m + 1);
 
@@ -96,27 +103,31 @@ th {
 			
 			//일요일부터 시작하는 날짜
 			start = dNum-date.getDay();
-			var nextDay = 1;
+			
 			
 			//다음달의 말일이 몇일
-			var nextMonth = m+1
+			var nextMonth = m+1;
 			for (var k = 1; k <= 7; k++) {
 				
+				//정상적으로 시작일이 그 달의 말일보다 작을 때부터 같을 때 까지  1.번
 				if(start <= last[m]){
+					
 					calendar += "<td>" + start + "</td>";
 					start++;
 					
-				}else if(nextDay <= last[nextMonth]){
-					calendar += "<td>" + nextDay + "</td>";
-					nextDay++;
+					//7일씩 찍는 동안 달이 바뀔경우 일자를 1일로 변경시키고
+					//달+1해서 찍어줌					
+				}else if(start > last[m]){
+
+					start = 1;
+					
+					calendar +="<td>"+start+"</td>";
+					start++;
+					m=m+1; 
 				}
 				
-				/* if (i == 0 && k <= theDay || dNum > last[m]) {
-					calendar += "<td></td>";
-				} else {
-					
-				} */
 			}
+			
 			calendar += "</tr>";
 		
 		calendar += "</table>";
@@ -124,16 +135,31 @@ th {
 		var calen = document.getElementById("calen");
 		calen.innerHTML = calendar;
 	}
+	
 	function nextMonth(){
-		/* dateToday = new Date(dateToday.getFullYear(),dateToday.getMonth()+1, 
-				dateToday.getDate());
-		alert(dateToday);
-		printCalendar(dateToday); */
-		var calDate = start+7;
+		var nDate=null;
+		//다음 버튼을 눌렀을 때
+		// 시작일이 말일보다 클 경우 처리 
+		if(start > last[m]){
+			
+			start = start-Number(last[m]);
+			       
+			alert("if start"+start); 
+			nDate = new Date(y,m+1,start);
+			
+			
+		}else if(start < last[m]){
+			
+			//10이 넘어옴
+			
+			/* start = calDate-Number(last[m]); */
+			nDate = new Date(y,m,start);
+			/* alert("말일보다 작을경우 calDate"+nDate); */
+			/* calDate = calDate; */
+		}
+		alert("달력 그리기 전 start"+start); 
 		
-		
-		alert(nextDay);
-		printCalendar(nextDay);
+		printCalendar(nDate);
 	}
 		
 	
