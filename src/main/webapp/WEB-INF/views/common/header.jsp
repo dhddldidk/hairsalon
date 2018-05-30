@@ -14,6 +14,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <style>
 	#mainLogo{
 		width:100%;
@@ -94,15 +95,23 @@
     </div>
     <ul class="nav navbar-nav" id="introLi">
       <li><a href="${pageContext.request.contextPath }/board/mainPage">HairSalon 소개</a></li>
-      <li><a href="#">예약</a></li>
+      <li><a href="${pageContext.request.contextPath }/reservation/reservation">예약</a></li>
       <li><a href="#">헤어스타일</a></li>
       <li><a href="${pageContext.request.contextPath }/board/listPage">고객센터</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="${pageContext.request.contextPath }/member/login"><span class="glyphicon glyphicon-user"></span> 로그인</a></li>
-      <li><a href="${pageContext.request.contextPath }/member/register"><span class="glyphicon glyphicon-log-in"></span> 회원가입</a></li>
+    	<c:if test="${login != null }">
+    		<li><a href="#"><span class="glyphicon glyphicon-gift"></span> [${login.u_name }] 님 환영합니다.</a></li>
+    		<li><a href="${pageContext.request.contextPath }/user/logOut"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>    		
+      		<li><a href="${pageContext.request.contextPath }/member/register"><span class="glyphicon glyphicon-user"></span> 마이페이지</a></li>
+    	</c:if>
+    
+    	<c:if test="${login == null }">
+    		<li><a href="${pageContext.request.contextPath }/user/login"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+      		<li><a href="${pageContext.request.contextPath }/member/register"><span class="glyphicon glyphicon-pencil"></span> 회원가입</a></li>
+    	</c:if>
     </ul>
+    
   </div>
 </nav>	
-</body>
-</html>
+
