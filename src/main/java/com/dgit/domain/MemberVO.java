@@ -2,6 +2,8 @@ package com.dgit.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class MemberVO {
 	private String u_id;
 	private String u_name;
@@ -9,14 +11,14 @@ public class MemberVO {
 	private String u_phone;
 	private String u_email;
 	private String u_address;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
 	private Date u_regdate;
 
 	public MemberVO() {
 		
 	}
 
-	
-	
 	public MemberVO(String u_id) {
 		super();
 		this.u_id = u_id;
