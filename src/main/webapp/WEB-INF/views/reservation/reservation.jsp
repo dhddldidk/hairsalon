@@ -11,20 +11,42 @@
 	width: 1400px;
 	margin: 0 auto;
 }
-/* table{
-		width:1400px;
-		
-	}
-	table,tr,td,th{
-		border:1px solid orange;
-		border-collapse: collapse;
-	} */
-tr, td, th {
-	padding: 20px !important;
+
+table {
+	position: relative;
+	/* text-align: center !important; */
 }
 
-th {
-	text-align: center;
+tr, td, th {
+	padding: 20px !important;
+	text-align: center !important;
+	width: 120px !important;
+}
+
+table img {
+	width: 35px;
+	height: 35px;
+	margin-bottom: 5px;
+}
+
+tr:first-child th:nth-child(2) img {
+	/* border:1px solid red; */
+	position: absolute;
+	top: 17px;
+	left: 180px;
+}
+
+tr:first-child th:last-child img {
+	/* border:1px solid red; */
+	position: absolute;
+	top: 17px;
+	right: 5px;
+}
+
+tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child th:nth-child(4),
+	tr:first-child th:nth-child(5), tr:first-child th:nth-child(6), tr:first-child th:nth-child(7),
+	tr:first-child th:nth-child(8) {
+	padding-top: 25px !important;
 }
 
 #notice {
@@ -56,37 +78,42 @@ th {
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <script type="text/javascript">
-	var dateToday = new Date();
+	
+</script>
+<script type="text/javascript">
+	//달력 생성
 	var theDate = new Date();
+
+	//달력 시작일
 	var start = null;
+
+	//말일
 	var last = null;
-	var m =null;
+
+	//월
+	var m = null;
 	var nextDay = 1;
 	var y = null;
 	var d = null;
-	
+
 	function printCalendar(date) {
-		//date = new Date)(2016,4,1);
+
 		y = date.getFullYear();
 		m = date.getMonth();
 		d = date.getDate();
 
-		/* theDate = new Date(y, m, 1); 
-		
-		var theDay = theDate.getDay();*/
-
-		/* alert("theDay"+date.getDay()); */
 		last = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
 		if (y % 4 == 0 && y % 100 !== 0 || y % 400 == 0)
 			last[4] = 29;
 
 		/* var row = Math.ceil(theDay + last[m]) / 7; */
-		var span =document.getElementsByTagName("span");
+		var span = document.getElementsByTagName("span");
 		span[0].innerHTML = y + "." + (m + 1);
 
-		var calendar = "<table>";
-		calendar += "<tr>";
+		var calendar = "<table class='table table-bordered'>";
+		/* calendar += "<tr>";
+		calendar += "<th></th>";
 		calendar += "<th id='sunday'>일</th>";
 		calendar += "<th>월</th>";
 		calendar += "<th>화</th>";
@@ -94,101 +121,171 @@ th {
 		calendar += "<th>목</th>";
 		calendar += "<th>금</th>";
 		calendar += "<th id='saturday'>토</th>";
-		calendar += "</tr>";
-		
+		calendar += "</tr>";  */
+
 		//오늘날짜
 		var dNum = d;
-	
-			calendar += "<tr>";
-			
-			//일요일부터 시작하는 날짜
-			start = dNum-date.getDay();
-			
-			
-			//다음달의 말일이 몇일
-			var nextMonth = m+1;
-			for (var k = 1; k <= 7; k++) {
-				
-				//정상적으로 시작일이 그 달의 말일보다 작을 때부터 같을 때 까지  1.번
-				if(start <= last[m]){
-					
-					calendar += "<td>" + start + "</td>";
-					start++;
-					
-					//7일씩 찍는 동안 달이 바뀔경우 일자를 1일로 변경시키고
-					//달+1해서 찍어줌					
-				}else if(start > last[m]){
 
-					start = 1;
-					
-					calendar +="<td>"+start+"</td>";
-					start++;
-					m=m+1; 
+		calendar += "<tr class='active'>";
+		calendar += "<th></th>";
+		//일요일부터 시작하는 날짜
+		start = dNum - date.getDay();
+		alert("넘어온 30일이 " + start);
+
+		//다음달의 말일이 몇일
+		var currMonth = m + 1;
+		for (var k = 1; k <= 7; k++) {
+
+			//정상적으로 시작일이 그 달의 말일보다 작을 때부터 같을 때 까지  1.번
+			if (start <= last[m]) {
+				if (k == 1) {
+					calendar += "<th class='imgObj'><img src='/hairsalon/resources/images/left_arrow.png' onclick='beforeMonth()' id='leftArrow'>"
+							+ currMonth + "월" + start + "일" + "</th>";
+
+				} else if (k == 7) {
+					calendar += "<th class='imgObj'>"
+							+ currMonth
+							+ "월"
+							+ start
+							+ "일"
+							+ "<img src='/hairsalon/resources/images/right_arrow.png' onclick='nextMonth()'></th>";
+
+				} else {
+					calendar += "<th class='imgObj'>" + currMonth + "월" + start
+							+ "일" + "</th>";
+
 				}
-				
+				start++
+
+				//7일씩 찍는 동안 달이 바뀔경우 일자를 1일로 변경시키고
+				//달+1해서 찍어줌					
+			} else if (start > last[m]) {
+
+				start = 1;
+
+				currMonth++;
+				if (currMonth > last.length) {
+					y++;
+					m = 0;
+					currMonth = m + 1;
+				}else {
+					m = m + 1;
+				} 
+				if (k == 1) {
+					calendar += "<th class='imgObj'><img src='/hairsalon/resources/images/left_arrow.png' onclick='beforeMonth()'>"
+							+ currMonth + "월" + start + "일" + "</th>";
+
+				} else if (k == 7) {
+					calendar += "<th class='imgObj'>"
+							+ currMonth
+							+ "월"
+							+ start
+							+ "일"
+							+ "<img src='/hairsalon/resources/images/right_arrow.png' onclick='nextMonth()'></th>";
+
+				} else {
+					calendar += "<th class='imgObj'>" + currMonth + "월" + start
+							+ "일" + "</th>";
+				}
+				start++;
 			}
-			
-			calendar += "</tr>";
+		}
+		calendar += "</tr>";
 		
+		//달력밑에 시간 추가
+		for(var i = 0; i<21; i++){
+			calendar += "<tr>";
+			for(var k =0; k <1; k++){
+				calendar +="<th class='active'>09:00</th>";
+				calendar +="<td></td>";
+				calendar +="<td></td>";
+				calendar +="<td></td>";
+				calendar +="<td></td>";
+				calendar +="<td></td>";
+				calendar +="<td></td>";
+				calendar +="<td></td>";
+			}
+			calendar +="</tr>";
+		}
 		calendar += "</table>";
-		
-		var calen = document.getElementById("calen");
+		var calen = document.getElementById("draw");
 		calen.innerHTML = calendar;
 	}
-	
-	function nextMonth(){
-		var nDate=null;
+
+	function nextMonth() {
+		var nDate = null;
 		//다음 버튼을 눌렀을 때
 		// 시작일이 말일보다 클 경우 처리 
-		if(start > last[m]){
-			
-			start = start-Number(last[m]);
-			       
-			alert("if start"+start); 
-			nDate = new Date(y,m+1,start);
-			
-			
-		}else if(start < last[m]){
-			
+		if (start > last[m]) {
+			start = start - Number(last[m]);
+			alert("if start" + start);
+			nDate = new Date(y, m + 1, start);
+		} else if (start <= last[m]) {
 			//10이 넘어옴
-			
-			/* start = calDate-Number(last[m]); */
-			nDate = new Date(y,m,start);
+			nDate = new Date(y, m, start);
 			/* alert("말일보다 작을경우 calDate"+nDate); */
 			/* calDate = calDate; */
 		}
-		alert("달력 그리기 전 start"+start); 
-		
+		alert("달력 그리기 전 start" + start);
 		printCalendar(nDate);
 	}
-		
-	
-	function beforeMonth(){
-		
-		/* dateToday = new Date(dateToday.getFullYear(),dateToday.getMonth()-1, 
-				dateToday.getDate()); */
-				var nextDay = start+7;
-				alert(nextDay);
-		printCalendar(start);
+
+	function beforeMonth() {
+		var nDate = null;
+		//다음 버튼을 눌렀을 때
+		// 시작일이 말일보다 클 경우 처리 
+		alert("계산하기 전 start"+start);
+			start = start - 14;
+		alert("돌아오는 start"+start);
+		if (start > 0) {
+			alert("if start" + start);
+			nDate = new Date(y, m, start);
+		} else if (start <= 0) {
+			//10이 넘어옴
+			
+			start = last[m]+start;
+			alert("왼쪽이동"+start);
+			
+			
+			//m이 0인 경우는 1월달
+			//m이 0일 때 -1을 해주면 
+			//Date객체에서 자동으로 작년으로 넘어가고, 달을 12월로 바꿔줌
+			nDate = new Date(y, m-1, start);
+			/* alert("말일보다 작을경우 calDate"+nDate); */
+			/* calDate = calDate; */
+		}
+		alert("달력 그리기 전 start" + start);
+		printCalendar(nDate);
 	}
-	
+
 	window.onload = function() {
 		var calen = document.getElementById("calen");
 		dateToday = new Date(theDate);
-		calen=printCalendar(dateToday);
+		calen = printCalendar(dateToday);
 	}
+</script>
+<script type="text/javascript">
+	$(function() {
+		var leftObj = $("<img src=>");
+		leftObj.attr("src", "/hairsalon/resources/images/right_arrow.png");
+		/* leftObj.attr("/hairsalon/resources/images/right_arrow.png");  */
+		/* leftImg. */
+
+		$("th:nth-child(2) img").attr("src",
+				"/hairsalon/resources/images/right_arrow.png");
+	})
 </script>
 <body>
 
 
 
-<div id="wrap">
+	<!-- <div id="wrap">
 		<div>
 			<img src="/hairsalon/resources/images/left_arrow.png" onclick="beforeMonth()"> <span></span>
 			<img src="/hairsalon/resources/images/right_arrow.png" onclick="nextMonth()">
 		</div>
 		<div id="calen"></div>
-	</div>
+	</div> -->
 
 	<div id="regContainer">
 		<div id="notice">
@@ -214,11 +311,25 @@ th {
 						</select>
 					</div>
 				</div>
-
-
 			</form>
 		</div>
-		<table class="table table-bordered">
+		<div id="wrap">
+
+			<div id="draw"></div>
+		</div>
+		<script type="text/javascript">
+			$(function() {
+				var leftObj = $("<img src=>");
+				leftObj.css("src",
+						"/hairsalon/resources/images/right_arrow.png");
+				/* leftObj.attr("/hairsalon/resources/images/right_arrow.png");  */
+				/* leftImg. */
+
+				$("tr:first-child").find("th:nth-child(2) img").attr("src",
+						"/hairsalon/resources/images/right_arrow.png");
+			})
+		</script>
+		<!-- 	<table class="table table-bordered">
 			<tr>
 				<th></th>
 				<th><img src="/hairsalon/resources/images/left_arrow.png" onclick="beforeMonth()">5/1</th>
@@ -310,7 +421,7 @@ th {
 				<td></td>
 				<td></td>
 			</tr>
-		</table>
+		</table> -->
 	</div>
 </body>
 </html>
