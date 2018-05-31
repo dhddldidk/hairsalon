@@ -77,13 +77,11 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script type="text/javascript">
-	
-</script>
+
 <script type="text/javascript">
 	//달력 생성
 	var theDate = new Date();
-
+	
 	//달력 시작일
 	var start = null;
 
@@ -160,7 +158,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 				//7일씩 찍는 동안 달이 바뀔경우 일자를 1일로 변경시키고
 				//달+1해서 찍어줌					
 			} else if (start > last[m]) {
-
+				alert("??????????????????????????"+m);
 				start = 1;
 
 				currMonth++;
@@ -168,9 +166,9 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					y++;
 					m = 0;
 					currMonth = m + 1;
-				}else {
+				} else {
 					m = m + 1;
-				} 
+				}  
 				if (k == 1) {
 					calendar += "<th class='imgObj'><img src='/hairsalon/resources/images/left_arrow.png' onclick='beforeMonth()'>"
 							+ currMonth + "월" + start + "일" + "</th>";
@@ -192,11 +190,31 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		}
 		calendar += "</tr>";
 		
+		
+		
+		
+		/*30분 단위 시간계산 */
+		const currDate = new Date("11/20/2017 10:00 AM");
+		const modiDate = new Date(currDate.valueOf());
+		
 		//달력밑에 시간 추가
 		for(var i = 0; i<21; i++){
+			//alert("시간시간시간 달력에서 온 날짜"+d);
 			calendar += "<tr>";
+			/*30분 단위 시간계산 */
+			
+			modiDate.setMinutes(modiDate.getMinutes()+30);
+			var hour = modiDate.getHours();
+			var min = modiDate.getMinutes();
+			if(min==0){
+				min = min+"0";
+			}
+			/* alert("hour"+hour);
+			alert("min"+min); */
+			
 			for(var k =0; k <1; k++){
-				calendar +="<th class='active'>09:00</th>";
+				
+				calendar +="<th class='active'>"+hour+":"+min+"</th>";
 				calendar +="<td></td>";
 				calendar +="<td></td>";
 				calendar +="<td></td>";
@@ -231,7 +249,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 	}
 
 	function beforeMonth() {
-		var nDate = null;
+		/* var nDate = null; */
 		//다음 버튼을 눌렀을 때
 		// 시작일이 말일보다 클 경우 처리 
 		alert("계산하기 전 start"+start);
@@ -239,18 +257,18 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		alert("돌아오는 start"+start);
 		if (start > 0) {
 			alert("if start" + start);
-			nDate = new Date(y, m, start);
+		var	nDate = new Date(y, m, start);
 		} else if (start <= 0) {
 			//10이 넘어옴
-			
-			start = last[m]+start;
+			alert("왼쪽이동m "+m);
+			start = last[m-1]+start;
 			alert("왼쪽이동"+start);
 			
 			
 			//m이 0인 경우는 1월달
 			//m이 0일 때 -1을 해주면 
 			//Date객체에서 자동으로 작년으로 넘어가고, 달을 12월로 바꿔줌
-			nDate = new Date(y, m-1, start);
+		var	nDate = new Date(y, m-1, start);
 			/* alert("말일보다 작을경우 calDate"+nDate); */
 			/* calDate = calDate; */
 		}
@@ -265,15 +283,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 	}
 </script>
 <script type="text/javascript">
-	$(function() {
-		var leftObj = $("<img src=>");
-		leftObj.attr("src", "/hairsalon/resources/images/right_arrow.png");
-		/* leftObj.attr("/hairsalon/resources/images/right_arrow.png");  */
-		/* leftImg. */
-
-		$("th:nth-child(2) img").attr("src",
-				"/hairsalon/resources/images/right_arrow.png");
-	})
+	
 </script>
 <body>
 
