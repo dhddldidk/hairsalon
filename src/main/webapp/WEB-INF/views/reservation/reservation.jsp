@@ -22,7 +22,9 @@ tr, td, th {
 	text-align: center !important;
 	width: 120px !important;
 }
-
+td:hover{
+	background: green;
+}
 table img {
 	width: 35px;
 	height: 35px;
@@ -110,16 +112,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		span[0].innerHTML = y + "." + (m + 1);
 
 		var calendar = "<table class='table table-bordered'>";
-		/* calendar += "<tr>";
-		calendar += "<th></th>";
-		calendar += "<th id='sunday'>일</th>";
-		calendar += "<th>월</th>";
-		calendar += "<th>화</th>";
-		calendar += "<th>수</th>";
-		calendar += "<th>목</th>";
-		calendar += "<th>금</th>";
-		calendar += "<th id='saturday'>토</th>";
-		calendar += "</tr>";  */
+		
 
 		//오늘날짜
 		var dNum = d;
@@ -194,7 +187,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		
 		
 		/*30분 단위 시간계산 */
-		const currDate = new Date("11/20/2017 10:00 AM");
+		const currDate = new Date("11/20/2017 09:30 AM");
 		const modiDate = new Date(currDate.valueOf());
 		
 		//달력밑에 시간 추가
@@ -276,27 +269,20 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		printCalendar(nDate);
 	}
 
+	
+	
 	window.onload = function() {
 		var calen = document.getElementById("calen");
 		dateToday = new Date(theDate);
 		calen = printCalendar(dateToday);
 	}
+	/* $("tr:nth-child(2) td:nth-child(1)").click(function(){
+		$(this).css("background","red");
+		
+	}) */
 </script>
-<script type="text/javascript">
-	
-</script>
+
 <body>
-
-
-
-	<!-- <div id="wrap">
-		<div>
-			<img src="/hairsalon/resources/images/left_arrow.png" onclick="beforeMonth()"> <span></span>
-			<img src="/hairsalon/resources/images/right_arrow.png" onclick="nextMonth()">
-		</div>
-		<div id="calen"></div>
-	</div> -->
-
 	<div id="regContainer">
 		<div id="notice">
 			<h4>주의사항</h4>
@@ -324,114 +310,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 			</form>
 		</div>
 		<div id="wrap">
-
 			<div id="draw"></div>
 		</div>
-		<script type="text/javascript">
-			$(function() {
-				var leftObj = $("<img src=>");
-				leftObj.css("src",
-						"/hairsalon/resources/images/right_arrow.png");
-				/* leftObj.attr("/hairsalon/resources/images/right_arrow.png");  */
-				/* leftImg. */
-
-				$("tr:first-child").find("th:nth-child(2) img").attr("src",
-						"/hairsalon/resources/images/right_arrow.png");
-			})
-		</script>
-		<!-- 	<table class="table table-bordered">
-			<tr>
-				<th></th>
-				<th><img src="/hairsalon/resources/images/left_arrow.png" onclick="beforeMonth()">5/1</th>
-				<th>5/2</th>
-				<th>5/3</th>
-				<th>5/4</th>
-				<th>5/5</th>
-				<th>5/6</th>
-				<th>5/7<a><img src="/hairsalon/resources/images/right_arrow.png" onclick="nextMonth()"></a></th>
-			</tr>
-
-			<tr>
-				<th>09:00</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>09:30</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>10:00</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>10:30</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>11:00</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>11:30</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>12:00</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>12:30</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table> -->
 	</div>
 </body>
 </html>
