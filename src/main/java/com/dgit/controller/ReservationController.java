@@ -1,5 +1,7 @@
 package com.dgit.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,23 +42,30 @@ public class ReservationController {
 		
 		model.addAttribute("hairList",hairList);
 		
+		
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/resAll", method=RequestMethod.GET)
-	public ResponseEntity<List<ReservationVO>> resAll() throws Exception{
+	public ResponseEntity<List<ReservationVO>> resAll(String res_start, String res_end) throws Exception{
 		logger.info("resAll Get ......");
 		
 		ResponseEntity<List<ReservationVO>> entity = null;
 		
+		logger.info("달력달력 ......"+res_start);
+		logger.info("달력달력 ......"+res_end);
+	
 		//예약된 리스트
-		List<ReservationVO> resList = resService.selectAllReservation();
+		List<ReservationVO> resList = resService.selectAllReservation(res_start, res_end);
 		for(ReservationVO res : resList){
+			res.setRes_start(res.getRes_start());
+			res.setRes_end(res.getRes_end());
 			logger.info("예약된 리스트"+res);
 		}
 		
 		try {
-			List<ReservationVO> result = resService.selectAllReservation();
+			List<ReservationVO> result = resService.selectAllReservation(res_start, res_end);
+			
 			entity = new ResponseEntity<>(result, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
