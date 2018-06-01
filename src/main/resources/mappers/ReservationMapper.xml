@@ -11,7 +11,8 @@
 		<result property="hairstyleVo.hair_no" column="hair_no"></result>
 		<result property="member.u_id" column="u_id"></result>
 	</resultMap>
-	<select id="selectAllReservation" resultMap="resHairStyleAndMember">
-		select * from reservation
+	<select id="selectAllReservation" parameterType="map" resultMap="resHairStyleAndMember">
+		select * from reservation where res_start between #{res_start} and #{res_end}
+		and  res_end between #{res_start} and #{res_end}
 	</select>
 </mapper>
