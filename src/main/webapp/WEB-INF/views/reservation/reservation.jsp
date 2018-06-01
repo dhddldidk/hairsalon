@@ -74,13 +74,6 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 #sWidth{
 	width:200px !important;
 }
-option:nth-child(even){
-	/* background: #0fc4a7; */
-}
-option:nth-child(odd){
-	/* background: #ff9633; */
-}
-
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -248,8 +241,15 @@ option:nth-child(odd){
 			/* alert("말일보다 작을경우 calDate"+nDate); */
 			/* calDate = calDate; */
 		}
+		
+		var sDate = new Date(nDate.getFullYear(), nDate.getMonth(), start);
+		var eDate = new Date(nDate.getFullYear(), nDate.getMonth(), start+6); 
+		
+		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
+		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
 		alert("달력 그리기 전 start" + start);
 		printCalendar(nDate);
+		reservedListDraw(ssDate,eeDate);
 	}
 
 	function beforeMonth() {
@@ -284,8 +284,16 @@ option:nth-child(odd){
 			/* alert("말일보다 작을경우 calDate"+nDate); */
 			/* calDate = calDate; */
 		}
+		var sDate = new Date(nDate.getFullYear(), nDate.getMonth(), start);
+		var eDate = new Date(nDate.getFullYear(), nDate.getMonth(), start+6); 
+		
+		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
+		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
+		
 		alert("달력 그리기 전 start" + start);
+		
 		printCalendar(nDate);
+		reservedListDraw(ssDate,eeDate);
 	}
 
 	
@@ -294,11 +302,29 @@ option:nth-child(odd){
 		var calen = document.getElementById("calen");
 		dateToday = new Date(theDate);
 		
+		var dstartDate = dateToday.getDate()-dateToday.getDay();
+		
+		var sDate = new Date(dateToday.getFullYear(), dateToday.getMonth(), dstartDate);
+		var eDate = new Date(dateToday.getFullYear(), dateToday.getMonth(), dstartDate+6); 
+		
+		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
+		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
+		alert("달력달력달력달력달겨"+sDate);
+		//달력 그려서 div에 넣어주기 
+		calen = printCalendar(dateToday);
+		reservedListDraw(ssDate, eeDate);
+	}
+	function reservedListDraw(sDate, eDate){
+		
+		var sendData = {res_start:sDate, res_end:eDate};//키 : 값	
+	
 		//예약된 리스트들 가져오기
 		$.ajax({
 			type:"get",
 			url:"${pageContext.request.contextPath}/reservation/resAll",
+			data:sendData,
 			dataType:"json",
+			headers:{"Content-Type":"application/json"},
 			success:function(result){
 				console.log(result);
 				
@@ -316,7 +342,7 @@ option:nth-child(odd){
 					var resStartDate = new Date(obj.res_start);
 					
 					//헤어시간 만들기
-					var hairHours = (resEndDate-resStartDate)/(60*1000);//분이 나옴 
+					var hairHours = (resEndDate-resStartDate)/(60*1000); //분이나옴 
 					alert("헤어시간 계산하기 "+hairHours);
 					
 					
@@ -332,12 +358,6 @@ option:nth-child(odd){
 						resMin = resMin+"0";
 					}
 					
-					if(hairHours/30==4){
-						alert("2시간 입니다.");
-					}
-					
-					
-					
 					//시간 만들기 11:00
 					var resTime = resHour+":"+resMin;
 					alert("시작시간 "+resTime);
@@ -350,17 +370,31 @@ option:nth-child(odd){
 					
 					//시간이 속해 있는 th의 부모인 tr을 찾은 후
 					//그 자식인 td를 찾아 css처리
-					$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red"); 
+					//$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red"); 
+					
+					
+					if(hairHours/30==1){
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","purple"); 
+					}
+					if(hairHours/30==2){
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","red");
+					}
+					if(hairHours/30==3){
+						
+					}
+					if(hairHours/30==4){
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","yellow");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","yellow");
+						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","yellow");
+						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","yellow");
+					}
 					
 				})
 			}
 		})
 		
-		
-		
-		calen = printCalendar(dateToday);
 	}
-	
 </script>
 
 <body>
@@ -373,7 +407,7 @@ option:nth-child(odd){
 			<p>문의 사항은 고객센터나 게시판을 이용해주세요.</p>
 		</div>
 		<div class="container">
-			<h2>Horizontal form</h2>
+			<h2>Reservation</h2>
 			<form class="form-horizontal" action="/action_page.php">
 			
 				<div class="form-group">
@@ -384,7 +418,7 @@ option:nth-child(odd){
 					
 						<select class="form-control" id="sWidth">
 							<c:forEach var="list" items="${hairList }">
-							<option>${list.hair_type}<span id="color"></span></option>
+							<option>${list.hair_type}</option>
 							</c:forEach>
 						</select>
 					<script type="text/javascript">
