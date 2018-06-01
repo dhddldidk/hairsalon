@@ -6,5 +6,5 @@ import com.dgit.domain.ReservationVO;
 
 public interface ReservationDAO {
 
-	public List<ReservationVO> selectAllReservation() throws Exception;
+	public List<ReservationVO> selectAllReservation(String res_start, String res_end) throws Exception;
 }

@@ -1,6 +1,8 @@
 package com.dgit.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,12 @@ public class ReservationDAOImpl implements ReservationDAO {
 	private static final String namespace = "com.dgit.mapper.ReservationMapper";
 	
 	@Override
-	public List<ReservationVO> selectAllReservation() throws Exception {
+	public List<ReservationVO> selectAllReservation(String res_start, String res_end) throws Exception {
 		
-		return session.selectList(namespace+".selectAllReservation");
+		Map<String, String> map = new HashMap<>();
+		map.put("res_start", res_start);
+		map.put("res_end", res_end);
+		return session.selectList(namespace+".selectAllReservation", map);
 	}
 
 }

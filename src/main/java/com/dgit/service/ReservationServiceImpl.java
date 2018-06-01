@@ -15,9 +15,9 @@ public class ReservationServiceImpl implements ReservationService {
 	ReservationDAO dao;
 	
 	@Override
-	public List<ReservationVO> selectAllReservation() throws Exception {
+	public List<ReservationVO> selectAllReservation(String res_start, String res_end) throws Exception {
 		
-		return dao.selectAllReservation();
+		return dao.selectAllReservation(res_start, res_end);
 	}
 
 }
