@@ -20,7 +20,7 @@ public class ReservationVOTest {
 	
 	@Test
 	public void test1selectAllReservation() throws Exception{
-		List<ReservationVO> list = dao.selectAllReservation();
+		List<ReservationVO> list = dao.selectAllReservation(null,null);
 		for(ReservationVO vo : list){
 			System.out.println(vo);
 		}
