@@ -44,7 +44,7 @@ public class MemberController {
 		   
 		service.registerMember(vo);
 
-		return "redirect:/member/login";
+		return "redirect:/user/login";  
 	}
 	
 	//아이디 중복 조회
