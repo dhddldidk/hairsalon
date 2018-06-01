@@ -5,8 +5,13 @@ import java.util.Date;
 public class ReservationVO {
 
 	private int res_no;
+	
+	
 	private Date res_start;
+	
+	
 	private Date res_end;
+	
 	private HairStyleVO hairstyleVo;
 	private MemberVO member;
 
