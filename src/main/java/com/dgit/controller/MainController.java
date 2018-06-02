@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController {
 
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReviewBoardController.class);
 	
 	@RequestMapping(value="/mainPage", method=RequestMethod.GET)
 	public void listPageGet(){
