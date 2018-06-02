@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,6 +71,9 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 	letter-spacing: 4px;
 	color: #493D26;
 }
+#sWidth{
+	width:200px !important;
+}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -121,6 +125,14 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		calendar += "<th></th>";
 		//일요일부터 시작하는 날짜
 		start = dNum - date.getDay();
+		alert("6월1일임  " + m);
+
+		if(start < 1){
+			start = last[m-1]+start;
+			m=m-1;
+		}
+		alert("6월1일임  " + m);
+
 		alert("넘어온 30일이 " + start);
 
 		//다음달의 말일이 몇일
@@ -204,16 +216,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 			}
 			/* alert("hour"+hour);
 			alert("min"+min); */
-			
-			for(var k =0; k <1; k++){
-				
-				calendar +="<th class='active'>"+hour+":"+min+"</th>";
-				calendar +="<td></td>";
-				calendar +="<td></td>";
-				calendar +="<td></td>";
-				calendar +="<td></td>";
-				calendar +="<td></td>";
-				calendar +="<td></td>";
+			calendar +="<th class='active'>"+hour+":"+min+"</th>";
+			for(var k =0; k <7; k++){	
 				calendar +="<td></td>";
 			}
 			calendar +="</tr>";
@@ -237,8 +241,15 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 			/* alert("말일보다 작을경우 calDate"+nDate); */
 			/* calDate = calDate; */
 		}
+		
+		var sDate = new Date(nDate.getFullYear(), nDate.getMonth(), start);
+		var eDate = new Date(nDate.getFullYear(), nDate.getMonth(), start+6); 
+		
+		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
+		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
 		alert("달력 그리기 전 start" + start);
 		printCalendar(nDate);
+		reservedListDraw(ssDate,eeDate);
 	}
 
 	function beforeMonth() {
@@ -254,7 +265,15 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		} else if (start <= 0) {
 			//10이 넘어옴
 			alert("왼쪽이동m "+m);
-			start = last[m-1]+start;
+			
+			if((m-1)<0){
+				m=last.length;
+				start = last[m-1]+start;
+				y--;
+			}else{
+				start = last[m-1]+start;
+			}
+			
 			alert("왼쪽이동"+start);
 			
 			
@@ -265,8 +284,16 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 			/* alert("말일보다 작을경우 calDate"+nDate); */
 			/* calDate = calDate; */
 		}
+		var sDate = new Date(nDate.getFullYear(), nDate.getMonth(), start);
+		var eDate = new Date(nDate.getFullYear(), nDate.getMonth(), start+6); 
+		
+		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
+		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
+		
 		alert("달력 그리기 전 start" + start);
+		
 		printCalendar(nDate);
+		reservedListDraw(ssDate,eeDate);
 	}
 
 	
@@ -274,12 +301,100 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 	window.onload = function() {
 		var calen = document.getElementById("calen");
 		dateToday = new Date(theDate);
-		calen = printCalendar(dateToday);
-	}
-	/* $("tr:nth-child(2) td:nth-child(1)").click(function(){
-		$(this).css("background","red");
 		
-	}) */
+		var dstartDate = dateToday.getDate()-dateToday.getDay();
+		
+		var sDate = new Date(dateToday.getFullYear(), dateToday.getMonth(), dstartDate);
+		var eDate = new Date(dateToday.getFullYear(), dateToday.getMonth(), dstartDate+6); 
+		
+		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
+		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
+		alert("달력달력달력달력달겨"+sDate);
+		//달력 그려서 div에 넣어주기 
+		calen = printCalendar(dateToday);
+		reservedListDraw(ssDate, eeDate);
+	}
+	function reservedListDraw(sDate, eDate){
+		
+		var sendData = {res_start:sDate, res_end:eDate};//키 : 값	
+	
+		//예약된 리스트들 가져오기
+		$.ajax({
+			type:"get",
+			url:"${pageContext.request.contextPath}/reservation/resAll",
+			data:sendData,
+			dataType:"json",
+			headers:{"Content-Type":"application/json"},
+			success:function(result){
+				console.log(result);
+				
+				//ajax로 선택된 예약정보를 받아옴
+				$(result).each(function(i, obj){
+					
+					//miliseconds를 알면 
+					//Date 객체를 생성해서 넣어주면 
+					//그에 해당하는 시간과 날짜 정보를 알 수 있음
+					
+					//예약종료시간
+					var resEndDate = new Date(obj.res_end);
+					
+					//예약시작시간
+					var resStartDate = new Date(obj.res_start);
+					
+					//헤어시간 만들기
+					var hairHours = (resEndDate-resStartDate)/(60*1000); //분이나옴 
+					alert("헤어시간 계산하기 "+hairHours);
+					
+					
+					
+					//시작일에서 날짜와 시간 받아오기 
+					var resMonth = resStartDate.getMonth()+1;
+					var resDate = resStartDate.getDate();
+					var resHour = resStartDate.getHours();
+					var resMin = resStartDate.getMinutes();
+					
+					//정각이면 시간과 분이 11:0으로 나오기 때문에 0을 붙여줌
+					if(resMin==0){
+						resMin = resMin+"0";
+					}
+					
+					//시간 만들기 11:00
+					var resTime = resHour+":"+resMin;
+					alert("시작시간 "+resTime);
+					
+					//월 만들기 6월1일
+					var resFullDate = resMonth+"월"+resDate+"일";
+					
+					//예약된 날짜의 th로 그 th가 해당하는 index를 찾아올 수 있음 contains
+					var index = $("table tr:first th").index($("th:contains('"+resFullDate+"')"));
+					
+					//시간이 속해 있는 th의 부모인 tr을 찾은 후
+					//그 자식인 td를 찾아 css처리
+					//$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red"); 
+					
+					
+					if(hairHours/30==1){
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","purple"); 
+					}
+					if(hairHours/30==2){
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","red");
+					}
+					if(hairHours/30==3){
+						
+					}
+					if(hairHours/30==4){
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","yellow");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","yellow");
+						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","yellow");
+						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","yellow");
+					}
+					
+				})
+			}
+		})
+		
+	}
 </script>
 
 <body>
@@ -292,19 +407,25 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 			<p>문의 사항은 고객센터나 게시판을 이용해주세요.</p>
 		</div>
 		<div class="container">
-			<h2>Horizontal form</h2>
+			<h2>Reservation</h2>
 			<form class="form-horizontal" action="/action_page.php">
+			
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="email">헤어스타일</label>
 					<div class="col-sm-10">
-						<select>
-							<option>일반 컷</option>
-							<option>단발펌</option>
-							<option>롱웨이브펌</option>
-							<option>볼륨매직</option>
-							<option>염색</option>
-							<option>염색+펌</option>
+					
+					<!-- 헤어스타일 종류 넣기 -->
+					
+						<select class="form-control" id="sWidth">
+							<c:forEach var="list" items="${hairList }">
+							<option>${list.hair_type}</option>
+							</c:forEach>
 						</select>
+					<script type="text/javascript">
+						/* $(document).ready(function(){
+							$("option:first-child").css("border-right","5px solid red");
+						}) */
+					</script>
 					</div>
 				</div>
 			</form>

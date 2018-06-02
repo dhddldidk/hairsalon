@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.mapper.ReservationMapper">
+
+	<resultMap type="ReservationVO" id="reservationResult">
+		<id property="res_no" column="res_no"></id>
+		<result property="res_start" column="res_start"></result>
+		<result property="res_end" column="res_end"></result>
+	</resultMap>
+	<resultMap type="ReservationVO" id="resHairStyleAndMember" extends="reservationResult">
+		<result property="hairstyleVo.hair_no" column="hair_no"></result>
+		<result property="member.u_id" column="u_id"></result>
+	</resultMap>
+	<select id="selectAllReservation" parameterType="map" resultMap="resHairStyleAndMember">
+		select * from reservation where res_start between #{res_start} and #{res_end}
+		and  res_end between #{res_start} and #{res_end}
+	</select>
+</mapper>
