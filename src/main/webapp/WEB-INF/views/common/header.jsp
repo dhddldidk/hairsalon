@@ -97,7 +97,7 @@
       <li><a href="${pageContext.request.contextPath }/board/mainPage">HairSalon 소개</a></li>
       <li><a href="${pageContext.request.contextPath }/reservation/reservation">예약</a></li>
       <li><a href="#">헤어스타일</a></li>
-      <li><a href="${pageContext.request.contextPath }/board/listPage">고객센터</a></li>
+      <li><a href="${pageContext.request.contextPath }/board/reviewListPage">고객센터</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
     	<c:if test="${login != null }">
