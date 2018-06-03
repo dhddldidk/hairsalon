@@ -32,6 +32,9 @@ public class ReviewBoardController {
 		logger.info("reviewListPage Get ......");
 		
 		List<ReviewBoardVO> boardList = service.selectAllReview();
+		
+		
+		
 		model.addAttribute("boardList",boardList);
 		
 	}
