@@ -68,10 +68,14 @@
 			<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-success">등록하기</button>
 			<button type="reset" class="btn btn-danger">취소하기</button>
-			<button type="button" class="btn btn-warning">돌아가기</button>
+			<button type="button" class="btn btn-warning" id="returnListBtn">후기 게시판으로 돌아가기</button>
 			</div>
 		</div>
-		
+		<script type="text/javascript">
+			$("#returnListBtn").click(function(){
+				location.href="reviewListPage";
+			})
+		</script>
 		
 	</form>
   
