@@ -38,8 +38,10 @@
   <div id="reviewContainer">
   <h1>후기 게시판</h1>
   <p>후기를 남기신 고객분들께 2000포인트를 드립니다.</p>
-  <button id="reviewRegister">후기 등록하기</button>
+  <div class="form-group">
+  <button id="reviewRegister" class="btn btn-warning">후기 등록하기</button>
   
+  </div>
   
   <script type="text/javascript">
   	$("#reviewRegister").click(function(){
