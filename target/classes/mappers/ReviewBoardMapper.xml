@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dgit.mapper.ReviewBoardMapper">
 	<select id="selectAllReview" resultType="ReviewBoardVO">
-		select * from review
+		select * from review order by rb_no desc
 	</select>
 	<insert id="insertReview">
 		insert review(rb_title, rb_context, rb_writer)
