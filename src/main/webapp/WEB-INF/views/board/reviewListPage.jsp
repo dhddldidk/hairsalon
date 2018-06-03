@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,10 +57,11 @@
 	</tr>
 	<c:forEach var="list" items="${boardList }">
 		<tr>
-			<td>${boardList.rb_title }</td>
-			<td>${boardList.rb_writer }</td>
-			<td>${boardList.rb_context }</td>
-			<td>${boardList.rb_viewcnt }</td>
+			<td>${list.rb_no }</td>
+			<td><a href="reviewReadPage?rb_no=${list.rb_no }">${list.rb_title }</a></td>
+			<td>${list.rb_writer }</td>
+			<td><fmt:formatDate value="${list.rb_regdate }" pattern="yyyy-MM-dd HH:mm"/></td>
+			<td>${list.rb_viewcnt }</td>
 		</tr>
 	</c:forEach>
 	
