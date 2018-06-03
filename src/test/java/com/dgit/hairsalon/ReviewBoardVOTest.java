@@ -30,13 +30,19 @@ public class ReviewBoardVOTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void test2selectAllReview() throws Exception{
 		List<ReviewBoardVO> list = dao.selectAllReview();
 		
 		for(ReviewBoardVO vo : list){
 			System.out.println("댓글 하나씩 찍어보기"+vo);
 		}
+	}
+	
+	@Test
+	public void test3readReview() throws Exception{
+		ReviewBoardVO vo = dao.readReview(3);
+		System.out.println(vo);
 	}
 	
 }
