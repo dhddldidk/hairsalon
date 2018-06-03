@@ -55,34 +55,18 @@
 		<th>등록일</th>
 		<th style="width:100px;">조회수</th>
 	</tr>
+	<c:forEach var="list" items="${boardList }">
+		<tr>
+			<td>${boardList.rb_title }</td>
+			<td>${boardList.rb_writer }</td>
+			<td>${boardList.rb_context }</td>
+			<td>${boardList.rb_viewcnt }</td>
+		</tr>
+	</c:forEach>
+	
   </table>
               
-<!--   <table class="table">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table> -->
+
 </div>
   
 </body>
