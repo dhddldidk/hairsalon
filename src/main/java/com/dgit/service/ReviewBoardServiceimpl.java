@@ -12,7 +12,7 @@ import com.dgit.persistence.ReviewBoardDAO;
 public class ReviewBoardServiceimpl implements ReviewBoardService {
 
 	@Autowired
-	ReviewBoardDAO dao;
+	private ReviewBoardDAO dao;
 	
 	@Override
 	public void insertReview(ReviewBoardVO vo) throws Exception {
