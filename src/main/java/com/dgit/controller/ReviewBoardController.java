@@ -32,9 +32,6 @@ public class ReviewBoardController {
 		logger.info("reviewListPage Get ......");
 		
 		List<ReviewBoardVO> boardList = service.selectAllReview();
-		
-		
-		
 		model.addAttribute("boardList",boardList);
 		
 	}
@@ -59,5 +56,23 @@ public class ReviewBoardController {
 		service.insertReview(vo);
 		
 		return "redirect:/board/reviewListPage";
+	}
+	
+	//게시판 상세보기
+	@RequestMapping(value="/reviewReadPage", method=RequestMethod.GET)
+	public void ReviewReadPageGet(Model model, int rb_no) throws Exception{
+		logger.info("reviewReadPage Get ......");
+		ReviewBoardVO reviewBoard = service.readReview(rb_no);
+		model.addAttribute("reviewBoard",reviewBoard);
+		
+	}
+	
+	//게시판 수정하기
+	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.GET)
+	public void ReviewtUpdatePage(Model model, int rb_no) throws Exception{
+		logger.info("reviewUpdatePage Get ......");
+		ReviewBoardVO reviewBoard = service.readReview(rb_no);
+		model.addAttribute("reviewBoard",reviewBoard);
+		
 	}
 }
