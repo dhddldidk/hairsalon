@@ -75,5 +75,7 @@ public class ReviewBoardVO {
 				+ ", rb_replycnt=" + rb_replycnt + "]";
 	}
 
+
+
 	
 }
