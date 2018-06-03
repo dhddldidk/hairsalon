@@ -26,4 +26,10 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		return dao.selectAllReview();
 	}
 
+	@Override
+	public ReviewBoardVO readReview(int rb_no) throws Exception {
+		
+		return dao.readReview(rb_no);
+	}
+
 }
