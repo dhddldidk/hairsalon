@@ -28,4 +28,10 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 		return session.selectList(namespace+".selectAllReview");
 	}
 
+	@Override
+	public ReviewBoardVO readReview(int rb_no) throws Exception {
+		
+		return session.selectOne(namespace+".readReview", rb_no);
+	}
+
 }
