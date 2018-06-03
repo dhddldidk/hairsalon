@@ -1,5 +1,8 @@
 package com.dgit.hairsalon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ public class ReviewBoardVOTest {
 	@Autowired
 	ReviewBoardDAO dao;
 	
-	@Test
+	//@Test
 	public void test1insertReview() throws Exception{
 		
 		ReviewBoardVO vo = new ReviewBoardVO();
@@ -26,4 +29,14 @@ public class ReviewBoardVOTest {
 		dao.insertReview(vo);
 		
 	}
+	
+	@Test
+	public void test2selectAllReview() throws Exception{
+		List<ReviewBoardVO> list = dao.selectAllReview();
+		
+		for(ReviewBoardVO vo : list){
+			System.out.println("댓글 하나씩 찍어보기"+vo);
+		}
+	}
+	
 }
