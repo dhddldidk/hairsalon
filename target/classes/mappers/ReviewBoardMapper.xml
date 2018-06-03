@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dgit.mapper.ReviewBoardMapper">
 	<select id="selectAllReview" resultType="ReviewBoardVO">
 		select * from review order by rb_no desc
@@ -8,4 +10,7 @@
 		insert review(rb_title, rb_context, rb_writer)
 		values (#{rb_title},#{rb_context},#{rb_writer})
 	</insert>
+	<select id="readReview" resultType="ReviewBoardVO">
+		select * from review where rb_no=#{rb_no}
+	</select>
 </mapper>
