@@ -69,10 +69,10 @@ public class ReviewBoardController {
 	
 	//게시판 수정하기
 	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.GET)
-	public void ReviewtUpdatePage(Model model, int rb_no) throws Exception{
+	public String ReviewtUpdatePage(Model model, int rb_no) throws Exception{
 		logger.info("reviewUpdatePage Get ......");
 		ReviewBoardVO reviewBoard = service.readReview(rb_no);
 		model.addAttribute("reviewBoard",reviewBoard);
-		
+		return "/board/reviewUpdatePage";
 	}
 }
