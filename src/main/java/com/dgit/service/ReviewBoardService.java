@@ -9,4 +9,6 @@ public interface ReviewBoardService {
 	public void insertReview(ReviewBoardVO vo) throws Exception;
 	
 	public List<ReviewBoardVO> selectAllReview() throws Exception;
+	
+	public ReviewBoardVO readReview(int rb_no) throws Exception;
 }
