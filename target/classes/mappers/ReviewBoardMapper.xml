@@ -5,7 +5,7 @@
 		select * from review
 	</select>
 	<insert id="insertReview">
-		insert review(rb_title, rb_content, rb_writer)
-		values (#{rb_title},#{rb_content},#{rb_writer})
+		insert review(rb_title, rb_context, rb_writer)
+		values (#{rb_title},#{rb_context},#{rb_writer})
 	</insert>
 </mapper>
