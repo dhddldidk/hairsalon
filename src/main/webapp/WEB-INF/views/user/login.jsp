@@ -80,14 +80,14 @@ label{
 		<div id="loginForm">
 		<form class="form-horizontal" action="loginPost" method="post" id="login">
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="id">아이디</label>
+				<label class="control-label col-sm-2" for="u_id">아이디</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control loginInput" id="u_id"
 						name="u_id" placeholder="아이디를 입력하세요.">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="pw">비밀번호</label>
+				<label class="control-label col-sm-2" for="u_pw">비밀번호</label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control loginInput" id="u_pw"
 						name="u_pw" placeholder="비밀번호를 입력하세요.">
@@ -121,13 +121,13 @@ label{
       <div class="modal-body">
       	<form class="form-horizontal">
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="id">아이디</label>
+				<label class="control-label col-sm-2" for="u_id">아이디</label>
 				<div class="col-sm-10">
 				<input type="text" class="form-control" id="id" name="u_id">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="email">이메일</label>
+				<label class="control-label col-sm-2" for="u_email">이메일</label>
 				<div class="col-sm-10">
 				<input type="password" class="form-control" id="email" name="u_email">
 				</div>
