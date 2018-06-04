@@ -50,11 +50,15 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value="/reservation", method=RequestMethod.POST)
-	public String reservationPost(ReservationVO vo) throws Exception{
+	public String reservationPost(ReservationVO vo, String res_sDate, String res_eDate, String user_id) throws Exception{
 		logger.info("reservationPost ......"+vo.toString());
+		logger.info("user_id ......"+user_id);
+		logger.info("sDate ......"+res_sDate);
+		logger.info("eDate ......"+res_eDate);
+		
 		resService.insertReservation(vo);
 		
-		return "redirect:/reservation/reservation";
+		return "redirect:/board/mainPage";
 	}
 	
 	//예약된 리스트들 가져와서 화면에 뿌려줌
