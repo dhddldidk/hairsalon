@@ -11,8 +11,16 @@
 		<result property="hairstyleVo.hair_no" column="hair_no"></result>
 		<result property="member.u_id" column="u_id"></result>
 	</resultMap>
+	
+	<!-- 예약된 리스트들 가져오기 -->
 	<select id="selectAllReservation" parameterType="map" resultMap="resHairStyleAndMember">
 		select * from reservation where res_start between #{res_start} and #{res_end}
 		and  res_end between #{res_start} and #{res_end}
 	</select>
+	
+	<!-- 예약 insert -->
+	<insert id="insertReservation">
+		insert into reservation(res_start, res_end, hair_no, u_id) values
+		(#{res_start}, #{res_end}, #{hairstyleVo.hair_no}, #{member.u_id})	
+	</insert>
 </mapper>

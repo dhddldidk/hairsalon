@@ -51,11 +51,11 @@
   
   <table class="table table-bordered">
   	<tr>
-		<th style="width:100px;">후기 번호</th>
-		<th>제목</th>
+		<th style="width:80px;">번호</th>
+		<th style="width:80px;">제목</th>
 		<th>작성자</th>
 		<th>등록일</th>
-		<th style="width:100px;">조회수</th>
+		<th style="width:80px;">조회수</th>
 	</tr>
 	<c:forEach var="list" items="${boardList }">
 		<tr>

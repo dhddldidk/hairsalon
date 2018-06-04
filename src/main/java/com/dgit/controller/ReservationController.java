@@ -40,11 +40,24 @@ public class ReservationController {
 		//select 박스
 		List<HairStyleVO> hairList = hairService.selectHairStyle();
 		
+		for(HairStyleVO vo : hairList){
+			logger.info("db에서 가져온 헤어시간"+vo.getHair_time());
+		}
+		
 		model.addAttribute("hairList",hairList);
 		
 		
 	}
 	
+	@RequestMapping(value="/reservation", method=RequestMethod.POST)
+	public String reservationPost(ReservationVO vo) throws Exception{
+		logger.info("reservationPost ......"+vo.toString());
+		resService.insertReservation(vo);
+		
+		return "redirect:/reservation/reservation";
+	}
+	
+	//예약된 리스트들 가져와서 화면에 뿌려줌
 	@ResponseBody
 	@RequestMapping(value="/resAll", method=RequestMethod.GET)
 	public ResponseEntity<List<ReservationVO>> resAll(String res_start, String res_end) throws Exception{

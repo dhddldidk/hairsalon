@@ -142,11 +142,11 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 			//정상적으로 시작일이 그 달의 말일보다 작을 때부터 같을 때 까지  1.번
 			if (start <= last[m]) {
 				if (k == 1) {
-					calendar += "<th class='imgObj'><img src='/hairsalon/resources/images/left_arrow.png' onclick='beforeMonth()' id='leftArrow'>"
+					calendar += "<th data-thisyear='"+y+'-'+currMonth+'-'+start+"'><img src='/hairsalon/resources/images/left_arrow.png' onclick='beforeMonth()' id='leftArrow'>"
 							+ currMonth + "월" + start + "일" + "</th>";
 
 				} else if (k == 7) {
-					calendar += "<th class='imgObj'>"
+					calendar += "<th data-thisyear='"+y+'-'+currMonth+'-'+start+"'>"
 							+ currMonth
 							+ "월"
 							+ start
@@ -154,7 +154,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							+ "<img src='/hairsalon/resources/images/right_arrow.png' onclick='nextMonth()'></th>";
 
 				} else {
-					calendar += "<th class='imgObj'>" + currMonth + "월" + start
+					calendar += "<th data-thisyear='"+y+'-'+currMonth+'-'+start+"'>" + currMonth + "월" + start
 							+ "일" + "</th>";
 
 				}
@@ -175,11 +175,11 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					m = m + 1;
 				}  
 				if (k == 1) {
-					calendar += "<th class='imgObj'><img src='/hairsalon/resources/images/left_arrow.png' onclick='beforeMonth()'>"
+					calendar += "<th data-thisyear='"+y+'-'+currMonth+'-'+start+"'><img src='/hairsalon/resources/images/left_arrow.png' onclick='beforeMonth()'>"
 							+ currMonth + "월" + start + "일" + "</th>";
 
 				} else if (k == 7) {
-					calendar += "<th class='imgObj'>"
+					calendar += "<th data-thisyear='"+y+'-'+currMonth+'-'+start+"'>"
 							+ currMonth
 							+ "월"
 							+ start
@@ -187,7 +187,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							+ "<img src='/hairsalon/resources/images/right_arrow.png' onclick='nextMonth()'></th>";
 
 				} else {
-					calendar += "<th class='imgObj'>" + currMonth + "월" + start
+					calendar += "<th data-thisyear='"+y+'-'+currMonth+'-'+start+"'>" + currMonth + "월" + start
 							+ "일" + "</th>";
 				}
 				start++;
@@ -203,7 +203,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		const modiDate = new Date(currDate.valueOf());
 		
 		//달력밑에 시간 추가
-		for(var i = 0; i<21; i++){
+		for(var i = 0; i<20; i++){
 			//alert("시간시간시간 달력에서 온 날짜"+d);
 			calendar += "<tr>";
 			/*30분 단위 시간계산 */
@@ -348,6 +348,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					
 					
 					//시작일에서 날짜와 시간 받아오기 
+					
 					var resMonth = resStartDate.getMonth()+1;
 					var resDate = resStartDate.getDate();
 					var resHour = resStartDate.getHours();
@@ -360,7 +361,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					
 					//시간 만들기 11:00
 					var resTime = resHour+":"+resMin;
-					alert("시작시간 "+resTime);
+					alert("시작시간 :  "+resTime);
 					
 					//월 만들기 6월1일
 					var resFullDate = resMonth+"월"+resDate+"일";
@@ -418,14 +419,10 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					
 						<select class="form-control" id="sWidth">
 							<c:forEach var="list" items="${hairList }">
-							<option>${list.hair_type}</option>
+							<option value="${list.hair_time }" data-hairNo="${list.hair_no }">${list.hair_type}</option>
 							</c:forEach>
 						</select>
-					<script type="text/javascript">
-						/* $(document).ready(function(){
-							$("option:first-child").css("border-right","5px solid red");
-						}) */
-					</script>
+					
 					</div>
 				</div>
 			</form>
@@ -433,6 +430,79 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		<div id="wrap">
 			<div id="draw"></div>
 		</div>
+		
+		<script type="text/javascript">
+					
+					//예약을 하려고 table을 눌렀을 때 
+					$(document).on("click", "td", function(){
+						$(this).each(function(i, obj){
+						
+							var hairTime = Number($("#sWidth option:selected").val());
+							var hairType = $("#sWidth option:selected").html();
+							var hairNo = $("#sWidth option:selected").attr("data-hairNo");
+							alert("hariNo : "+hairNo);
+							alert("hairTime : "+hairTime);
+							//td index찾기
+							var tdIndex = $(obj).index();
+							
+							//td 시간찾기
+							var tdTime = $(obj).parent().find("th").html();
+							
+							//th td에 해당하는 th 속성찾기
+							var thObj =  $(obj).parents("table").find("th").eq(tdIndex).attr("data-thisyear");
+							
+							//선택된 td의 예약날짜와 시간
+							var startDate = thObj+" "+tdTime;
+							alert("startDate : "+startDate);
+							
+							const selectedDate = new Date(startDate);
+							const modifiedDate = new Date(selectedDate.valueOf());
+							
+							
+							modifiedDate.setMinutes(modifiedDate.getMinutes()+hairTime);
+							
+							var modYear = modifiedDate.getFullYear();
+							var modMonth = modifiedDate.getMonth()+1;
+							var modDate = modifiedDate.getDate();
+							var modHours = modifiedDate.getHours();
+							var modMins = modifiedDate.getMinutes();
+							alert("hours : "+modHours+"minutes : "+modMins);
+							
+							//정각이면 시간과 분이 11:0으로 나오기 때문에 0을 붙여줌
+							if(modMins==0){
+								modMins = modMins+"0";
+							}
+							
+							
+							//종료시간
+							var endDate = modYear+"-"+(modMonth>9? modMonth:"0"+modMonth)+"-"+(modDate>9? modDate:"0"+modDate)+" "+modHours+":"+modMins;
+							
+							alert(endDate);
+							
+							var reservedInfo = confirm("예약날짜 : "+startDate+"\n예상 종료시간 : "+endDate+"\n헤어종류 : "+hairType+"\n해당 날짜에 예약 하시겠습니까?");
+							
+							
+							if(reservedInfo!=false){
+								
+								var formObj = $('<form id="f1" method="post" action="reservation">');
+								var SDate = $("<input type='hidden' name='res_start' value='"+startDate+"'>");
+								var eDate = $("<input type='hidden' name='res_end' value='"+endDate+"'>");
+								var hairNo = $("<input type='hidden' name='hair_no' value='"+hairNo+"'>");
+								var uId = $("<input type='hidden' name='u_id' value='${login.u_id }'>");
+					
+								alert("헤어번호"+hairNo);
+								
+								$("#sendData").append(formObj).append(SDate).append(eDate).append(hairNo).append(uId);
+								formObj.submit();
+								
+							}						
+						})
+					})
+					
+					
+					</script>
+		<!-- <form id="f1" method="post" action="reservation"></form> -->
+		<div id="sendData"></div>
 	</div>
 </body>
 </html>

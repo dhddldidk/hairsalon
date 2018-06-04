@@ -12,12 +12,18 @@ import com.dgit.persistence.ReservationDAO;
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
-	ReservationDAO dao;
+	private ReservationDAO dao;
 	
 	@Override
 	public List<ReservationVO> selectAllReservation(String res_start, String res_end) throws Exception {
 		
 		return dao.selectAllReservation(res_start, res_end);
+	}
+
+	@Override
+	public void insertReservation(ReservationVO vo) throws Exception {
+		dao.insertReservation(vo);
+		
 	}
 
 }

@@ -27,4 +27,10 @@ public class ReservationDAOImpl implements ReservationDAO {
 		return session.selectList(namespace+".selectAllReservation", map);
 	}
 
+	@Override
+	public void insertReservation(ReservationVO vo) throws Exception {
+		session.insert(namespace+".insertReservation",vo);
+		
+	}
+
 }
