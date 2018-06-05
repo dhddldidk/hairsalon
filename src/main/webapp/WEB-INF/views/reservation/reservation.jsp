@@ -407,10 +407,6 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		
 	}
 	
-	/* function notselect(){
-		alert("이미 예약되었습니다.");
-		return false;
-	} */
 </script>
 
 <body>
