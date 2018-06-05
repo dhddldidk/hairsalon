@@ -24,7 +24,7 @@ tr, td, th {
 	width: 120px !important;
 }
 td:hover{
-	background: green;
+	background: #4CC417;
 }
 table img {
 	width: 35px;
@@ -378,23 +378,27 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					//시간이 속해 있는 th의 부모인 tr을 찾은 후
 					//그 자식인 td를 찾아 css처리
 					//$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red"); 
-					
-					
 					if(hairHours/30==1){
-						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","purple"); 
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FF7F50");
 					}
 					if(hairHours/30==2){
-						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red");
-						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","red");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#A23BEC");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#A23BEC");
 					}
-					if(hairHours/30==3){
-						
-					}
+					
 					if(hairHours/30==4){
-						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","yellow");
-						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","yellow");
-						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","yellow");
-						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","yellow");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FFD801");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#FFD801");
+						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#FFD801");
+						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#FFD801");
+					}
+					if(hairHours/30==6){
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#1589FF");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#1589FF");
+						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#1589FF");
+						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#1589FF");
+						$("th:contains('"+resTime+"')").parent().next().next().next().next().find("td").eq(index-1).css("background","#1589FF");
+						$("th:contains('"+resTime+"')").parent().next().next().next().next().next().find("td").eq(index-1).css("background","#1589FF");
 					}
 					
 				})
@@ -402,6 +406,11 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		})
 		
 	}
+	
+	/* function notselect(){
+		alert("이미 예약되었습니다.");
+		return false;
+	} */
 </script>
 
 <body>
@@ -441,6 +450,20 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					
 					//예약을 하려고 table을 눌렀을 때 
 					$(document).on("click", "td", function(){
+						
+						//예약이 된 시간에는 예약 못하도록
+						var colorBg = $(this).css("background");
+						
+						//alert("colorBg"+colorBg);
+						
+						//"rgb(0, 128, 0) none repeat scroll 0% 0% / auto padding-box border-box"
+						//colorBg.startsWith("rgb(0, 128, 0)")
+						//이 값이 있냐 없냐를 true or false로 반환함
+						if(!colorBg.startsWith("rgb(76, 196, 23)")){
+							
+							alert("이미 예약되었습니다.");
+							return false;
+						} 
 						$(this).each(function(i, obj){
 						
 							var hairTime = Number($("#sWidth option:selected").val());
@@ -495,7 +518,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 				
 							alert("헤어번호"+hairno.val());
 							alert("헤어번호"+uId.val());
-							$("#sendData").append(formObj).append(SDate).append(eDate).append(hairno).append(uId);
+							formObj.append(SDate).append(eDate).append(hairno).append(uId);
+							$("#sendData").append(formObj);
 							
 							if(reservedInfo==true){
 								
