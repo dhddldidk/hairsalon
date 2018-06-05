@@ -24,6 +24,7 @@ public class MemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
+	//회원가입 
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public void registerGet(){
 		logger.info("register Get ......");
@@ -67,5 +68,13 @@ public class MemberController {
 			entity = new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
 		}
 		return entity;
+	}
+	
+	//마이페이지에서 예약내역 관리
+	@RequestMapping(value="/myPage", method=RequestMethod.GET)
+	public void myPageGet(){
+		logger.info("myPage Get ......");
+		
+		
 	}
 }
