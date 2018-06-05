@@ -33,4 +33,19 @@ public class ReservationDAOImpl implements ReservationDAO {
 		
 	}
 
+	@Override
+	public List<ReservationVO> myPageReservation(String u_id) throws Exception {
+		
+		return session.selectList(namespace+".myPageReservation", u_id);
+	}
+
+	@Override
+	public void myPageDeleteReg(String u_id, int res_no) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("u_id", u_id);
+		map.put("res_no", res_no);
+		
+		session.delete(namespace+".myPageDeleteReg",map);
+	}
+
 }
