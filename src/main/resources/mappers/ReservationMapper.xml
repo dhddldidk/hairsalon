@@ -23,4 +23,9 @@
 		insert into reservation(res_start, res_end, hair_no, u_id) values
 		(#{res_start}, #{res_end}, #{hairstyleVo.hair_no}, #{member.u_id})	
 	</insert>
+	
+	<!-- mypage 예약내역 -->
+	<select id="myPageReservation">
+		select * from reservation r left join hair_style h on r.hair_no=h.hair_no
+	</select>
 </mapper>
