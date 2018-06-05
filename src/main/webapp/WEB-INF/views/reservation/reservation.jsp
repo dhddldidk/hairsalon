@@ -483,6 +483,25 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							const selectedDate = new Date(startDate);
 							const modifiedDate = new Date(selectedDate.valueOf());
 							
+							//현재시간 이전의 날은 선택 못하게 처리
+							const todayDate = new Date().getTime();
+							const preDate = new Date(startDate).getTime();
+							alert("todayDate : "+todayDate);
+							alert("preDate : "+preDate);
+							
+							if(preDate<todayDate){
+								alert("오늘 이전의 날은 예약할 수 없습니다.");
+								return false;
+							}
+							
+							
+							/* alert("todayDate"+todayDate);
+							alert("modifiedDate"+modifiedDate);
+							
+							if(todayDate.getTime()>modifiedDate.getTime()){
+								
+							} */
+							
 							
 							modifiedDate.setMinutes(modifiedDate.getMinutes()+hairTime);
 							
