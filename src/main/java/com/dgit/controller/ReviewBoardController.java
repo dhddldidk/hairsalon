@@ -1,6 +1,5 @@
 package com.dgit.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dgit.domain.ReviewBoardVO;
 import com.dgit.service.ReviewBoardService;
@@ -36,7 +36,7 @@ public class ReviewBoardController {
 		
 	}
 	
-	//게시판 등록
+	//게시판 등록 get
 	@RequestMapping(value="/reviewRegisterPage", method=RequestMethod.GET)
 	public void ReviewRegisterPageGet(){
 		logger.info("reviewRegisterPage Get ......");
@@ -44,6 +44,7 @@ public class ReviewBoardController {
 		
 	}
 	
+	//게시판 등록 post
 	@RequestMapping(value="/reviewRegisterPage", method=RequestMethod.POST)
 	public String ReviewRegisterPagePost(ReviewBoardVO vo) throws Exception{
 		logger.info("reviewRegisterPage Post ......");
@@ -67,7 +68,7 @@ public class ReviewBoardController {
 		
 	}
 	
-	//게시판 수정하기
+	//게시판 수정하기 get
 	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.GET)
 	public String ReviewtUpdatePage(Model model, int rb_no) throws Exception{
 		logger.info("reviewUpdatePage Get ......");
@@ -75,4 +76,29 @@ public class ReviewBoardController {
 		model.addAttribute("reviewBoard",reviewBoard);
 		return "/board/reviewUpdatePage";
 	}
+	
+	//게시판 수정 post
+	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.POST)
+	public String ReviewUpdatePagePost(ReviewBoardVO vo) throws Exception{
+		logger.info("ReviewUpdatePagePost Post ......");
+			
+		logger.info(vo.toString());
+		service.updateReview(vo);	
+	
+			
+		return "redirect:/board/reviewListPage";
+	}
+	
+	//게시판 삭제하기
+	@RequestMapping(value="/reviewDeletePage", method=RequestMethod.GET)
+	public String ReviewDeletePageGet(int rb_no) throws Exception{
+		logger.info("reviewDeletePage Get ......");
+		logger.info("rb_no......"+rb_no);
+		service.deleteReview(rb_no);
+		
+		return "redirect:/board/reviewListPage";
+		
+	}
+	
+	
 }
