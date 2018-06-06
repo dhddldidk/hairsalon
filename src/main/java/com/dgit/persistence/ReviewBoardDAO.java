@@ -11,4 +11,8 @@ public interface ReviewBoardDAO {
 	public List<ReviewBoardVO> selectAllReview() throws Exception;
 	
 	public ReviewBoardVO readReview(int rb_no) throws Exception;
+	
+	public void deleteReview(int rb_no) throws Exception;
+	
+	public void updateReview(ReviewBoardVO vo) throws Exception;
 }
