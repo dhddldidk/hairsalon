@@ -74,7 +74,7 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 	@Override
 	public int totalSearchCount(SearchCriteria cri) throws Exception {
 		
-		return session.selectOne(namespace+".totalSearchCount"+cri);
+		return session.selectOne(namespace+".totalSearchCount",cri);
 	}
 
 }
