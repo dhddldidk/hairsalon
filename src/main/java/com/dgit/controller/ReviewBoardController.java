@@ -7,11 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dgit.domain.Criteria;
+import com.dgit.domain.PageMaker;
 import com.dgit.domain.ReviewBoardVO;
+import com.dgit.domain.SearchCriteria;
 import com.dgit.service.ReviewBoardService;
 
 @RequestMapping("/board/")
@@ -28,12 +32,17 @@ public class ReviewBoardController {
 	
 	//게시판 리스트
 	@RequestMapping(value="/reviewListPage", method=RequestMethod.GET)
-	public void ReviewListPageGet(Model model) throws Exception{
+	public void ReviewListPageGet(Model model,@ModelAttribute("cri")SearchCriteria cri) throws Exception{
 		logger.info("reviewListPage Get ......");
+		logger.info("cri.toString()"+cri.toString());
 		
-		List<ReviewBoardVO> boardList = service.selectAllReview();
+		List<ReviewBoardVO> boardList = service.listCriteria(cri);
 		model.addAttribute("boardList",boardList);
 		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.totalSearchCount(cri));
+		model.addAttribute("pageMaker",pageMaker);
 	}
 	
 	//게시판 등록 get
