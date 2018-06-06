@@ -490,18 +490,9 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							alert("preDate : "+preDate);
 							
 							if(preDate<todayDate){
-								alert("오늘 이전의 날은 예약할 수 없습니다.");
+								alert("이미 지난 날은 예약할 수 없습니다.\n 날짜를 다시 확인해주세요.");
 								return false;
 							}
-							
-							
-							/* alert("todayDate"+todayDate);
-							alert("modifiedDate"+modifiedDate);
-							
-							if(todayDate.getTime()>modifiedDate.getTime()){
-								
-							} */
-							
 							
 							modifiedDate.setMinutes(modifiedDate.getMinutes()+hairTime);
 							
@@ -543,11 +534,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 								
 							}						
 						})
-					})
-					
-					
+					})				
 					</script>
-		<!-- <form id="f1" method="post" action="reservation"></form> -->
 		<div id="sendData"></div>
 	</div>
 </body>
