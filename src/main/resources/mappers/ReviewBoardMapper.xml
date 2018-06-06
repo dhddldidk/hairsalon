@@ -19,4 +19,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateReview">
 		update review set rb_title=#{rb_title}, rb_context=#{rb_context} where rb_no=#{rb_no}
 	</update>
+	
+	<!-- 페이징 게시글 10개 가져오기 -->
+	<select id="listPage" resultType="ReviewBoardVO">
+		select * from review order by rb_no desc limit #{page}, 10
+	</select>
+	<select id="listCriteria" resultType="ReviewBoardVO">
+		select * from review order by rb_no desc limit #{pageStart}, #{perPageNum}
+	</select>
+	<select id="totalCount" resultType="int">
+		select count(rb_no) from review
+	</select>
+	
+	
+	<!-- 검색 페이징 -->
+	<!-- 후기게시판에서 검색한 조건에 맞는 리스트 찾아오기 -->
+	<sql id="search">
+		<if test="searchType=='t'.toString()">
+			where rb_title like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='c'.toString()">
+			where rb_context like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='w'.toString()">
+			where rb_writer like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='tc'.toString()">
+			where rb_title like CONCAT('%',#{keyword},'%') OR where rb_context like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='cw'.toString()">
+			where rb_context like CONCAT('%',#{keyword},'%') OR where rb_writer like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='tcw'.toString()">
+			where rb_title like CONCAT('%',#{keyword},'%') 
+			OR where rb_context like CONCAT('%',#{keyword},'%') 
+			OR where rb_writer like CONCAT('%',#{keyword},'%')
+		</if>
+	</sql>
+	<select id="listSearch" resultType="ReviewBoardVO">
+		select * from review
+			<include refid="search"></include>
+		order by rb_no desc limit #{pageStart}, #{perPageNum} 	
+	</select>
+	
+	<!-- search한 것에 대한 totalcount -->
+	<select id="totalSearchCount" resultType="int">
+		select count(rb_no) from review
+			<include refid="search"></include>
+	</select>
 </mapper>
