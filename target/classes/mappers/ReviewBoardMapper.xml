@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dgit.mapper.ReviewBoardMapper">
 	<select id="selectAllReview" resultType="ReviewBoardVO">
-		select * from review order by rb_no desc
+		select * from review order by rb_regdate desc
 	</select>
 	<insert id="insertReview">
 		insert review(rb_title, rb_context, rb_writer)
@@ -13,4 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="readReview" resultType="ReviewBoardVO">
 		select * from review where rb_no=#{rb_no}
 	</select>
+	<delete id="deleteReview">
+		delete from review where rb_no=#{rb_no}
+	</delete>
+	<update id="updateReview">
+		update review set rb_title=#{rb_title}, rb_context=#{rb_context} where rb_no=#{rb_no}
+	</update>
 </mapper>
