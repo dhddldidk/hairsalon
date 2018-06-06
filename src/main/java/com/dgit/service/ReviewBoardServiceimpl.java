@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dgit.domain.Criteria;
 import com.dgit.domain.ReviewBoardVO;
+import com.dgit.domain.SearchCriteria;
 import com.dgit.persistence.ReviewBoardDAO;
 
 @Service
@@ -42,6 +44,36 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 	public void updateReview(ReviewBoardVO vo) throws Exception {
 		dao.updateReview(vo);
 		
+	}
+
+	@Override
+	public List<ReviewBoardVO> listPage(int page) throws Exception {
+		
+		return dao.listPage(page);
+	}
+
+	@Override
+	public List<ReviewBoardVO> listCriteria(Criteria cri) throws Exception {
+		
+		return dao.listCriteria(cri);
+	}
+
+	@Override
+	public List<ReviewBoardVO> listSearch(SearchCriteria cri) throws Exception {
+		
+		return dao.listSearch(cri);
+	}
+
+	@Override
+	public int totalCount() throws Exception {
+		
+		return dao.totalCount();
+	}
+
+	@Override
+	public int totalSearchCount(SearchCriteria cri) throws Exception {
+		
+		return dao.totalSearchCount(cri);
 	}
 
 }
