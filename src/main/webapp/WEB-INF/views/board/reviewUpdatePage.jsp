@@ -42,7 +42,7 @@
 		<div id="reviewUpdatePage">
   <h1>후기 수정</h1>
   		<form class="form-horizontal" method="post" action="reviewUpdatePage">
-  			<input type="hidden" name="" value="">
+  			<input type="hidden" name="rb_no" value="${reviewBoard.rb_no }">
   		
   		
 		<div class="form-group">
@@ -66,7 +66,7 @@
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn btn-success" id="modifyBtn">수정하기</button>
-				<button type="submit" class="btn btn-danger" id="deleteBtn">삭제하기</button>
+				<button type="submit" class="btn btn-warning" id="returnBtn">게시판 리스트로 돌아가기</button>
 			</div>
 		</div>
 		</form>
@@ -75,6 +75,9 @@
 				//location.href="reviewListPage";
 				$("#f1").attr("action", "reviewUpdatePage");
 				$("#f1").submit();
+			})
+			$("#returnBtn").click(function(){
+				location.href="reviewListPage";	
 			})
 		</script>
 	
