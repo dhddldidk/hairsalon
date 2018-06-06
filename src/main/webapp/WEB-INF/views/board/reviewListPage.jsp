@@ -31,7 +31,12 @@
 		color:#493D26;
 		font-size: 24px;
 	}
-	
+	th, td:nth-child(1),
+	td:nth-child(3),
+	td:nth-child(4),
+	td:nth-child(5){
+		text-align: center;
+	}
 </style>
 </head>
 <body>
@@ -50,19 +55,21 @@
   </script>
   
   <table class="table table-bordered">
-  	<tr>
-		<th style="width:80px;">번호</th>
-		<th style="width:80px;">제목</th>
-		<th>작성자</th>
-		<th>등록일</th>
-		<th style="width:80px;">조회수</th>
+  	<tr class="active">
+		<th style="width:70px;">번호</th>
+		<th>제목</th>
+		<th style="width:200px;">작성자</th>
+		<th style="width:220px;">등록일</th>
+		<th style="width:70px;">조회수</th>
 	</tr>
+	<c:set var="no" value="0"></c:set>
 	<c:forEach var="list" items="${boardList }">
+		
 		<tr>
-			<td>${list.rb_no }</td>
+			<td>${no=no+1 }</td>
 			<td><a href="reviewReadPage?rb_no=${list.rb_no }">${list.rb_title }</a></td>
 			<td>${list.rb_writer }</td>
-			<td><fmt:formatDate value="${list.rb_regdate }" pattern="yyyy-MM-dd HH:mm"/></td>
+			<td><fmt:formatDate value="${list.rb_regdate }" pattern="yyyy-MM-dd"/></td>
 			<td>${list.rb_viewcnt }</td>
 		</tr>
 	</c:forEach>
