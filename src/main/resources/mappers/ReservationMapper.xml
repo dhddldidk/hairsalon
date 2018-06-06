@@ -3,12 +3,14 @@
 <mapper namespace="com.dgit.mapper.ReservationMapper">
 
 	<resultMap type="ReservationVO" id="reservationResult">
-		<id property="res_no" column="res_no"></id>
+		<result property="res_no" column="res_no"></result>
 		<result property="res_start" column="res_start"></result>
 		<result property="res_end" column="res_end"></result>
 	</resultMap>
 	<resultMap type="ReservationVO" id="resHairStyleAndMember" extends="reservationResult">
 		<result property="hairstyleVo.hair_no" column="hair_no"></result>
+		<result property="hairstyleVo.hair_type" column="hair_type"></result>
+		<result property="hairstyleVo.hair_price" column="hair_price"></result>
 		<result property="member.u_id" column="u_id"></result>
 	</resultMap>
 	
@@ -23,4 +25,19 @@
 		insert into reservation(res_start, res_end, hair_no, u_id) values
 		(#{res_start}, #{res_end}, #{hairstyleVo.hair_no}, #{member.u_id})	
 	</insert>
+	
+	<!-- mypage 예약내역 -->
+	<select id="myPageReservation" resultMap="resHairStyleAndMember">
+		select r.res_start, r.res_end, r.hair_no, r.u_id, r.res_no, h.hair_type, h.hair_price 
+		from reservation r 
+		left join hair_style h on r.hair_no=h.hair_no
+		where u_id=#{u_id}
+		order by r.res_start desc
+	</select>
+	
+	<!-- mypage 예약취소 -->
+	<delete id="myPageDeleteReg">
+		delete from reservation
+		where u_id=#{u_id} and res_no=#{res_no}
+	</delete>
 </mapper>

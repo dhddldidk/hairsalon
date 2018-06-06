@@ -7,6 +7,16 @@ public class HairStyleVO {
 	private int hair_time;
 	private int hair_price;
 
+	public HairStyleVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public HairStyleVO(int hair_no) {
+		super();
+		this.hair_no = hair_no;
+	}
+
 	public int getHair_no() {
 		return hair_no;
 	}

@@ -83,6 +83,21 @@
 				$("#f1").attr("action", "reviewUpdatePage");
 				$("#f1").submit();
 			})
+			$("#deleteBtn").click(function(){
+				
+				var flag=confirm("해당 게시글을 삭제하겠습니까?");
+				
+				if(flag==true){
+
+					$("#f1").attr("action", "reviewDeletePage");
+					$("#f1").submit();
+				}else{
+					return false;
+				}
+				
+				
+				
+			})
 		</script>
 	<!-- </form> -->
   

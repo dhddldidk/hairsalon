@@ -11,12 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dgit.domain.HairStyleVO;
+import com.dgit.domain.MemberVO;
 import com.dgit.domain.ReservationVO;
 import com.dgit.service.HairStyleService;
 import com.dgit.service.ReservationService;
@@ -49,16 +49,28 @@ public class ReservationController {
 		
 	}
 	
+	//테이블에서 예약하기를 눌렀을 때
 	@RequestMapping(value="/reservation", method=RequestMethod.POST)
-	public String reservationPost(ReservationVO vo, String res_sDate, String res_eDate, String user_id) throws Exception{
+	public String reservationPost(ReservationVO vo, 
+			String res_sDate, String res_eDate, String user_id, int hair_no) throws Exception{
 		logger.info("reservationPost ......"+vo.toString());
 		logger.info("user_id ......"+user_id);
 		logger.info("sDate ......"+res_sDate);
 		logger.info("eDate ......"+res_eDate);
+		logger.info("hair_no ......"+hair_no);
 		
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date startD = fm.parse(res_sDate);
+		Date endD = fm.parse(res_eDate);
+		vo.setRes_start(startD);
+		vo.setRes_end(endD);
+		
+		vo.setMember(new MemberVO(user_id));
+		
+		vo.setHairstyleVo(new HairStyleVO(hair_no));
 		resService.insertReservation(vo);
 		
-		return "redirect:/board/mainPage";
+		return "redirect:/member/myPage";
 	}
 	
 	//예약된 리스트들 가져와서 화면에 뿌려줌
