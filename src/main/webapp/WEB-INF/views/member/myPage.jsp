@@ -51,10 +51,7 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3),
 td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	padding-top: 16px !important; 
 }
-
 </style>
-
-
 	<div id="myPageContainer">
 		<h1>예약 내역 관리</h1>
 		<table class='table table-bordered'>
@@ -83,9 +80,6 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 			
 		</c:forEach>
 		</table>
-		<!-- <form method="post" id="f1">
-			<input type="hidden" name="res_no" value="">
-		</form> -->
 		<script type="text/javascript">
 				var res_no="";
 			$("#cancel").click(function(){
