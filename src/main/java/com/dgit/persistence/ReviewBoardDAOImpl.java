@@ -34,4 +34,15 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 		return session.selectOne(namespace+".readReview", rb_no);
 	}
 
+	@Override
+	public void deleteReview(int rb_no) throws Exception {
+		session.delete(namespace+".deleteReview", rb_no);
+	}
+
+	@Override
+	public void updateReview(ReviewBoardVO vo) throws Exception {
+		session.update(namespace+".updateReview",vo);
+		
+	}
+
 }
