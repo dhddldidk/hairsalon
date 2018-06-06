@@ -32,4 +32,16 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		return dao.readReview(rb_no);
 	}
 
+	@Override
+	public void deleteReview(int rb_no) throws Exception {
+		dao.deleteReview(rb_no);
+		
+	}
+
+	@Override
+	public void updateReview(ReviewBoardVO vo) throws Exception {
+		dao.updateReview(vo);
+		
+	}
+
 }
