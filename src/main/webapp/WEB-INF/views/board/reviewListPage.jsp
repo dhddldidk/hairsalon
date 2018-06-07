@@ -120,7 +120,7 @@
   				<li><a href="reviewListPage?page=${pageMaker.startPage-1 }">&laquo;</a></li>
   			</c:if>
   			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-  				<li ${pageMaker.cri.page == idx? 'class="active"':'' }><a href="reviewListPage?page=${idx }">${idx }</a></li>
+  				<li ${pageMaker.cri.page == idx? 'class="active"':'' }><a href="reviewListPage?page=${idx }&searchType=${cri.searchType}&keyword=${cri.keyword}">${idx }</a></li>
   			</c:forEach>
   			<c:if test="${pageMaker.next }">
   				<li><a href="reviewListPage=${pageMaker.endPage+1 }">&raquo;</a></li>
