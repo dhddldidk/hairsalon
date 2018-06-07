@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dgit.domain.HairStyleVO;
+import com.dgit.domain.LoginDTO;
 import com.dgit.domain.MemberVO;
 import com.dgit.domain.ReservationVO;
 import com.dgit.service.HairStyleService;
@@ -34,8 +38,11 @@ public class ReservationController {
 	private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
 	
 	@RequestMapping(value="/reservation", method=RequestMethod.GET)
-	public void reservationGet(Model model) throws Exception{
+	public void reservationGet(Model model, HttpServletRequest request) throws Exception{
 		logger.info("reservation Get ......");
+		
+		HttpSession session = request.getSession();
+		LoginDTO loginDTO = (LoginDTO)session.getAttribute("login");
 		
 		//select 박스
 		List<HairStyleVO> hairList = hairService.selectHairStyle();
