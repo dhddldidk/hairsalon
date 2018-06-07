@@ -85,6 +85,9 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 </head>
 
 <script type="text/javascript">
+
+
+
 	//달력 생성
 	var theDate = new Date();
 	
@@ -319,6 +322,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		//달력 그려서 div에 넣어주기 
 		calen = printCalendar(dateToday);
 		reservedListDraw(ssDate, eeDate);
+		/* doubleCheckRes(ssDate); */
 	}
 	function reservedListDraw(sDate, eDate){
 		
@@ -382,6 +386,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FF7F50");
 					}
 					if(hairHours/30==2){
+						
 						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#A23BEC");
 						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#A23BEC");
 					}
@@ -407,9 +412,15 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		
 	}
 	
+	/* function doubleCheckRes(sDate){
+		$.ajax({
+			type:"get",
+		})
+	} */
 </script>
 
 <body>
+
 	<div id="regContainer">
 		<div id="notice">
 			<h4>주의사항</h4>
@@ -444,11 +455,26 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		
 		<script type="text/javascript">
 					
+					
 					//예약을 하려고 table을 눌렀을 때 
 					$(document).on("click", "td", function(){
 						
 						//예약이 된 시간에는 예약 못하도록
 						var colorBg = $(this).css("background");
+						
+						alert("${login}");
+						
+						//var flag=${login==null};
+						//예약을 하려고 테이블을 눌렀을 때 로그인 정보가 없으면
+						if(${login==null}){
+							var flag = confirm("로그인을 해야 예약을 할 수 있습니다. \n 로그인 페이지로 이동하겠습니까?");
+							if(flag){
+								location.href="${pageContext.request.contextPath}/user/login";
+								return false;
+							}else{
+								return false;
+							}
+						}
 						
 						//alert("colorBg"+colorBg);
 						
@@ -460,6 +486,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							alert("이미 예약되었습니다.");
 							return false;
 						} 
+						
 						$(this).each(function(i, obj){
 						
 							var hairTime = Number($("#sWidth option:selected").val());
@@ -493,7 +520,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 								alert("이미 지난 날은 예약할 수 없습니다.\n 날짜를 다시 확인해주세요.");
 								return false;
 							}
-							
+											
 							modifiedDate.setMinutes(modifiedDate.getMinutes()+hairTime);
 							
 							var modYear = modifiedDate.getFullYear();
@@ -508,6 +535,18 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 								modMins = modMins+"0";
 							}
 							
+							var closeTime = modHours +":"+modMins;
+							//마감시간에 가까우면 예약 못하게 처리
+							if(closeTime>'20:00'){
+								alert("선택한 시간이 마감시간에 가깝습니다. \n좀 더 이른 시간을 선택해주세요.");
+								return false;
+							}
+							
+							//중복예약 에러처리
+							/* var reservedTime = resTime();
+							if(reservedTime<tdTime && tdTime>closeTime){
+								alert("다른 예약이 있습니다. \n시간을 다시 확인해 주세요.");
+							}  */
 							
 							//종료시간
 							var endDate = modYear+"-"+(modMonth>9? modMonth:"0"+modMonth)+"-"+(modDate>9? modDate:"0"+modDate)+" "+modHours+":"+modMins;
@@ -532,9 +571,11 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 								$("#f1").attr("action", "reservation");
 								$("#f1").submit();
 								
-							}						
+							}
+							
 						})
-					})				
+					})
+					
 					</script>
 		<div id="sendData"></div>
 	</div>
