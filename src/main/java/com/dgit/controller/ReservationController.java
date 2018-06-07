@@ -91,7 +91,7 @@ public class ReservationController {
 		logger.info("달력달력 ......"+res_start);
 		logger.info("달력달력 ......"+res_end);
 	
-		//예약된 리스트
+		//예약된 모든 리스트
 		List<ReservationVO> resList = resService.selectAllReservation(res_start, res_end);
 		for(ReservationVO res : resList){
 			res.setRes_start(res.getRes_start());
