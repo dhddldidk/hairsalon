@@ -36,7 +36,7 @@ public class ReviewBoardController {
 		logger.info("reviewListPage Get ......");
 		logger.info("cri.toString()"+cri.toString());
 		
-		List<ReviewBoardVO> boardList = service.listCriteria(cri);
+		List<ReviewBoardVO> boardList = service.listSearch(cri);
 		model.addAttribute("boardList",boardList);
 		
 		PageMaker pageMaker = new PageMaker();
