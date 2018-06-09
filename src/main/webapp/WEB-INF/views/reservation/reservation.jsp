@@ -85,6 +85,9 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 </head>
 
 <script type="text/javascript">
+
+
+
 	//달력 생성
 	var theDate = new Date();
 	
@@ -319,6 +322,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		//달력 그려서 div에 넣어주기 
 		calen = printCalendar(dateToday);
 		reservedListDraw(ssDate, eeDate);
+		/* doubleCheckRes(ssDate); */
 	}
 	function reservedListDraw(sDate, eDate){
 		
@@ -379,26 +383,27 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					//그 자식인 td를 찾아 css처리
 					//$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red"); 
 					if(hairHours/30==1){
-						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FF7F50");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FF7F50").attr("data-check","reserved");
 					}
 					if(hairHours/30==2){
-						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#A23BEC");
-						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#A23BEC");
+						
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#A23BEC").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#A23BEC").attr("data-check","reserved");
 					}
 					
 					if(hairHours/30==4){
-						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FFD801");
-						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#FFD801");
-						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#FFD801");
-						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#FFD801");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
 					}
 					if(hairHours/30==6){
-						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#1589FF");
-						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#1589FF");
-						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#1589FF");
-						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#1589FF");
-						$("th:contains('"+resTime+"')").parent().next().next().next().next().find("td").eq(index-1).css("background","#1589FF");
-						$("th:contains('"+resTime+"')").parent().next().next().next().next().next().find("td").eq(index-1).css("background","#1589FF");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().next().next().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().next().next().next().next().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
 					}
 					
 				})
@@ -407,9 +412,11 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		
 	}
 	
+	
 </script>
 
 <body>
+
 	<div id="regContainer">
 		<div id="notice">
 			<h4>주의사항</h4>
@@ -443,12 +450,25 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		</div>
 		
 		<script type="text/javascript">
-					
 					//예약을 하려고 table을 눌렀을 때 
 					$(document).on("click", "td", function(){
 						
 						//예약이 된 시간에는 예약 못하도록
 						var colorBg = $(this).css("background");
+						
+						alert("${login}");
+						
+						//var flag=${login==null};
+						//예약을 하려고 테이블을 눌렀을 때 로그인 정보가 없으면
+						if(${login==null}){
+							var flag = confirm("로그인을 해야 예약을 할 수 있습니다. \n 로그인 페이지로 이동하겠습니까?");
+							if(flag){
+								location.href="${pageContext.request.contextPath}/user/login";
+								return false;
+							}else{
+								return false;
+							}
+						}
 						
 						//alert("colorBg"+colorBg);
 						
@@ -460,7 +480,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							alert("이미 예약되었습니다.");
 							return false;
 						} 
-						$(this).each(function(i, obj){
+						
+						/* $(this).each(function(i, obj){ */
 						
 							var hairTime = Number($("#sWidth option:selected").val());
 							var hairType = $("#sWidth option:selected").html();
@@ -468,13 +489,13 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							alert("hariNo : "+hairNo);
 							alert("hairTime : "+hairTime);
 							//td index찾기
-							var tdIndex = $(obj).index();
+							var tdIndex = $(this).index();
 							
 							//td 시간찾기
-							var tdTime = $(obj).parent().find("th").html();
+							var tdTime = $(this).parent().find("th").html();
 							
 							//th td에 해당하는 th 속성찾기
-							var thObj =  $(obj).parents("table").find("th").eq(tdIndex).attr("data-thisyear");
+							var thObj =  $(this).parents("table").find("th").eq(tdIndex).attr("data-thisyear");
 							
 							//선택된 td의 예약날짜와 시간
 							var startDate = thObj+" "+tdTime;
@@ -508,6 +529,47 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 								modMins = modMins+"0";
 							}
 							
+							var closeTime = modHours +":"+modMins;
+							//마감시간에 가까우면 예약 못하게 처리
+							if(closeTime>'20:00'){
+								alert("선택한 시간이 마감시간에 가깝습니다. \n좀 더 이른 시간을 선택해주세요.");
+								return false;
+							}
+							
+							//중복예약 에러처리
+							//함수에서 보내준 return 값에서 내가 받은게 true인지 false인지 판단해 주면 됨
+							var tdIndex = $(this).index();
+							var trFind = $(this).parent("tr").next();
+							
+							/* if(doubleResCheck(tdIndex, trFind)){//doubleResCheck()함수가 return false를 반환하면
+								return false;//예약하는 곳에서 return false해서 밑으로 못 내려 가게 막음
+							} */
+							//선택한 td의 부모tr
+							var hairTime = Number($("#sWidth option:selected").val());
+							
+							
+							
+							//alert("tdIndex"+tdIndex);
+							
+							
+							//30분은 비교할 필요가 없으므로 (30/30=1) 한칸은 색칠할 수 있음
+							//var i를 1부터 시작함(두번째 칸부터 비교하겠음)
+							 for(var i =1; i<(hairTime/30); i++){
+								
+								//선택한 td의 바로 밑에 칸(선택한 td와 같은 인덱스)
+								var comparingTd = trFind.find("td:nth-child("+(tdIndex+1)+")");
+								//comparingTd.css("background","red");
+								trFind = trFind.next();
+								var comparingTdBg = comparingTd.css("background");
+								alert("????????????????????"+comparingTdBg);
+								if(!comparingTdBg.startsWith("rgba(0, 0, 0, 0)")){
+									
+									alert("중복예약입니다. 다시 예약해주세요.");
+									return false;
+								} 
+							 } 
+							
+							
 							
 							//종료시간
 							var endDate = modYear+"-"+(modMonth>9? modMonth:"0"+modMonth)+"-"+(modDate>9? modDate:"0"+modDate)+" "+modHours+":"+modMins;
@@ -532,9 +594,19 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 								$("#f1").attr("action", "reservation");
 								$("#f1").submit();
 								
-							}						
-						})
-					})				
+							}
+							
+						/* }) */
+					})
+					
+					
+					</script>
+					<script>
+					//중복예약 처리 
+					/* function doubleResCheck(tdIndex, trFind){
+					
+						
+					} */
 					</script>
 		<div id="sendData"></div>
 	</div>

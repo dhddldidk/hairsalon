@@ -10,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dgit.domain.Criteria;
 import com.dgit.domain.PageMaker;
 import com.dgit.domain.ReviewBoardVO;
 import com.dgit.domain.SearchCriteria;
@@ -36,7 +34,7 @@ public class ReviewBoardController {
 		logger.info("reviewListPage Get ......");
 		logger.info("cri.toString()"+cri.toString());
 		
-		List<ReviewBoardVO> boardList = service.listCriteria(cri);
+		List<ReviewBoardVO> boardList = service.listSearch(cri);
 		model.addAttribute("boardList",boardList);
 		
 		PageMaker pageMaker = new PageMaker();
