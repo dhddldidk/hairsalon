@@ -26,4 +26,7 @@ public interface ReviewBoardDAO {
 	//후기게시판 search부분
 	public List<ReviewBoardVO> listSearch(SearchCriteria cri) throws Exception;
 	public int totalSearchCount(SearchCriteria cri) throws Exception;
+	
+	//조회수 증가
+	public void updateReviewViewCnt(int rb_no) throws Exception;
 }
