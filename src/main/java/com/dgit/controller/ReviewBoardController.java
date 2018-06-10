@@ -68,9 +68,9 @@ public class ReviewBoardController {
 	
 	//게시판 상세보기
 	@RequestMapping(value="/reviewReadPage", method=RequestMethod.GET)
-	public void ReviewReadPageGet(Model model, int rb_no) throws Exception{
+	public void ReviewReadPageGet(Model model, int rb_no, boolean flag) throws Exception{
 		logger.info("reviewReadPage Get ......");
-		ReviewBoardVO reviewBoard = service.readReview(rb_no);
+		ReviewBoardVO reviewBoard = service.readReview(rb_no, flag);
 		model.addAttribute("reviewBoard",reviewBoard);
 		
 	}
@@ -79,20 +79,20 @@ public class ReviewBoardController {
 	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.GET)
 	public String ReviewtUpdatePage(Model model, int rb_no) throws Exception{
 		logger.info("reviewUpdatePage Get ......");
-		ReviewBoardVO reviewBoard = service.readReview(rb_no);
+		ReviewBoardVO reviewBoard = service.readReview(rb_no, false);
 		model.addAttribute("reviewBoard",reviewBoard);
 		return "/board/reviewUpdatePage";
 	}
 	
 	//게시판 수정 post
 	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.POST)
-	public String ReviewUpdatePagePost(ReviewBoardVO vo) throws Exception{
+	public String ReviewUpdatePagePost(ReviewBoardVO vo, Model model) throws Exception{
 		logger.info("ReviewUpdatePagePost Post ......");
 			
 		logger.info(vo.toString());
 		service.updateReview(vo);	
 	
-			
+		model.addAttribute("flag", false);
 		return "redirect:/board/reviewListPage";
 	}
 	
