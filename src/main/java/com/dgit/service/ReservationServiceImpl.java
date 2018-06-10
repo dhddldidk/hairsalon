@@ -1,12 +1,11 @@
 package com.dgit.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dgit.domain.Criteria;
 import com.dgit.domain.ReservationVO;
 import com.dgit.persistence.ReservationDAO;
 
@@ -40,5 +39,7 @@ public class ReservationServiceImpl implements ReservationService {
 		dao.myPageDeleteReg(u_id, res_no);
 		
 	}
+
+	
 
 }

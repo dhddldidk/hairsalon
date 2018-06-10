@@ -28,7 +28,7 @@ public class ReviewBoardController {
 	
 	
 	
-	//게시판 리스트
+	//게시판 리스트+페이징
 	@RequestMapping(value="/reviewListPage", method=RequestMethod.GET)
 	public void ReviewListPageGet(Model model,@ModelAttribute("cri")SearchCriteria cri) throws Exception{
 		logger.info("reviewListPage Get ......");
