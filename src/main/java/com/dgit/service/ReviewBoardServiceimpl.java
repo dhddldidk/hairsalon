@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dgit.domain.Criteria;
 import com.dgit.domain.ReviewBoardVO;
@@ -28,9 +29,12 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		return dao.selectAllReview();
 	}
 
+	@Transactional
 	@Override
-	public ReviewBoardVO readReview(int rb_no) throws Exception {
-		
+	public ReviewBoardVO readReview(int rb_no, boolean flag) throws Exception {
+		if(flag==true){
+			dao.updateReviewViewCnt(rb_no);
+		}
 		return dao.readReview(rb_no);
 	}
 
@@ -74,6 +78,12 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 	public int totalSearchCount(SearchCriteria cri) throws Exception {
 		
 		return dao.totalSearchCount(cri);
+	}
+
+	@Override
+	public void updateReviewViewCnt(int rb_no) throws Exception {
+		dao.updateReviewViewCnt(rb_no);
+		
 	}
 
 }
