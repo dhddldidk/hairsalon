@@ -1,6 +1,9 @@
 package com.dgit.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dgit.domain.PageMaker;
 import com.dgit.domain.ReviewBoardVO;
 import com.dgit.domain.SearchCriteria;
 import com.dgit.service.ReviewBoardService;
+import com.dgit.util.UploadFileUtils;
 
 @RequestMapping("/board/")
 @Controller
@@ -25,7 +30,8 @@ public class ReviewBoardController {
 	@Autowired
 	private ReviewBoardService service;
 	
-	
+	@Resource(name="uploadPath")
+	private String uploadPath;
 	
 	
 	//게시판 리스트+페이징
@@ -53,14 +59,23 @@ public class ReviewBoardController {
 	
 	//게시판 등록 post
 	@RequestMapping(value="/reviewRegisterPage", method=RequestMethod.POST)
-	public String ReviewRegisterPagePost(ReviewBoardVO vo) throws Exception{
+	public String ReviewRegisterPagePost(ReviewBoardVO vo, List<MultipartFile> imageFiles) throws Exception{
 		logger.info("reviewRegisterPage Post ......");
 		
 		logger.info(vo.toString());
 		
-		/*Date date = new Date();
-		vo.setRb_regdate(date);
-		logger.info("게시글 등록일"+vo.getRb_regdate());*/
+		if(!imageFiles.get(0).getOriginalFilename().equals("")){
+			ArrayList<String> list = new ArrayList<>();
+			for(MultipartFile file:imageFiles){
+				logger.info("filename : "+file.getOriginalFilename());
+				
+				String thumb = UploadFileUtils.uploadFile(uploadPath, 
+											file.getOriginalFilename(), 
+											file.getBytes());
+				list.add(thumb);
+			}
+			vo.setFiles(list.toArray(new String[list.size()]));
+		}
 		service.insertReview(vo);
 		
 		return "redirect:/board/reviewListPage";
@@ -92,6 +107,7 @@ public class ReviewBoardController {
 		logger.info(vo.toString());
 		service.updateReview(vo);	
 	
+		//model.addAttribute("rb_no", vo.getRb_no());
 		model.addAttribute("flag", false);
 		return "redirect:/board/reviewListPage";
 	}
