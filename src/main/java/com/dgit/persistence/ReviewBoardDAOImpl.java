@@ -83,4 +83,10 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 		
 	}
 
+	@Override
+	public void addAttach(String att_filename) throws Exception {
+		session.insert(namespace+".addAttach", att_filename);
+		
+	}
+
 }
