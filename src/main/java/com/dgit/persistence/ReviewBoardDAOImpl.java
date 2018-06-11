@@ -89,4 +89,10 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 		
 	}
 
+	@Override
+	public List<String> getAttach(int rb_no) throws Exception {
+		
+		return session.selectList(namespace+".getAttach", rb_no);
+	}
+
 }
