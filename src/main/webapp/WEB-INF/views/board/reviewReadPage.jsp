@@ -54,6 +54,12 @@
   	<!-- <form class="form-horizontal" method="post" action="reviewUpdatePage"> -->
   		<form method="get" id="f1">
   			<input type="hidden" name="rb_no" value="${reviewBoard.rb_no }">
+  			<input type="hidden" name="page" value="${cri.page }">
+  			<input type="hidden" name="searchType" value="${cri.searchType }">
+  			<input type="hidden" name="keyword" value="${cri.keyword }">
+  			<c:forEach var="file" items="${reviewBoard.files }">
+  				<input type="hidden" name="files" value="${file }">
+  			</c:forEach>
   		</form>
   		<form class="form-horizontal" onSubmit="return false;">
 		<div class="form-group">
