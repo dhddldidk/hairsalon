@@ -35,7 +35,17 @@
 		width:800px !important;
 		height: 200px !important;
 	}
-	
+	#previewBox{
+		width:800px;
+		height: 300px;
+		border:3px dotted #848B79;
+		margin-left:203px;
+		margin-bottom: 20px;
+		
+	}
+	#previewBox img{
+		width:100px;
+	}
 </style>
 </head>
 <body>
@@ -64,6 +74,12 @@
 			<input type="text" name="rb_writer" id="rb_writer" class="form-control" value="${reviewBoard.rb_writer }" readonly="readonly"><br>
 			</div>
 		</div>
+		<div class="form-group" id="previewBox">
+			<c:forEach var="file" items="${reviewBoard.files }">
+				<img src="displayFile?att_filename=${file }">
+			</c:forEach>
+		</div>
+		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn btn-success" id="modifyBtn">수정하기</button>
