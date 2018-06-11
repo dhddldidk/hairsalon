@@ -37,12 +37,23 @@
 		width:800px !important;
 		height: 200px !important;
 	}
+	#previewBox{
+		width:800px;
+		height: 300px;
+		border:3px dotted #848B79;
+		margin-left:203px;
+		margin-bottom: 20px;
+		
+	}
+	#previewBox img{
+		width:100px;
+	}
 </style>
 </head>
 <body>
 	<div id="reviewRegister">
   <h1>후기 등록</h1>
-  	<form class="form-horizontal" method="post" action="reviewRegisterPage" enctype="multiport/form-data">
+  	<form class="form-horizontal" method="post" action="reviewRegisterPage" enctype="multipart/form-data">
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="rb_title">제목</label>
 			<div class="col-sm-10"> 
@@ -58,7 +69,7 @@
 		<div class="form-group">
 			<label for="rb_writer" class="control-label col-sm-2">작성자</label>
 			<div class="col-sm-10">  
-			<input type="text" name="rb_writer" id="rb_writer" class="form-control">
+			<input type="text" name="rb_writer" id="rb_writer" value="${login.u_id }" class="form-control" readonly="readonly">
 			</div>
 		</div>
 		<div class="form-group">
@@ -66,6 +77,8 @@
 			<div class="col-sm-10">  
 			<input type="file" name="imageFiles" multiple="multiple" id="file" class="form-control">
 			</div>
+		</div>
+		<div class="form-group previewBox" id="previewBox">
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
@@ -77,6 +90,20 @@
 		<script type="text/javascript">
 			$("#returnListBtn").click(function(){
 				location.href="reviewListPage";
+			})
+			
+			//파일 선택시 프리뷰 
+			$("#file").change(function(){
+				$("#previewBox").empty();
+				for(var i =0; i<$(this)[0].files.length; i++){
+					var reader = new FileReader();
+					reader.onload = function(e){
+						var imgObj = $("<img multiple='multiple'>").attr("src", e.target.result);
+						$("#previewBox").append(imgObj);
+					}
+					reader.readAsDataURL($(this)[0].files[i]);
+				}
+				
 			})
 		</script>
 		
