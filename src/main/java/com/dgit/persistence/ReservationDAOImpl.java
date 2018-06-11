@@ -49,4 +49,23 @@ public class ReservationDAOImpl implements ReservationDAO {
 		session.delete(namespace+".myPageDeleteReg",map);
 	}
 
+	@Override
+	public List<ReservationVO> myPageListCriteria(String u_id, Criteria cri) throws Exception {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("u_id", u_id);
+		map.put("pageStart", cri.getPageStart());
+		map.put("perPageNum", cri.getPerPageNum());
+		return session.selectList(namespace+".myPageListCriteria", map);
+	}
+
+	@Override
+	public int myPageTotalCount(String u_id, Criteria cri) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("u_id", u_id);
+		map.put("pageStart", cri.getPageStart());
+		map.put("perPageNum", cri.getPerPageNum());
+		return session.selectOne(namespace+".myPageTotalCount", map);
+	}
+
 }
