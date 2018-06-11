@@ -35,7 +35,31 @@
 		width:800px !important;
 		height: 200px !important;
 	}
-	
+	.wrap{
+		position: relative;
+		width:100px;
+		height: 100px;
+		border:1px solid gray;
+		text-align: center;
+		display: inline-block;
+	}
+	.wrap button{
+		position: absolute;
+		top:0px;
+		right: 0px;
+		background: orange;
+	}
+	#previewBox, #previewBox11{
+		width:800px;
+		height: 120px;
+		border:3px dotted #848B79;
+		margin-left:203px;
+		margin-bottom: 20px;
+		
+	}
+	#previewBox img{
+		width:100px;
+	}
 </style>
 </head>
 <body>
@@ -63,6 +87,25 @@
 			<input type="text" name="rb_writer" id="rb_writer" class="form-control" value="${reviewBoard.rb_writer }" readonly="readonly"><br>
 			</div>
 		</div>
+		
+		
+		<div class="form-group" id="previewBox11">	
+			<c:forEach var="file" items="${reviewBoard.files }">
+				<div class="wrap">
+					<img src="displayFile?att_filename=${file }">
+					<button data-file="${file }">X</button>
+				</div>
+			</c:forEach>
+		</div>
+		<div class="form-group">
+			<label for="newFiles" class="control-label col-sm-2">첨부파일</label>
+			<div class="col-sm-10">  
+			<input type="file" name="newFiles" class="form-control" multiple="multiple" id="file">
+			</div>
+		</div>
+		<div class="form-group"  id="previewBox">
+							
+		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn btn-success" id="modifyBtn">수정하기</button>
@@ -78,6 +121,28 @@
 			})
 			$("#returnBtn").click(function(){
 				location.href="reviewListPage";	
+			})
+			$(".wrap button").click(function(){
+				//버튼을 클릭을 했을 때 버튼이 파일 경로의 값을 들고 있을 수 있도록
+				//버튼에 속성을 줄 수 있음 ex)<button data-file="${file }">X</button>
+				
+				var path = $(this).attr("data-file");
+				$(this).parent().remove();
+				
+				var inputObj = $('<input type="hidden" name="oldFiles" id="delFile">');
+				$(inputObj).val(path);
+				$("#delFile").append(inputObj);
+			})
+			$("#file").change(function(){
+				$("#previewBox").empty();
+				for(var i =0; i<$(this)[0].files.length; i++){
+					var reader = new FileReader();
+					reader.onload=function(e){
+						var imgObj = $("<img multiple='multiple'>").attr("src", e.target.result);
+						$("#previewBox").append(imgObj);
+					}
+					reader.readAsDataURL($(this)[0].files[i]);
+				}
 			})
 		</script>
 	
