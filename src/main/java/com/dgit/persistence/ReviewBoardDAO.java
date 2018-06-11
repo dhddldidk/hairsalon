@@ -32,4 +32,5 @@ public interface ReviewBoardDAO {
 	
 	//파일 업로드
 	public void addAttach(String att_filename) throws Exception;
+	public List<String> getAttach(int rb_no) throws Exception;
 }
