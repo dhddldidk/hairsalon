@@ -17,10 +17,17 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 	@Autowired
 	private ReviewBoardDAO dao;
 	
+	@Transactional
 	@Override
 	public void insertReview(ReviewBoardVO vo) throws Exception {
 		dao.insertReview(vo);
 
+		if(vo.getFiles()==null){
+			return;
+		}
+		for(String att_filename : vo.getFiles()){
+			dao.addAttach(att_filename);
+		}
 	}
 
 	@Override
