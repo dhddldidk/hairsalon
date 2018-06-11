@@ -35,6 +35,18 @@
 		order by r.res_start desc
 	</select>
 	
+	<!-- mypage 예약내역 페이징 -->
+	<select id="myPageListCriteria" resultMap="resHairStyleAndMember">
+		select r.res_start, r.res_end, r.hair_no, r.u_id, r.res_no, h.hair_type, h.hair_price 
+		from reservation r 
+		left join hair_style h on r.hair_no=h.hair_no
+		where u_id=#{u_id}
+		order by r.res_start desc limit #{pageStart}, #{perPageNum}
+	</select>
+	<select id="myPageTotalCount" resultType="int">
+		select count(res_no) from reservation where u_id=#{u_id}
+	</select>
+	
 	<!-- mypage 예약취소 -->
 	<delete id="myPageDeleteReg">
 		delete from reservation
