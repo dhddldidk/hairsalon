@@ -79,4 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addAttach">
 		insert into review_attach(att_filename, rb_no) values (#{att_filename}, LAST_INSERT_ID())
 	</insert>
+	<select id="getAttach" resultType="String">
+		select att_filename from review_attach where rb_no = #{rb_no} order by att_regdate	
+	</select>
 </mapper>
