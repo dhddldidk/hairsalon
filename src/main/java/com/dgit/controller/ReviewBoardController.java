@@ -1,24 +1,33 @@
 package com.dgit.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dgit.domain.PageMaker;
 import com.dgit.domain.ReviewBoardVO;
 import com.dgit.domain.SearchCriteria;
 import com.dgit.service.ReviewBoardService;
+import com.dgit.util.MediaUtils;
 import com.dgit.util.UploadFileUtils;
 
 @RequestMapping("/board/")
@@ -90,6 +99,37 @@ public class ReviewBoardController {
 		
 	}
 	
+	//게시판 상세보기에서 첨부파일 이미지 나타나도록 처리하기 위해
+	@ResponseBody
+	@RequestMapping("/displayFile")
+	public ResponseEntity<byte[]> displayFile(String att_filename) throws Exception{
+		ResponseEntity<byte[]> entity = null;
+		InputStream in = null;
+		
+		logger.info("[displayFile] filename : "+ att_filename);
+		
+		try{
+			String format = att_filename.substring(att_filename.lastIndexOf(".")+1);
+			
+			MediaType mType = MediaUtils.getMediaType(format);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(mType);
+			
+			in = new FileInputStream(uploadPath+"/"+att_filename);
+			
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+														headers,
+														HttpStatus.CREATED);
+		}catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		}finally{
+			in.close();
+		}
+		return entity;
+	}
+	
 	//게시판 수정하기 get
 	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.GET)
 	public String ReviewtUpdatePage(Model model, int rb_no) throws Exception{
@@ -118,9 +158,7 @@ public class ReviewBoardController {
 		logger.info("reviewDeletePage Get ......");
 		logger.info("rb_no......"+rb_no);
 		service.deleteReview(rb_no);
-		
 		return "redirect:/board/reviewListPage";
-		
 	}
 	
 	
