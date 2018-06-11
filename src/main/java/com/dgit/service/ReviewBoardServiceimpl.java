@@ -42,7 +42,11 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		if(flag==true){
 			dao.updateReviewViewCnt(rb_no);
 		}
-		return dao.readReview(rb_no);
+		
+		ReviewBoardVO vo = dao.readReview(rb_no);
+		List<String> files = dao.getAttach(rb_no);
+		vo.setFiles(files.toArray(new String[files.size()]));
+		return vo;
 	}
 
 	@Override
