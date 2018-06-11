@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dgit.domain.Criteria;
 import com.dgit.domain.PageMaker;
 import com.dgit.domain.ReviewBoardVO;
 import com.dgit.domain.SearchCriteria;
@@ -92,7 +93,7 @@ public class ReviewBoardController {
 	
 	//게시판 상세보기
 	@RequestMapping(value="/reviewReadPage", method=RequestMethod.GET)
-	public void ReviewReadPageGet(Model model, int rb_no, boolean flag) throws Exception{
+	public void ReviewReadPageGet(Model model, int rb_no, boolean flag, @ModelAttribute("cri")SearchCriteria cri) throws Exception{
 		logger.info("reviewReadPage Get ......");
 		ReviewBoardVO reviewBoard = service.readReview(rb_no, flag);
 		model.addAttribute("reviewBoard",reviewBoard);
@@ -132,7 +133,7 @@ public class ReviewBoardController {
 	
 	//게시판 수정하기 get
 	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.GET)
-	public String ReviewtUpdatePage(Model model, int rb_no) throws Exception{
+	public String ReviewtUpdatePage(Model model, int rb_no, @ModelAttribute("cri")SearchCriteria cri) throws Exception{
 		logger.info("reviewUpdatePage Get ......");
 		ReviewBoardVO reviewBoard = service.readReview(rb_no, false);
 		model.addAttribute("reviewBoard",reviewBoard);
