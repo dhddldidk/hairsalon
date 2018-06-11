@@ -77,4 +77,10 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 		return session.selectOne(namespace+".totalSearchCount",cri);
 	}
 
+	@Override
+	public void updateReviewViewCnt(int rb_no) throws Exception {
+		session.update(namespace+".updateReviewViewCnt", rb_no);
+		
+	}
+
 }

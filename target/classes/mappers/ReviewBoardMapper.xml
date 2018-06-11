@@ -67,4 +67,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(rb_no) from review
 			<include refid="search"></include>
 	</select>
+	
+	<!-- ViewCnt 조회수 증가시키기 -->
+	<update id="updateReviewViewCnt">
+		update review set rb_viewcnt = rb_viewcnt+1 where rb_no = #{rb_no}
+	</update>
 </mapper>

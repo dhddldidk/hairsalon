@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dgit.domain.Criteria;
 import com.dgit.domain.ReservationVO;
 
 @Repository
@@ -36,7 +37,7 @@ public class ReservationDAOImpl implements ReservationDAO {
 	@Override
 	public List<ReservationVO> myPageReservation(String u_id) throws Exception {
 		
-		return session.selectList(namespace+".myPageReservation", u_id);
+		return session.selectList(namespace+".myPageReservation",u_id);
 	}
 
 	@Override

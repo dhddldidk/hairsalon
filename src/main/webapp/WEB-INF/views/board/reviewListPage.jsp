@@ -105,10 +105,10 @@
 		
 		<tr>
 			<td>${list.rb_no }</td>
-			<td><a href="reviewReadPage?rb_no=${list.rb_no }">${list.rb_title }</a></td>
+			<td><a href="reviewReadPage?rb_no=${list.rb_no }&page=${pageMaker.cri.page}&searchType=${cri.searchType}&keyword=${cri.keyword}&flag=true">${list.rb_title }</a></td>
 			<td>${list.rb_writer }</td>
 			<td><fmt:formatDate value="${list.rb_regdate }" pattern="yyyy-MM-dd"/></td>
-			<td>${list.rb_viewcnt }</td>
+			<td><span class="bedge bg-red">${list.rb_viewcnt }</span></td>
 		</tr>
 	</c:forEach>
 	
@@ -123,7 +123,7 @@
   				<li ${pageMaker.cri.page == idx? 'class="active"':'' }><a href="reviewListPage?page=${idx }&searchType=${cri.searchType}&keyword=${cri.keyword}">${idx }</a></li>
   			</c:forEach>
   			<c:if test="${pageMaker.next }">
-  				<li><a href="reviewListPage=${pageMaker.endPage+1 }">&raquo;</a></li>
+  				<li><a href="reviewListPage?page=${pageMaker.endPage+1 }&searchType=${cri.searchType}&keyword=${cri.keyword}">&raquo;</a></li>
   			</c:if>
   		</ul>
   	</div>

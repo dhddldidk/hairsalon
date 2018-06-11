@@ -42,7 +42,7 @@
 <body>
 	<div id="reviewRegister">
   <h1>후기 등록</h1>
-  	<form class="form-horizontal" method="post" action="reviewRegisterPage">
+  	<form class="form-horizontal" method="post" action="reviewRegisterPage" enctype="multiport/form-data">
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="rb_title">제목</label>
 			<div class="col-sm-10"> 
@@ -52,16 +52,19 @@
 		<div class="form-group" >
 			<label for="rb_context" class="control-label col-sm-2" class="idAlign">내용</label>
 			<div class="col-sm-10">  
-			<textarea class="form-control reg" name="rb_context" row="20">
-			</textarea>
-			
-			
+			<textarea class="form-control reg" name="rb_context" row="20"></textarea>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="rb_writer" class="control-label col-sm-2">작성자</label>
 			<div class="col-sm-10">  
 			<input type="text" name="rb_writer" id="rb_writer" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="imageFiles" class="control-label col-sm-2">첨부파일</label>
+			<div class="col-sm-10">  
+			<input type="file" name="imageFiles" multiple="multiple" id="file" class="form-control">
 			</div>
 		</div>
 		<div class="form-group">

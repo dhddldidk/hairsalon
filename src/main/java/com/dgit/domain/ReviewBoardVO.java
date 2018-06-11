@@ -1,5 +1,6 @@
 package com.dgit.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class ReviewBoardVO {
@@ -11,6 +12,7 @@ public class ReviewBoardVO {
 	private Date rb_regdate;
 	private int rb_viewcnt;
 	private int rb_replycnt;
+	private String[] files;// 파일첨부
 
 	public int getRb_no() {
 		return rb_no;
@@ -68,14 +70,19 @@ public class ReviewBoardVO {
 		this.rb_replycnt = rb_replycnt;
 	}
 
+	public String[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
+
 	@Override
 	public String toString() {
 		return "ReviewBoardVO [rb_no=" + rb_no + ", rb_title=" + rb_title + ", rb_context=" + rb_context
 				+ ", rb_writer=" + rb_writer + ", rb_regdate=" + rb_regdate + ", rb_viewcnt=" + rb_viewcnt
-				+ ", rb_replycnt=" + rb_replycnt + "]";
+				+ ", rb_replycnt=" + rb_replycnt + ", files=" + Arrays.toString(files) + "]";
 	}
 
-
-
-	
 }
