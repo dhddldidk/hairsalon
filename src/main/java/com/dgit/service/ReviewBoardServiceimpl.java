@@ -49,15 +49,37 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		return vo;
 	}
 
+	@Transactional
 	@Override
 	public void deleteReview(int rb_no) throws Exception {
-		dao.deleteReview(rb_no);
 		
+		dao.deleteAttach(rb_no, null);
+		dao.deleteReview(rb_no);
 	}
 
+	@Transactional
 	@Override
-	public void updateReview(ReviewBoardVO vo) throws Exception {
+	public void updateReview(ReviewBoardVO vo, String[] oldFiles) throws Exception {
 		dao.updateReview(vo);
+		
+		//첨부파일 수정할 때 선택된 파일 지우기
+		int rb_no = vo.getRb_no();
+		if(oldFiles!=null){
+			for(String deletedFile : oldFiles){
+				dao.deleteAttach(rb_no, deletedFile);
+			}
+		}
+		
+		//첨부파일 새로 선택한거 업로드
+		String[] files = vo.getFiles();
+		
+		if(files==null){
+			return;
+		}
+		
+		for(String att_filename : files){
+			dao.replaceAttach(att_filename, rb_no);
+		}
 		
 	}
 
