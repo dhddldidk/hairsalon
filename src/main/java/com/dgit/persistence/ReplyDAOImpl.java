@@ -47,4 +47,10 @@ public class ReplyDAOImpl implements ReplyDAO {
 		
 	}
 
+	@Override
+	public void updateReply(ReplyVO vo) throws Exception {
+		session.update(namespace+".updateReply", vo);
+		
+	}
+
 }
