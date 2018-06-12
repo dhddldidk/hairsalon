@@ -49,8 +49,7 @@ public class ReplyController {
 	
 	@RequestMapping(value="/{rb_noVal}", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> list(@PathVariable("rb_noVal") int rb_noVal,
-								Criteria cri
-								){//cri안에 page 변수에 담음
+								Criteria cri){//cri안에 page 변수에 담음
 		ResponseEntity<Map<String, Object>> entity = null;
 		
 		logger.info("rb_noVal : "+rb_noVal);
@@ -73,5 +72,20 @@ public class ReplyController {
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
+	}
+	
+	@RequestMapping(value="/{reply_no}", method=RequestMethod.DELETE)
+	public ResponseEntity<String> deleteReply(@PathVariable("reply_no") int reply_no){
+			ResponseEntity<String> entity = null;
+			logger.info("[delete] reply_no : "+ reply_no);
+			
+			try{
+				service.deleteReply(reply_no);
+				entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			}catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			}
+			return entity;
 	}
 }
