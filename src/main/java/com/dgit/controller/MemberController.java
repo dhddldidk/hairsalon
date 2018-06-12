@@ -101,7 +101,7 @@ public class MemberController {
 		
 		PageMaker pageMager = new PageMaker();
 		pageMager.setCri(cri);
-		pageMager.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id(), cri));
+		pageMager.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id()));
 		model.addAttribute("pageMaker", pageMager);
 	}
 	
