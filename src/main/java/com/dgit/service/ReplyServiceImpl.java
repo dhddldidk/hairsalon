@@ -40,6 +40,12 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		return replyDao.replyTotalCount(rb_no);
 	}
+
+	@Override
+	public void deleteReply(int reply_no) throws Exception {
+		replyDao.deleteReply(reply_no);
+		
+	}
 	
 	
 }
