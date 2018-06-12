@@ -30,6 +30,10 @@ public interface ReviewBoardDAO {
 	//조회수 증가
 	public void updateReviewViewCnt(int rb_no) throws Exception;
 	
+	
+	//후기게시판 댓글 개수
+	public void updateReplyCnt(int rb_no, int amount) throws Exception;
+	
 	//파일 업로드
 	public void addAttach(String att_filename) throws Exception;
 	public List<String> getAttach(int rb_no) throws Exception;
