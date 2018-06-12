@@ -41,4 +41,10 @@ public class ReplyDAOImpl implements ReplyDAO {
 		return session.selectOne(namespace+".replyTotalCount", rb_no);
 	}
 
+	@Override
+	public void deleteReply(int reply_no) throws Exception {
+		session.delete(namespace+".deleteReply", reply_no);
+		
+	}
+
 }
