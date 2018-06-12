@@ -142,23 +142,67 @@ public class ReviewBoardController {
 	
 	//게시판 수정 post
 	@RequestMapping(value="/reviewUpdatePage", method=RequestMethod.POST)
-	public String ReviewUpdatePagePost(ReviewBoardVO vo, Model model) throws Exception{
+	public String ReviewUpdatePagePost(ReviewBoardVO vo, Model model,
+										SearchCriteria cri, String[] oldFiles,
+										List<MultipartFile> newFiles) throws Exception{
 		logger.info("ReviewUpdatePagePost Post ......");
 			
 		logger.info(vo.toString());
-		service.updateReview(vo);	
+		
+		if(oldFiles!=null){
+			//이미 업로드된 파일을 삭제했을 때
+			for(String file: oldFiles){
+				logger.info("지우려고 선택한 파일 filename : "+file);
+				//업로드 폴더 c:안에 사진 지우기
+				UploadFileUtils.deleteFile(uploadPath, file);
+			}
+		}
+		
+		
+		//새롭게 선택한 파일 올리기
+		if(!newFiles.get(0).getOriginalFilename().equals("")){
+			ArrayList<String> list = new ArrayList<>();
+			for(MultipartFile file : newFiles){
+				logger.info("새로 선택한 파일 newFilename : "+file.getOriginalFilename());
+				
+				//c:저장하기
+				String thumb = UploadFileUtils.uploadFile(uploadPath, 
+												file.getOriginalFilename(), 
+												file.getBytes());
+				//리스트 객체
+				list.add(thumb);
+			}
+			//스트링 배열
+			vo.setFiles(list.toArray(new String[list.size()]));
+		}
+		service.updateReview(vo, oldFiles);	
 	
 		//model.addAttribute("rb_no", vo.getRb_no());
+		model.addAttribute("page", cri.getPage());
+		model.addAttribute("searchType", cri.getSearchType());
+		model.addAttribute("keyword", cri.getKeyword());
 		model.addAttribute("flag", false);
 		return "redirect:/board/reviewListPage";
 	}
 	
 	//게시판 삭제하기
 	@RequestMapping(value="/reviewDeletePage", method=RequestMethod.GET)
-	public String ReviewDeletePageGet(int rb_no) throws Exception{
+	public String ReviewDeletePageGet(int rb_no, SearchCriteria cri, Model model, String[] files) throws Exception{
 		logger.info("reviewDeletePage Get ......");
 		logger.info("rb_no......"+rb_no);
+		
+		if(files != null){
+			for(String file : files){
+				logger.info("file : "+file);
+				UploadFileUtils.deleteFile(uploadPath, file);
+			}
+		}
+		
 		service.deleteReview(rb_no);
+		model.addAttribute("page", cri.getPage());
+		model.addAttribute("searchType", cri.getSearchType());
+		model.addAttribute("keyword", cri.getKeyword());
+		
 		return "redirect:/board/reviewListPage";
 	}
 	
