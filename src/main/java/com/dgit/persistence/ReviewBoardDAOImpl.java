@@ -113,4 +113,12 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 		session.insert(namespace+".replaceAttach", map);
 	}
 
+	@Override
+	public void updateReplyCnt(int rb_no, int amount) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("rb_no", rb_no);
+		map.put("amount", amount);
+		session.update(namespace+".updateReplyCnt", map);
+	}
+
 }
