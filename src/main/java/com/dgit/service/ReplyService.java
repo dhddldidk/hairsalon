@@ -14,4 +14,6 @@ public interface ReplyService {
 	public void insertReply(ReplyVO vo) throws Exception;
 	
 	public void deleteReply(int reply_no) throws Exception;
+	
+	public void updateReply(ReplyVO vo) throws Exception;
 }
