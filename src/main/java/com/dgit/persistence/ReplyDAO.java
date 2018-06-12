@@ -17,4 +17,6 @@ public interface ReplyDAO {
 	
 	public void deleteReply(int reply_no) throws Exception;
 	
+	public void updateReply(ReplyVO vo) throws Exception;
+	
 }
