@@ -46,6 +46,12 @@ public class ReplyServiceImpl implements ReplyService {
 		replyDao.deleteReply(reply_no);
 		
 	}
+
+	@Override
+	public void updateReply(ReplyVO vo) throws Exception {
+		replyDao.updateReply(vo);
+		
+	}
 	
 	
 }
