@@ -44,7 +44,7 @@
 		order by r.res_start desc limit #{pageStart}, #{perPageNum}
 	</select>
 	<select id="myPageTotalCount" resultType="int">
-		select count(res_no) from reservation where u_id=#{u_id}
+		select count(*) from reservation where u_id=#{u_id}
 	</select>
 	
 	<!-- mypage 예약취소 -->

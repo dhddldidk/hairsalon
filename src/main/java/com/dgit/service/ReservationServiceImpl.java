@@ -47,9 +47,9 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public int myPageTotalCount(String u_id, Criteria cri) throws Exception {
+	public int myPageTotalCount(String u_id) throws Exception {
 		
-		return dao.myPageTotalCount(u_id, cri);
+		return dao.myPageTotalCount(u_id);
 	}
 
 	

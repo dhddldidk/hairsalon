@@ -60,12 +60,9 @@ public class ReservationDAOImpl implements ReservationDAO {
 	}
 
 	@Override
-	public int myPageTotalCount(String u_id, Criteria cri) throws Exception {
-		Map<String, Object> map = new HashMap<>();
-		map.put("u_id", u_id);
-		map.put("pageStart", cri.getPageStart());
-		map.put("perPageNum", cri.getPerPageNum());
-		return session.selectOne(namespace+".myPageTotalCount", map);
+	public int myPageTotalCount(String u_id) throws Exception {
+		
+		return session.selectOne(namespace+".myPageTotalCount", u_id);
 	}
 
 }

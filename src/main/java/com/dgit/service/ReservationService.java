@@ -16,7 +16,7 @@ public interface ReservationService {
 	
 	//마이페이지 페이징
 	public List<ReservationVO> myPageListCriteria(String u_id, Criteria cri) throws Exception;
-	public int myPageTotalCount(String u_id, Criteria cri) throws Exception;
+	public int myPageTotalCount(String u_id) throws Exception;
 	
 	public void myPageDeleteReg(String u_id, int res_no) throws Exception;
 }
