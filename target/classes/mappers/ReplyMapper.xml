@@ -17,4 +17,7 @@
 	<delete id="deleteReply">
 		delete from reply where reply_no = #{reply_no}
 	</delete>
+	<update id="updateReply">
+		update reply set reply_content = #{reply_content}, reply_update = now() where reply_no=#{reply_no}
+	</update>
 </mapper>
