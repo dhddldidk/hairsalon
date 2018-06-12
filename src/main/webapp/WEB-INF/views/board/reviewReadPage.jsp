@@ -126,7 +126,15 @@
 				$("#f1").attr("action", "reviewUpdatePage");
 				$("#f1").submit();
 			})
+			
+			//댓글이 달린 게시물은 삭제할 수 없도록 처리
 			$("#deleteBtn").click(function(){
+				
+				var replyCnt = $("#replyCnt").html();
+				if(replyCnt>0){
+					alert("댓글이 달린 게시물은 삭제할 수 없습니다.");
+					return;
+				}
 				
 				var flag=confirm("해당 게시글을 삭제하겠습니까?");
 				
@@ -281,7 +289,11 @@
   		e.preventDefault();
   		
   		pageNumber = $(this).text();
-  		$.ajax({
+  		
+  		//getListPage(ajax를 실행시켜야 함 ) - > 버튼이 클릭되도록 함getListPage
+		$("#repliesDiv").trigger("click"); // = $("#repliesDiv").click();
+		
+  		/* $.ajax({
   			url:"${pageContext.request.contextPath}/replies/"+rb_noVal+"?page="+pageNumber,
   			type:"get",
   			dataType:"json",
@@ -292,7 +304,7 @@
   				
   				displayPaging(result.pageMaker);
   			}
-  		})
+  		}) */
   	})
   	
   	function displayList(data){
@@ -316,6 +328,37 @@
 		}
 		$(".pagination").html(str);
 	}
+	
+	//댓글 삭제
+	$(document).on("click", ".timeline-footer a:last-child", function(e){
+		var reply_no = $(this).parents(".replyLi").attr("data-rno");
+		var replyCnt = Number($("#replyCnt").html())-1;
+		
+		$.ajax({
+			type:"delete",
+			url:"${pageContext.request.contextPath}/replies/"+reply_no,
+			dataType:"text",
+			success:function(result){
+				console.log(result);
+				if(result == "success"){
+					alert("댓글이 삭제되었습니다.");
+					$("#replyCnt").html(replyCnt);
+				}
+				$("#repliesDiv").trigger("click");
+			}
+		})
+		
+	})
+	
+	//댓글 수정1. Modal에 값 넣기
+	$(document).on("click", ".timeline-footer a:first-child", function(e){
+		var replyNo = $(this).parents(".replyLi").attr("data-rno");
+		var replyContext = $(this).parents(".replyLi").find(".timeline-body").html();
+		
+		$("#reply_no").val(replyNo);
+		$("#reply_content").val(replyContext);
+	})
+	
   </script>
 </body>
 </html>
