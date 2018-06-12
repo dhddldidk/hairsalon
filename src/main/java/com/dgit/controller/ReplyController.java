@@ -88,4 +88,22 @@ public class ReplyController {
 			}
 			return entity;
 	}
+	
+	@RequestMapping(value="/{reply_no}", method={RequestMethod.PUT, RequestMethod.PATCH})
+	public ResponseEntity<String> updateReply(@PathVariable("reply_no") int reply_no,
+											@RequestBody ReplyVO vo){
+		ResponseEntity<String> entity = null;
+		logger.info("reply_no : "+reply_no);
+		logger.info(vo.toString());
+		
+		try{
+			vo.setReply_no(reply_no);
+			service.updateReply(vo);
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
 }
