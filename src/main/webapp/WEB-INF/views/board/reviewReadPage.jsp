@@ -45,10 +45,10 @@
 		letter-spacing: 4px;
 		color:#493D26;
 	}
-	input, textarea{
+	#replyContainer input{
 		width:800px !important;
 	}
-	textarea{
+	#replyContainer textarea{
 		width:800px !important;
 		height: 200px !important;
 	}
@@ -64,8 +64,27 @@
 		width:100px;
 	}
 	.replyLi{
-		border:1px solid orange;
+		border:2px dotted #D5D5D5; 
+		margin-bottom:10px;
+		padding:5px;
+		padding-left:10px;
 	}
+	
+	li{
+		list-style: none;
+	}
+	#pagingList{
+		text-align: center;
+	}
+	.timeline li{
+		/* margin:5px; */
+	}
+	
+	.timeline h5{
+		border-bottom: 1px solid #D5D5D5; 
+		
+	}
+	
 </style>
 </head>
 <script src="${pageContext.request.contextPath }/resources/handlebars-v4.0.10.js"></script>
@@ -168,16 +187,13 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10"> 
-			<button class="btn btn-primary" id="replyAddBtn">등록</button>
+			<button class="btn btn-primary" id="replyAddBtn">등록하기</button>
+			<button class="btn btn-warning" id="repliesDiv">댓글 리스트 보기 [<span id="replyCnt">${reviewBoard.rb_replycnt }</span>]</button>
 			</div>
 		</div>
 		<ul class="timeline">
-				<li class="time-label" id="repliesDiv">
-				<div class="col-sm-offset-2 col-sm-10"> 
-					<button type="button" class="btn btn-success">댓글 리스트 보기 [<span id="replyCnt">${reviewBoard.rb_replycnt }</span>]</button>
-				</div>
-				</li>
-			</ul>
+				
+			</ul> 
 			
 		</form>
 		<div id="pagingList">
@@ -190,25 +206,30 @@
   </div>
   
  <script id="template" type="text/x-handlebars-template">
+
 {{#each.}}
 <li class="replyLi" data-rno={{reply_no}}>
 	<i class="fa fa-comments bg-blue"></i>
 	<div class="timeline-item">
-		<span class="time">
-			<i class="fa fa-clock-o"></i>{{prettifyDate reply_date}}
-		</span>
-			<h4 class="timeline-header"><strong>{{reply_no}}</strong> -{{reply_writer}}</h4>
-			<div class="timeline-body">{{reply_content}}
-		</div>
+		
+			<span class="time" id="replyTime">
+				<i class="fa fa-clock-o"></i>{{prettifyDate reply_date}}
+			</span>
+		
+		
+			<h5 class="timeline-header"><strong>{{reply_no}}</strong> 작성자[{{reply_writer}}]</h5>
+		
+			<h4 class="timeline-body">{{reply_content}}</h4>
 			{{#if reply_writer}}
 		<div class="timeline-footer">
-			<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyModal">Modify</a>
-			<a class="btn btn-danger">Delete</a>
+			<a class="btn btn-success" data-toggle="modal" data-target="#modifyModal">수정하기</a>
+			<a class="btn btn-danger">삭제하기</a>
 		</div>
 			{{/if}}
 	</div>
 </li>
 {{/each}}
+
 </script>
   
   <script type="text/javascript">
@@ -315,12 +336,19 @@
 	
 	function displayPaging(pageMaker){
 		var str = "";
+		var index = "";
+		
 		if(pageMaker.prev){
 			str += "<li><a href='#'> << </a></li>";
 		}
 		
 		for(var i = pageMaker.startPage; i<=pageMaker.endPage; i++){
-			str += "<li><a href='#'> "+i+" </a></li>";
+			if(pageNumber==i){
+				str += "<li class='active'><a href='#'> "+i+" </a></li>";
+			}else{
+				str += "<li><a href='#'> "+i+" </a></li>";
+			}
+			
 		}
 		
 		if(pageMaker.next){
@@ -351,15 +379,70 @@
 	})
 	
 	//댓글 수정1. Modal에 값 넣기
-	$(document).on("click", ".timeline-footer a:first-child", function(e){
+	$(document).on("click", ".timeline-footer a:first-child", function(){
 		var replyNo = $(this).parents(".replyLi").attr("data-rno");
-		var replyContext = $(this).parents(".replyLi").find(".timeline-body").html();
+		var replyContent = $(this).parents(".replyLi").find(".timeline-body").html();
 		
-		$("#reply_no").val(replyNo);
-		$("#reply_content").val(replyContext);
+		$("#replyNumber").val(replyNo);
+		$("#getReplyContent").val(replyContent);         
 	})
 	
+	//댓글 수정2. Modal에 댓글 수정하기
+	$(document).on("click", ".updateComplete", function(){
+		var reply_no=$("#replyNumber").val();
+		var replyContentVal = $("#getReplyContent").val();
+		var sendData = {reply_content:replyContentVal};
+		
+		$.ajax({
+			type:"put",
+			url:"${pageContext.request.contextPath}/replies/"+reply_no,
+			data:JSON.stringify(sendData),
+			dataType:"text",
+			headers:{"Content-Type":"application/json"},
+			success:function(result){
+				console.log(result);
+				if(result=="success"){
+					alert("수정되었습니다.");
+				}
+				$("#repliesDiv").trigger("click");
+			}
+		})
+	})
   </script>
+  
+  <!-- Modal 댓글 수정누르면 수정하는 Modal 뜨도록 -->
+  <div class="modal fade" id="modifyModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        	<!-- data-dismiss="modal" 닫게 해줌 -->
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">수정하기</h4>
+        </div>
+        <div class="modal-body">
+          
+			<div class="form-group">
+				<label for="reply_no">번호</label>
+				<input type="text" class="form-control" id="replyNumber" readonly="readonly">
+			</div>
+			<div class="form-group">
+				<label for="reply_content">댓글내용</label>
+				<input type="text" class="form-control" id="getReplyContent">
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary updateComplete" data-dismiss="modal">수정하기</button>
+			</div>
+		
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </body>
 </html>
 <%@ include file="../common/footer.jsp" %>
