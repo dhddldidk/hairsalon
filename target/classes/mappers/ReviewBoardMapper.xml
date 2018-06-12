@@ -82,4 +82,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getAttach" resultType="String">
 		select att_filename from review_attach where rb_no = #{rb_no} order by att_regdate	
 	</select>
+	<!-- 파일 삭제 -->
+	<sql id="filename">
+		<if test="att_filename!=null">
+			and att_filename=#{att_filename}
+		</if>
+	</sql>
+	<delete id="deleteAttach">
+		delete from review_attach where rb_no=#{rb_no}
+		<include refid="filename"></include>
+	</delete>
+	<insert id="replaceAttach">
+		insert into review_attach(att_filename, rb_no) values (#{att_filename}, #{rb_no})
+	</insert>
 </mapper>
