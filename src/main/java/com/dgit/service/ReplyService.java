@@ -12,4 +12,6 @@ public interface ReplyService {
 	public int replyTotalCount(int rb_no) throws Exception;
 	
 	public void insertReply(ReplyVO vo) throws Exception;
+	
+	public void deleteReply(int reply_no) throws Exception;
 }
