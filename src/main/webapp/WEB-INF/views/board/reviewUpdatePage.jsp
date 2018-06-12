@@ -43,6 +43,9 @@
 		text-align: center;
 		display: inline-block;
 	}
+	.wrap img{
+		width:100px;
+	}
 	.wrap button{
 		position: absolute;
 		top:0px;
@@ -65,10 +68,18 @@
 <body>
 		<div id="reviewUpdatePage">
   <h1>후기 수정</h1>
-  		<form class="form-horizontal" method="post" action="reviewUpdatePage">
+  		<form class="form-horizontal" method="post" action="reviewUpdatePage" enctype="multipart/form-data">
   			<input type="hidden" name="rb_no" value="${reviewBoard.rb_no }">
-  		
-  		
+  			<input type="hidden" name="page" value="${cri.page }">
+  			<input type="hidden" name="searchType" value="${cri.searchType }">
+  			<input type="hidden" name="keyword" value="${cri.keyword }">
+  			<div id="delFile">
+  				<!-- 
+					수정하기 위해 먼저 선택된 파일들을 지우기 위해 
+					엑스 버튼이 클릭 될 때마다 그 파일의 주소를 input 태그에
+					같은 name을 줘서 쌓아서 controller에 넘김
+					<input type="hidden" name="oldFiles" id="delFile"> -->
+  			</div>
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="rb_title">제목</label>
 			<div class="col-sm-10"> 
@@ -89,6 +100,13 @@
 		</div>
 		
 		
+		
+		<div class="form-group">
+			<label for="newFiles" class="control-label col-sm-2">첨부파일</label>
+			<div class="col-sm-10">  
+			<input type="file" name="newFiles" class="form-control" multiple="multiple" id="file">
+			</div>
+		</div>
 		<div class="form-group" id="previewBox11">	
 			<c:forEach var="file" items="${reviewBoard.files }">
 				<div class="wrap">
@@ -96,12 +114,6 @@
 					<button data-file="${file }">X</button>
 				</div>
 			</c:forEach>
-		</div>
-		<div class="form-group">
-			<label for="newFiles" class="control-label col-sm-2">첨부파일</label>
-			<div class="col-sm-10">  
-			<input type="file" name="newFiles" class="form-control" multiple="multiple" id="file">
-			</div>
 		</div>
 		<div class="form-group"  id="previewBox">
 							
