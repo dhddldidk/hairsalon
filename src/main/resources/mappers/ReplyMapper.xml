@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.mapper.ReplyMapper">
+	<select id="listReply" resultType="ReplyVO">
+		select * from reply where rb_no=#{rb_no} order by reply_no desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	<select id="replyTotalCount" resultType="int">
+		select count(*) from reply where rb_no=#{rb_no}
+	</select>
+	<insert id="insertReply">
+		insert into reply (rb_no, reply_content, reply_writer)
+		values (#{rb_no},#{reply_content},#{reply_writer})
+	</insert>
+</mapper>
