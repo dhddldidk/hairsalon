@@ -95,4 +95,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="replaceAttach">
 		insert into review_attach(att_filename, rb_no) values (#{att_filename}, #{rb_no})
 	</insert>
+	
+	<!-- 게시판에 답글 개수 나타내기 -->
+	<update id="updateReplyCnt">
+		update review set rb_replycnt = rb_replycnt + #{amount}
+		where rb_no = #{rb_no}
+	</update>
 </mapper>
