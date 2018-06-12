@@ -119,4 +119,10 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		
 	}
 
+	@Override
+	public void updateReplyCnt(int rb_no, int amount) throws Exception {
+		dao.updateReplyCnt(rb_no, amount);
+		
+	}
+
 }
