@@ -4,4 +4,7 @@
 	<select id="selectHairStyle" resultType="HairStyleVO">
 		select * from hair_style
 	</select>
+	<select id="selectAllHairInfo">
+		select * from hair_style where hair_no=#{hair_no}
+	</select>
 </mapper>
