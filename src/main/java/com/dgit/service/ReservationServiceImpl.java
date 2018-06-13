@@ -40,6 +40,18 @@ public class ReservationServiceImpl implements ReservationService {
 		
 	}
 
+	@Override
+	public List<ReservationVO> myPageListCriteria(String u_id, Criteria cri) throws Exception {
+		
+		return dao.myPageListCriteria(u_id, cri);
+	}
+
+	@Override
+	public int myPageTotalCount(String u_id) throws Exception {
+		
+		return dao.myPageTotalCount(u_id);
+	}
+
 	
 
 }

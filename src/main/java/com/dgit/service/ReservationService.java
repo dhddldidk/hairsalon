@@ -11,7 +11,12 @@ public interface ReservationService {
 	
 	public void insertReservation(ReservationVO vo) throws Exception;
 	
+	//마이페이지
 	public List<ReservationVO> myPageReservation(String u_id) throws Exception;
+	
+	//마이페이지 페이징
+	public List<ReservationVO> myPageListCriteria(String u_id, Criteria cri) throws Exception;
+	public int myPageTotalCount(String u_id) throws Exception;
 	
 	public void myPageDeleteReg(String u_id, int res_no) throws Exception;
 }

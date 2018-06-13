@@ -16,7 +16,8 @@ public interface ReviewBoardService {
 	
 	public void deleteReview(int rb_no) throws Exception;
 	
-	public void updateReview(ReviewBoardVO vo) throws Exception;
+	//게시글 수정할 때 업로드 된 파일도 파일 이름 받아서 수정하도록
+	public void updateReview(ReviewBoardVO vo, String[] att_filename) throws Exception;
 	
 	//페이징
 	public List<ReviewBoardVO> listPage(int page) throws Exception;
@@ -29,4 +30,7 @@ public interface ReviewBoardService {
 	
 	//조회수 증가
 	public void updateReviewViewCnt(int rb_no) throws Exception;
+	
+	//후기게시판 댓글 개수
+	public void updateReplyCnt(int rb_no, int amount) throws Exception;
 }

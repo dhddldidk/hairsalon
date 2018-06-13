@@ -72,4 +72,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateReviewViewCnt">
 		update review set rb_viewcnt = rb_viewcnt+1 where rb_no = #{rb_no}
 	</update>
+	
+	<!-- 파일 업로드 file upload -->
+	<!-- LAST_INSERT_ID()를 쓰면 제일 마지막에 auto_increment된 아이를 받을 수 있음
+	board에서 글 쓸 때 bno -->
+	<insert id="addAttach">
+		insert into review_attach(att_filename, rb_no) values (#{att_filename}, LAST_INSERT_ID())
+	</insert>
+	<select id="getAttach" resultType="String">
+		select att_filename from review_attach where rb_no = #{rb_no} order by att_regdate	
+	</select>
+	<!-- 파일 삭제 -->
+	<sql id="filename">
+		<if test="att_filename!=null">
+			and att_filename=#{att_filename}
+		</if>
+	</sql>
+	<delete id="deleteAttach">
+		delete from review_attach where rb_no=#{rb_no}
+		<include refid="filename"></include>
+	</delete>
+	<insert id="replaceAttach">
+		insert into review_attach(att_filename, rb_no) values (#{att_filename}, #{rb_no})
+	</insert>
+	
+	<!-- 게시판에 답글 개수 나타내기 -->
+	<update id="updateReplyCnt">
+		update review set rb_replycnt = rb_replycnt + #{amount}
+		where rb_no = #{rb_no}
+	</update>
 </mapper>

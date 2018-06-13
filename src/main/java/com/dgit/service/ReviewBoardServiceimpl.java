@@ -17,10 +17,17 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 	@Autowired
 	private ReviewBoardDAO dao;
 	
+	@Transactional
 	@Override
 	public void insertReview(ReviewBoardVO vo) throws Exception {
 		dao.insertReview(vo);
 
+		if(vo.getFiles()==null){
+			return;
+		}
+		for(String att_filename : vo.getFiles()){
+			dao.addAttach(att_filename);
+		}
 	}
 
 	@Override
@@ -35,18 +42,44 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		if(flag==true){
 			dao.updateReviewViewCnt(rb_no);
 		}
-		return dao.readReview(rb_no);
+		
+		ReviewBoardVO vo = dao.readReview(rb_no);
+		List<String> files = dao.getAttach(rb_no);
+		vo.setFiles(files.toArray(new String[files.size()]));
+		return vo;
 	}
 
+	@Transactional
 	@Override
 	public void deleteReview(int rb_no) throws Exception {
-		dao.deleteReview(rb_no);
 		
+		dao.deleteAttach(rb_no, null);
+		dao.deleteReview(rb_no);
 	}
 
+	@Transactional
 	@Override
-	public void updateReview(ReviewBoardVO vo) throws Exception {
+	public void updateReview(ReviewBoardVO vo, String[] oldFiles) throws Exception {
 		dao.updateReview(vo);
+		
+		//첨부파일 수정할 때 선택된 파일 지우기
+		int rb_no = vo.getRb_no();
+		if(oldFiles!=null){
+			for(String deletedFile : oldFiles){
+				dao.deleteAttach(rb_no, deletedFile);
+			}
+		}
+		
+		//첨부파일 새로 선택한거 업로드
+		String[] files = vo.getFiles();
+		
+		if(files==null){
+			return;
+		}
+		
+		for(String att_filename : files){
+			dao.replaceAttach(att_filename, rb_no);
+		}
 		
 	}
 
@@ -83,6 +116,12 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 	@Override
 	public void updateReviewViewCnt(int rb_no) throws Exception {
 		dao.updateReviewViewCnt(rb_no);
+		
+	}
+
+	@Override
+	public void updateReplyCnt(int rb_no, int amount) throws Exception {
+		dao.updateReplyCnt(rb_no, amount);
 		
 	}
 

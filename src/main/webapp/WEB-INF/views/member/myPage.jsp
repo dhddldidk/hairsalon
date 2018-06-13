@@ -51,6 +51,9 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3),
 td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	padding-top: 16px !important; 
 }
+#pagingList{
+		text-align: center;
+	}
 </style>
 	<div id="myPageContainer">
 		<h1>예약 내역 관리</h1>
@@ -69,26 +72,28 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 		<c:forEach var="item" items="${myList }">
 			
 			<tr>
-				<td>${no=no+1 }</td>
+				<td>${item.res_no }</td>
 				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger" id="cancel" data-resno="${item.res_no }">예약취소</button></td>
+				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
 				<td><input type="checkbox" id="chkBox"></td>
 			</tr>
 			
 		</c:forEach>
 		</table>
+		 
 		<script type="text/javascript">
-				var res_no="";
-			$("#cancel").click(function(){
+				//var res_no="";
+			$(".cancel").click(function(){
+				
 				var clickedVal = $(this).parent().parent();
 				res_no = $(this).attr("data-resno");        
-				alert("res_no : "+$(this).attr("data-resno"));
+				//alert("res_no : "+$(this).attr("data-resno"));
 				var flag = confirm("선택된 예약을 취소 하시겠습니까?");
 				if(flag==true){
-					$("input[name='res_no']").val(res_no);
+					//$("input[name='res_no']").val(res_no);
 					$("#f1").attr("action","myPage");
 					$("#f1").submit();
 				}else{
@@ -105,14 +110,30 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 						
 						clickedVal.remove();
 						
-						for(var i=2; i<result.length+1; i++){
+						/* for(var i=2; i<result.length+1; i++){
 							$("table").find("tr:nth-child("+i+") td:first-child").html(i-1);
 							
-						}
+						} */
 					}
 				})
 			})
 		</script>
+		<!-- 페이징 -->
+		<div id="pagingList">
+  	<div>
+  		<ul class="pagination">
+  			<c:if test="${pageMaker.prev }">
+  				<li><a href="myPage?page=${pageMaker.startPage-1 }">&laquo;</a></li>
+  			</c:if>
+  			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+  				<li ${pageMaker.cri.page == idx? 'class="active"':'' }><a href="myPage?page=${idx }">${idx }</a></li>
+  			</c:forEach>
+  			<c:if test="${pageMaker.next }">
+  				<li><a href="myPage?page=${pageMaker.endPage+1 }">&raquo;</a></li>
+  			</c:if>
+  		</ul>
+  	</div>
+  </div>       
 	</div>
 	
 

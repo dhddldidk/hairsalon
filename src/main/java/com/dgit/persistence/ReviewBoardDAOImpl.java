@@ -1,6 +1,8 @@
 package com.dgit.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +83,42 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 	public void updateReviewViewCnt(int rb_no) throws Exception {
 		session.update(namespace+".updateReviewViewCnt", rb_no);
 		
+	}
+
+	@Override
+	public void addAttach(String att_filename) throws Exception {
+		session.insert(namespace+".addAttach", att_filename);
+		
+	}
+
+	@Override
+	public List<String> getAttach(int rb_no) throws Exception {
+		
+		return session.selectList(namespace+".getAttach", rb_no);
+	}
+
+	@Override
+	public void deleteAttach(int rb_no, String att_filename) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("rb_no", rb_no);
+		map.put("att_filename", att_filename);
+		session.delete(namespace+".deleteAttach", map);
+	}
+
+	@Override
+	public void replaceAttach(String att_filename, int rb_no) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("rb_no", rb_no);
+		map.put("att_filename", att_filename);
+		session.insert(namespace+".replaceAttach", map);
+	}
+
+	@Override
+	public void updateReplyCnt(int rb_no, int amount) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("rb_no", rb_no);
+		map.put("amount", amount);
+		session.update(namespace+".updateReplyCnt", map);
 	}
 
 }

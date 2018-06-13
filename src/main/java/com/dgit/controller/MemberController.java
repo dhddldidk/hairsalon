@@ -13,12 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dgit.domain.Criteria;
 import com.dgit.domain.LoginDTO;
 import com.dgit.domain.MemberVO;
+import com.dgit.domain.PageMaker;
 import com.dgit.domain.ReservationVO;
 import com.dgit.service.MemberService;
 import com.dgit.service.ReservationService;
@@ -83,18 +86,23 @@ public class MemberController {
 	
 	//마이페이지에서 예약내역 관리
 	@RequestMapping(value="/myPage", method=RequestMethod.GET)
-	public void myPageGet(Model model, HttpServletRequest request) throws Exception{
+	public void myPageGet(Model model, HttpServletRequest request,@ModelAttribute("cri")Criteria cri) throws Exception{
 		logger.info("myPage Get ......");
 		
 		HttpSession session = request.getSession();
 		LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");
 		
-		List<ReservationVO> list = resService.myPageReservation(loginDTO.getU_id());
+		List<ReservationVO> list = resService.myPageListCriteria(loginDTO.getU_id(), cri);
 		for(ReservationVO vo : list){
 			logger.info("마이페이지 : "+vo.toString());
 		}
 		
 		model.addAttribute("myList", list);
+		
+		PageMaker pageMager = new PageMaker();
+		pageMager.setCri(cri);
+		pageMager.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id()));
+		model.addAttribute("pageMaker", pageMager);
 	}
 	
 	//예약 취소

@@ -105,10 +105,10 @@
 		
 		<tr>
 			<td>${list.rb_no }</td>
-			<td><a href="reviewReadPage?rb_no=${list.rb_no }&page=${pageMaker.cri.page}&searchType=${cri.searchType}&keyword=${cri.keyword}&flag=true">${list.rb_title }</a></td>
+			<td><a href="reviewReadPage?rb_no=${list.rb_no }&page=${pageMaker.cri.page}&searchType=${cri.searchType}&keyword=${cri.keyword}&flag=true">${list.rb_title } [${list.rb_replycnt }]</a></td>
 			<td>${list.rb_writer }</td>
 			<td><fmt:formatDate value="${list.rb_regdate }" pattern="yyyy-MM-dd"/></td>
-			<td><span class="bedge bg-red">${list.rb_viewcnt }</span></td>
+			<td><span class="badge bg-red">${list.rb_viewcnt }</span></td>
 		</tr>
 	</c:forEach>
 	
