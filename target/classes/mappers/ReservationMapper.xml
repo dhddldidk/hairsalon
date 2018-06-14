@@ -47,6 +47,20 @@
 		select count(*) from reservation where u_id=#{u_id} and res_start>now()
 	</select>
 	
+	<!-- mypage 지난 예약내역 페이징  -->
+	<select id="beforeMyPageListCriteria" resultMap="resHairStyleAndMember">
+		select r.res_start, r.res_end, r.hair_no, r.u_id, r.res_no, h.hair_type, h.hair_price 
+		from reservation r 
+		left join hair_style h on r.hair_no=h.hair_no
+		where u_id=#{u_id} and r.res_start <!-- < --> now()
+		order by r.res_start desc limit #{pageStart}, #{perPageNum}              
+	</select>
+	<select id="beforeMyPageTotalCount" resultType="int">
+		select count(*) from reservation where u_id=#{u_id} and res_start <!-- < --> now()
+	</select>
+	
+	
+	
 	<!-- mypage 예약취소 -->
 	<delete id="myPageDeleteReg">
 		delete from reservation
