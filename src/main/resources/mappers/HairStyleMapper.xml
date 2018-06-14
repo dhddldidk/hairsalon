@@ -21,4 +21,36 @@
 	<insert id="addHairAttach">
 		insert into hair_attach(hair_filename, hair_no) values (#{hair_filename}, LAST_INSERT_ID())
 	</insert>
+	
+	<!-- 헤어스타일 read -->
+	<select id="readHairStyle" resultType="HairStyleVO">
+		select * from hair_style where hair_no = #{hair_no}
+	</select>
+	<select id="getHairAttach" resultType="String">
+		select hair_filename from hair_attach where hair_no=#{hair_no} order by hair_regdate
+	</select>
+	
+	<!-- 헤어스타일 삭제 -->
+	<delete id="deleteHairStyle">
+		delete from hair_style where hair_no=#{hair_no}
+	</delete>
+	<sql id="filename">
+		<if test="hair_filename!=null">
+			and hair_filename=#{hair_filename}
+		</if>
+	</sql>
+	<delete id="deleteHairAttach">
+		delete from hair_attach where hair_no=#{hair_no}
+		<include refid="filename"></include>
+	</delete>
+	
+	<!-- 헤어스타일 update -->
+	<update id="updateHairStyle">
+		update hair_style 
+		set hair_type=#{hair_type}, hair_time=#{hair_time}, hair_price=#{hair_price}
+		where hair_no=#{hair_no}
+	</update>
+	<insert id="replaceHairAttach">
+		insert into hair_attach(hair_filename, hair_no) values (#{hair_filename},#{hair_no})
+	</insert>
 </mapper>
