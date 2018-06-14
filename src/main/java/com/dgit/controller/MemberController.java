@@ -93,8 +93,9 @@ public class MemberController {
 		LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");
 		
 		List<ReservationVO> list = resService.myPageListCriteria(loginDTO.getU_id(), cri);
+		
 		for(ReservationVO vo : list){
-			logger.info("마이페이지 : "+vo.toString());
+			logger.info("예약리스트 : "+vo.toString());
 		}
 		
 		model.addAttribute("myList", list);
@@ -102,8 +103,32 @@ public class MemberController {
 		PageMaker pageMager = new PageMaker();
 		pageMager.setCri(cri);
 		pageMager.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id()));
-		model.addAttribute("pageMaker", pageMager);
+		model.addAttribute("pageMager", pageMager);
+		
+		//마이페이지에서 이전 예약내역 관리
+		List<ReservationVO> joinList = resService.beforeMyPageListCriteria(loginDTO.getU_id(), cri);
+		for(ReservationVO vo : joinList){
+			logger.info("이전예약 : "+vo.toString());
+		}
+		
+		model.addAttribute("joinList", joinList);
+		
+		PageMaker joinPageMager = new PageMaker();
+		joinPageMager.setCri(cri);
+		joinPageMager.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
+		model.addAttribute("joinPageMager", joinPageMager);
 	}
+	
+	/*//마이페이지에서 이전 예약내역 관리
+		@RequestMapping(value="/beforeMyPage", method=RequestMethod.GET)
+		public void beforeMyPageGet(Model model, HttpServletRequest request,@ModelAttribute("cri")Criteria cri) throws Exception{
+			logger.info("myPage Get ......");
+			
+			HttpSession session = request.getSession();
+			LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");
+			
+			
+		}*/
 	
 	//예약 취소
 	@ResponseBody
