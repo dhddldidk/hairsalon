@@ -1,12 +1,16 @@
 package com.dgit.domain;
 
+import java.util.Arrays;
+
 public class HairStyleVO {
 
 	private int hair_no;
 	private String hair_type;
 	private int hair_time;
 	private int hair_price;
-
+	private String[] hFiles;
+	private String hair_filename;
+	
 	public HairStyleVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -49,10 +53,30 @@ public class HairStyleVO {
 		this.hair_price = hair_price;
 	}
 
+	public String[] gethFiles() {
+		return hFiles;
+	}
+
+	public void sethFiles(String[] hFiles) {
+		this.hFiles = hFiles;
+	}
+
+	
+	public String getHair_filename() {
+		return hair_filename;
+	}
+
+	public void setHair_filename(String hair_filename) {
+		this.hair_filename = hair_filename;
+	}
+
 	@Override
 	public String toString() {
 		return "HairStyleVO [hair_no=" + hair_no + ", hair_type=" + hair_type + ", hair_time=" + hair_time
-				+ ", hair_price=" + hair_price + "]";
+				+ ", hair_price=" + hair_price + ", hFiles=" + Arrays.toString(hFiles) + ", hair_filename="
+				+ hair_filename + "]";
 	}
+
+	
 
 }
