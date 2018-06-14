@@ -35,6 +35,7 @@ li{
 	color: #493D26;
 	/* font-size: 24px; */
 }
+
 #hairstyleContainer ul {
 	width:100%;
 	height:300px;
@@ -70,7 +71,8 @@ li{
 }
 #hairstyleContainer ul li .hair_detail:hover{
 	opacity:1;
-	border:2px solid red;
+	border:2px solid #EDE275;
+	
 }
 #hairstyleContainer ul li:nth-child(1),
 #hairstyleContainer ul li:nth-child(2),
@@ -84,6 +86,11 @@ li{
 }
 #hairRegisterContainer h2{
 	padding-left:20px;
+	display: inline-block;
+}
+#hairstyleContainer h2 a:hover {
+	color:#669966;
+	font-weight: bolder;
 }
 #hairRegisterContainer a{
 	color:#848B79;
@@ -93,40 +100,38 @@ li{
 	<div id="hairstyleContainer">
 		<div id="hairRegisterContainer">
 			<h2><a href="${pageContext.request.contextPath }/hairstyle/hairstyleRegister">[ 헤어스타일 등록 ]</a></h2>
+			<h2><a href="${pageContext.request.contextPath }/hairstyle/hairstyleRegister">[ 헤어스타일 수정 ]</a></h2>
 		</div>
 		<div>
-			<h3>일반컷</h3>
+			<c:set var="i" value="1"></c:set>
+			<c:forEach var="list" items="${hairList}" end="${hairList.size() }">
+			<c:if test="${list.hair_no==i }" >
+			<h3>${list.hair_type }</h3>
 				<ul>
-					<li class="hairIntro_li">
-						<div class="hair_img">
-							<img src="${pageContext.request.contextPath }/resources/header.jpg">
-						</div>
-						<div class="hair_detail">
-							<p>예상 소요시간 : 30분</p>
-							<p>가격 : 15000원</p>
-						</div>
-					</li>
-					<li>22222</li>
-					<li>33333</li>
-					<li>44444</li>
+					<c:set var="j" value="1"></c:set>
+					<c:forEach var="listLi" items="${hairList}"> 
+					<c:if test="${listLi.hair_no==i }" >
+						<c:if test="${j<5 }" >
+						<c:if test="${listLi.hair_filename!=null }" >
+						
+							<li class="hairIntro_li">
+								<div class="hair_img">
+									<img src="displayHairFile?hair_filename=${listLi.hair_filename }">
+								</div>
+								<div class="hair_detail">
+									<p>예상 소요시간 : ${listLi.hair_time }분</p>
+									<p>가격 : ${listLi.hair_price }원</p>
+								</div>
+							</li>
+							<c:set var="j" value="${j=j+1 }"></c:set>
+						</c:if>
+						</c:if>
+					</c:if>
+					</c:forEach>
 				</ul>
-		</div>
-		<div>
-			<h3>일반단발펌</h3>
-				<ul>
-					<li class="hairIntro_li">
-						<div class="hair_img">
-							<img src="${pageContext.request.contextPath }/resources/header.jpg">
-						</div>
-						<div class="hair_detail">
-							<p>예상 소요시간 : 30분</p>
-							<p>가격 : 15000원</p>
-						</div>
-					</li>
-					<li>22222</li>
-					<li>33333</li>
-					<li>44444</li>
-				</ul>
+				<c:set var ="i" value="${i+1 }"></c:set>
+				</c:if> 
+			</c:forEach>
 		</div>
 	</div>
 <%@ include file="../common/footer.jsp"%>
