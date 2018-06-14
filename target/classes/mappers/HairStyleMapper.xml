@@ -4,7 +4,21 @@
 	<select id="selectHairStyle" resultType="HairStyleVO">
 		select * from hair_style
 	</select>
-	<select id="selectAllHairInfo">
-		select * from hair_style where hair_no=#{hair_no}
+	
+	<!-- 작업하는 중 -->
+	<select id="selectAllHairInfo" resultType="HairStyleVO">
+		select * from hair_style hs
+		left join hair_attach ha
+		on hs.hair_no=ha.hair_no
+		order by hs.hair_no
 	</select>
+	
+	<!-- 헤어스타일 등록 -->
+	<insert id="insertHairStyle">
+		insert into hair_style(hair_type, hair_time, hair_price) values
+		(#{hair_type}, #{hair_time}, #{hair_price})
+	</insert>
+	<insert id="addHairAttach">
+		insert into hair_attach(hair_filename, hair_no) values (#{hair_filename}, LAST_INSERT_ID())
+	</insert>
 </mapper>
