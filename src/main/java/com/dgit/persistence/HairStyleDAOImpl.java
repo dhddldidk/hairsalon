@@ -22,4 +22,22 @@ public class HairStyleDAOImpl implements HairStyleDAO {
 		return session.selectList(namespace+".selectHairStyle");
 	}
 
+	@Override
+	public void insertHairStyle(HairStyleVO vo) throws Exception {
+		session.insert(namespace+".insertHairStyle", vo);
+		
+	}
+
+	@Override
+	public void addHairAttach(String hair_filename) throws Exception {
+		session.insert(namespace+".addHairAttach", hair_filename);
+		
+	}
+
+	@Override
+	public List<HairStyleVO> selectAllHairInfo() throws Exception {
+		
+		return session.selectList(namespace+".selectAllHairInfo");
+	}
+
 }
