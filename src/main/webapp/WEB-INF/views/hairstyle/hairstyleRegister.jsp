@@ -58,27 +58,27 @@ li{
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="hair_type">헤어타입</label>
 			<div class="col-sm-10"> 
-			<input type="text" name="hair_type" id="hair_type" class="form-control reg"><br>
+			<input type="text" name="hair_type" id="hair_type" class="form-control"><br>
 			</div>
 		</div>
 		<div class="form-group" >
-			<label for="hair_time" class="control-label col-sm-2" class="idAlign">헤어소요시간</label>
+			<label for="hair_time" class="control-label col-sm-2">헤어소요시간</label>
 			<div class="col-sm-10">  
-			<input type="text" name="hair_time" id="hair_time" class="form-control reg" placeholder="예)120">
+			<input type="text" name="hair_time" id="hair_time" class="form-control" placeholder="예)120">
 			<span>헤어 소요시간은 분 단위로 숫자만 입력해주세요.</span>
 			</div>
 		</div>
 		<div class="form-group" >
-			<label for="hair_price" class="control-label col-sm-2" class="idAlign">가격</label>
+			<label for="hair_price" class="control-label col-sm-2">가격</label>
 			<div class="col-sm-10">  
-			<input type="text" name="hair_price" id="hair_price" class="form-control idAlign reg" placeholder="숫자만 입력해주세요. 예)15000">
+			<input type="text" name="hair_price" id="hair_price" class="form-control" placeholder="숫자만 입력해주세요. 예)15000">
 			<span>가격은 숫자만 입력해주세요.</span>
 			</div>
 		</div>
 		<div class="form-group" >
-			<label for="hairFiles" class="control-label col-sm-2" class="idAlign">헤어이미지</label>
+			<label for="hairFiles" class="control-label col-sm-2">헤어이미지</label>
 			<div class="col-sm-10">  
-			<input type="file" name="hairFiles" id="hairFiles" class="form-control idAlign reg" multiple="multiple"> 
+			<input type="file" name="hairFiles" id="hairFiles" class="form-control" multiple="multiple"> 
 			</div>
 		</div>
 		<div class="form-group previewBox" id="previewBox">
