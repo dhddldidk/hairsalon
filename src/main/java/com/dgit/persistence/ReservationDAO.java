@@ -19,4 +19,8 @@ public interface ReservationDAO {
 	public int myPageTotalCount(String u_id) throws Exception;
 	
 	public void myPageDeleteReg(String u_id, int res_no) throws Exception;
+	
+	//이전 예약내역 페이징
+	public List<ReservationVO> beforeMyPageListCriteria(String u_id, Criteria cri) throws Exception;
+	public int beforeMyPageTotalCount(String u_id) throws Exception;
 }
