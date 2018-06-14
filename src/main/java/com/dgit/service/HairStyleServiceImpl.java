@@ -40,6 +40,51 @@ public class HairStyleServiceImpl implements HairStyleService {
 		return dao.selectAllHairInfo();
 	}
 
+	@Transactional
+	@Override
+	public HairStyleVO readHairStyle(int hair_no) throws Exception {
+		
+		HairStyleVO vo = dao.readHairStyle(hair_no);
+		List<String> files = dao.getHairAttach(hair_no);
+		vo.sethFiles(files.toArray(new String[files.size()]));
+		return vo;
+	}
+
+	@Transactional
+	@Override
+	public void deleteHairStyle(int hair_no) throws Exception {
+		dao.deleteHairAttach(hair_no, null);
+		dao.deleteHairStyle(hair_no);
+		
+	}
+
+	@Transactional
+	@Override
+	public void updateHairStyle(HairStyleVO vo, String[] oldFiles) throws Exception {
+		dao.updateHairStyle(vo);
+		
+		//첨부파일 수정할 때 선택된 파일 지우기
+		int hair_no = vo.getHair_no();
+		if(oldFiles!=null){
+			for(String deletedFile : oldFiles){
+				dao.deleteHairAttach(hair_no, deletedFile);
+			}
+		}
+		
+		//첨부파일 새로 선택한거 업로드
+		String[] files = vo.gethFiles();
+		
+		if(files==null){
+			return;
+		}
+		
+		for(String hair_filename : files){
+			dao.replaceHairAttach(hair_filename, hair_no);
+		}
+	}
+
+	
+
 	
 
 }
