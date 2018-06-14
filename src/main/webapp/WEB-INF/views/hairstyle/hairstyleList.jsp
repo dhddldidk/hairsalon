@@ -100,7 +100,7 @@ li{
 	<div id="hairstyleContainer">
 		<div id="hairRegisterContainer">
 			<h2><a href="${pageContext.request.contextPath }/hairstyle/hairstyleRegister">[ 헤어스타일 등록 ]</a></h2>
-			<h2><a href="${pageContext.request.contextPath }/hairstyle/hairstyleRegister">[ 헤어스타일 수정 ]</a></h2>
+			<h2><a href="${pageContext.request.contextPath }/hairstyle/hairstyleUpdate">[ 헤어스타일 수정 ]</a></h2>
 		</div>
 		<div>
 			<c:set var="i" value="1"></c:set>
