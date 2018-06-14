@@ -44,13 +44,15 @@ public class HairStyleController {
 	public void hairstyleListGet(Model model) throws Exception{
 		logger.info("hairstyleList Get ......");
 		
-		List<HairStyleVO> hairList = service.selectAllHairInfo();
+		List<HairStyleVO> hairJoinList = service.selectAllHairInfo();
+		List<HairStyleVO> hairList = service.selectHairStyle(); 
 		
 		for(HairStyleVO vo : hairList){
 			logger.info(vo.toString());
 		}
 		
 		model.addAttribute("hairList", hairList);
+		model.addAttribute("hairJoinList", hairJoinList);
 	}
 	
 	@RequestMapping(value="/hairstyleRegister", method=RequestMethod.GET)
@@ -109,5 +111,65 @@ public class HairStyleController {
 			in.close();
 		}
 		return entity;
+	}
+	
+	@RequestMapping(value="/hairstyleUpdate", method=RequestMethod.GET)
+	public void hairstyleUpdateGet(int hair_no, Model model) throws Exception{
+		logger.info("hairstyleUpdate Get ......");
+		
+		HairStyleVO hairVo = service.readHairStyle(hair_no);
+		logger.info("hairVo.toString() ......"+hairVo.toString());
+		model.addAttribute("hairVo", hairVo);
+	}
+	
+	@RequestMapping(value="/hairstyleUpdate", method=RequestMethod.POST)
+	public String hairstyleUpdatePost(HairStyleVO vo, Model model,
+									String[] oldFiles,
+									List<MultipartFile> newFiles) throws Exception{
+		logger.info("hairstyleUpdate Post ......");
+		logger.info(vo.toString());
+		
+		if(oldFiles!=null){
+			//이미 업로드된 파일을 삭제했을 때
+			for(String file: oldFiles){
+				logger.info("지우려고 선택한 파일 filename : "+file);
+				
+				//업로드 폴더 c:안에 사진 지우기
+				UploadFileUtils.deleteFile(uploadPath, file);
+			}
+		}
+		
+		//새롭게 선택한 파일 올리기
+		if(!newFiles.get(0).getOriginalFilename().equals("")){
+			ArrayList<String> list = new ArrayList<>();
+			for(MultipartFile file : newFiles){
+				logger.info("새로 선택한 파일 newFilename : "+file.getOriginalFilename());
+				
+				//c:저장하기
+				String thumb = UploadFileUtils.uploadFile(uploadPath, 
+												file.getOriginalFilename(), 
+												file.getBytes());
+				//리스트 객체
+				list.add(thumb);
+			}
+			//스트링 배열
+			vo.sethFiles(list.toArray(new String[list.size()]));
+		}
+		service.updateHairStyle(vo, oldFiles);
+		return "redirect:/hairstyle/hairstyleList";
+	}
+	
+	@RequestMapping(value="/hairstyleDelete", method=RequestMethod.POST)
+	public String hairstyleDeletePost(int hair_no, String[] files) throws Exception{
+		logger.info("hairstyleDelete Post ......");
+		
+		if(files != null){
+			for(String file: files){
+				logger.info("file : "+file);
+				UploadFileUtils.deleteFile(uploadPath, file);
+			}
+		}
+		service.deleteHairStyle(hair_no);
+		return "redirect:/hairstyle/hairstyleList";
 	}
 }
