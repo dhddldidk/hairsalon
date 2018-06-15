@@ -95,9 +95,7 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	font-size: 28px;	
 	font-weight: bold;
 }
-#beforeMyPage{
-	display: none;
-}
+
 #beforeMyPage td{
 	padding:17px !important;
 }
@@ -141,17 +139,17 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 		
 		var number = 1;
 		$("#myPageContainer #myPageMenu li:first-child").click(function(){
-			$("#myPageManagement").css("display", "block");
-			$("#beforeMyPage").css("display", "none");
+			/* $("#myPageManagement").css("display", "block");
+			$("#beforeMyPage").css("display", "none"); */
 			
-			//location.href="${pageContext.request.contextPath}/member/myPage?page="+number;
+			location.href="${pageContext.request.contextPath}/member/myPage";
 		})
 		$("#myPageContainer #myPageMenu li:last-child").click(function(){
-			$("#myPageManagement").css("display", "none");
-			$("#beforeMyPage").css("display", "block");
+			/* $("#myPageManagement").css("display", "none");
+			$("#beforeMyPage").css("display", "block"); */
 			
 			
-			/* //location.href="${pageContext.request.contextPath}/member/myPage?page="+number; */
+			location.href="${pageContext.request.contextPath}/member/beforeMyPage?page="+number; 
 		})
 		
 		
@@ -203,7 +201,7 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
   </div>       
 	
 	
-<!-- 이전 예약 리스트 -->
+<%-- <!-- 이전 예약 리스트 -->
 <div id="beforeMyPage">
 		<table class='table table-bordered'>
 			<tr class='active'>
@@ -225,8 +223,8 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<%-- <td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td> 
-				<td><input type="checkbox" id="chkBox"></td> --%>
+				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td> 
+				<td><input type="checkbox" id="chkBox"></td>
 			</tr>
 			
 		</c:forEach>
@@ -247,6 +245,6 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
   		</ul>
   	</div>
   </div>
-		</div> 
+		</div> --%> 
 </div>
 <%@ include file="../common/footer.jsp"%>
