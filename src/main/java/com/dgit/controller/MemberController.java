@@ -100,10 +100,11 @@ public class MemberController {
 		
 		model.addAttribute("myList", list);
 		
-		PageMaker pageMager = new PageMaker();
-		pageMager.setCri(cri);
-		pageMager.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id()));
-		model.addAttribute("pageMager", pageMager);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id()));
+		logger.info("예약된 개수 : "+resService.myPageTotalCount(loginDTO.getU_id()));
+		model.addAttribute("pageMaker", pageMaker);
 		
 		//마이페이지에서 이전 예약내역 관리
 		List<ReservationVO> joinList = resService.beforeMyPageListCriteria(loginDTO.getU_id(), cri);
@@ -113,10 +114,10 @@ public class MemberController {
 		
 		model.addAttribute("joinList", joinList);
 		
-		PageMaker joinPageMager = new PageMaker();
-		joinPageMager.setCri(cri);
-		joinPageMager.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
-		model.addAttribute("joinPageMager", joinPageMager);
+		PageMaker joinPageMaker = new PageMaker();
+		joinPageMaker.setCri(cri);
+		joinPageMaker.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
+		model.addAttribute("joinPageMaker", joinPageMaker);
 	}
 	
 	/*//마이페이지에서 이전 예약내역 관리
