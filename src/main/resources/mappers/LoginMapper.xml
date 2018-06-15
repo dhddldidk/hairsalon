@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dgit.mapper.LoginMapper">
 	<select id="login" resultType="MemberVO">
-		select u_id, u_name from user
-		where u_id=#{u_id} and u_pw = #{u_pw}
+		select * from user
+		where u_id=#{u_id} and u_pw = #{u_pw} 
 	</select>
 </mapper>
