@@ -135,13 +135,15 @@ public class MemberController {
 			joinPageMaker.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
 			model.addAttribute("joinPageMaker", joinPageMaker);
 			
+			/////////////////////
+			
 		}
 	
 	//예약 취소
 	@ResponseBody
 	@RequestMapping(value="/myPage", method=RequestMethod.POST)
 	public ResponseEntity<List<ReservationVO>> myPagePost(HttpServletRequest request, int res_no, Model model) throws Exception{
-		logger.info("myPage Post ......");
+		logger.info("myPage Post ......res_no"+res_no);
 		ResponseEntity<List<ReservationVO>> entity = null;
 		HttpSession session = request.getSession();
 		LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");
