@@ -94,11 +94,16 @@ public class MemberController {
 		
 		List<ReservationVO> list = resService.myPageListCriteria(loginDTO.getU_id(), cri);
 		
-		for(ReservationVO vo : list){
-			logger.info("예약리스트 : "+vo.toString());
+		//관리자 예약현황 리스트
+		List<ReservationVO> todayReservation = resService.todayReservation();
+		
+		for(ReservationVO vo : todayReservation){
+			logger.info("관리자 예약리스트 : "+vo.toString());
 		}
 		
 		model.addAttribute("myList", list);
+		model.addAttribute("todayReservation", todayReservation);
+		
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -143,7 +148,7 @@ public class MemberController {
 		
 		logger.info("loginDTO : "+loginDTO.getU_id());
 		try{
-			resService.myPageDeleteReg(loginDTO.getU_id(), res_no);
+			resService.myPageDeleteReg(res_no);
 			List<ReservationVO> list = resService.myPageReservation(loginDTO.getU_id());
 			
 			
