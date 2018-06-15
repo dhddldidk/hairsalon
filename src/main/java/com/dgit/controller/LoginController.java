@@ -46,6 +46,7 @@ public class LoginController {
 		//jsp로 값을 보낼 수 있음
 		//아이디와 패스워드가 일치하지 않으면 
 		//login화면으로 redirect 시켜줌
+		
 		if(vo==null){
 			rttr.addFlashAttribute("loginFail", true);
 			return "redirect:/user/login";
@@ -54,6 +55,7 @@ public class LoginController {
 		LoginDTO loginDto = new LoginDTO();
 		loginDto.setU_id(vo.getU_id());
 		loginDto.setU_name(vo.getU_name());
+		loginDto.setU_flag(vo.getU_flag());
 		
 		logger.info("이거 찍어보기"+loginDto.toString());
 		
