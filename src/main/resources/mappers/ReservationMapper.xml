@@ -6,12 +6,15 @@
 		<result property="res_no" column="res_no"></result>
 		<result property="res_start" column="res_start"></result>
 		<result property="res_end" column="res_end"></result>
+		<result property="res_usage" column="res_usage"></result>
 	</resultMap>
 	<resultMap type="ReservationVO" id="resHairStyleAndMember" extends="reservationResult">
 		<result property="hairstyleVo.hair_no" column="hair_no"></result>
 		<result property="hairstyleVo.hair_type" column="hair_type"></result>
 		<result property="hairstyleVo.hair_price" column="hair_price"></result>
 		<result property="member.u_id" column="u_id"></result>
+		<result property="member.u_name" column="u_name"></result>
+		<result property="member.u_phone" column="u_phone"></result>
 	</resultMap>
 	
 	<!-- 예약된 리스트들 가져오기 -->
@@ -62,11 +65,19 @@
 		select count(*) from reservation where u_id=#{u_id} and res_start &lt; now()
 	</select>
 	
-	
-	
 	<!-- mypage 예약취소 -->
 	<delete id="myPageDeleteReg">
 		delete from reservation
-		where u_id=#{u_id} and res_no=#{res_no}
+		where res_no=#{res_no}
 	</delete>
+	
+	<!-- 관리자 오늘의 예약현황 -->
+	<select id="todayReservation" resultMap="resHairStyleAndMember">
+		select * from reservation r
+		left join hair_style h on r.hair_no=h.hair_no 
+		left join user u on r.u_id=u.u_id
+		where r.res_start
+		between date_format(now(),'%Y-%m-%d 10:00:00') 
+		and date_format(now(),'%Y-%m-%d 20:00:00');
+	</select>
 </mapper>
