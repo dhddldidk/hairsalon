@@ -104,24 +104,43 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	<div id="myPageContainer">
 		
 		<ul id="myPageMenu">
-			<li><h2>예약 내역 관리</h2></li>
-			<li><h2>이전 예약 리스트</h2></li>
+			<c:if test = "${login.u_flag==1 }">
+				<li><h2>예약 내역 관리</h2></li>
+				<li><h2>이전 예약 리스트</h2></li>
+			</c:if>
+			<c:if test = "${login.u_flag==0 }">
+				<li><h2>오늘의 예약 리스트</h2></li>
+				<li><h2>이전 예약 리스트</h2></li>
+			</c:if>
 		</ul>
 		<div id="myPageManagement">
 		<table class='table table-bordered'>
 			<tr class='active'>
-				<th>번호</th>
+			
+				<!-- <th>번호</th>
 				<th>예약 날짜</th>
 				<th>예약 종료 시간</th>
 				<th>헤어 스타일</th>
 				<th>가격</th>
 				<th>예약 취소</th>
 				<th>이용 현황</th>
+			 -->
+			
+				<th>번호</th>
+				<th>예약 날짜</th>
+				<th>예약 종료 시간</th>
+				<th>헤어 스타일</th>
+				<th>가격</th>
+				<th>예약 취소</th>
+			<c:if test = "${login.u_flag==0 }">
+				<th>고객명</th>
+				<th>연락처</th>
+				<th>No Show</th>
+			</c:if>	
 			</tr>
 			
-			
-		<c:forEach var="item" items="${myList }">
-			
+		<c:if test = "${login.u_flag==1 }">	
+			<c:forEach var="item" items="${myList }">
 			<tr>
 				<td>${item.res_no }</td>
 				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
@@ -129,10 +148,24 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
 				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
+			</tr>
+			</c:forEach>
+		</c:if>
+		<c:if test = "${login.u_flag==0 }">
+			<c:forEach var="item" items="${myList }">
+			<tr>
+				<td>${item.res_no }</td>
+				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
+				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
+				<td>${item.hairstyleVo.hair_type }</td>
+				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
+				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
+				<td>고객명</td>
+				<td>연락처</td>
 				<td><input type="checkbox" id="chkBox"></td>
 			</tr>
-			
 		</c:forEach>
+		</c:if>
 		</table>
 		
 		<script type="text/javascript">
