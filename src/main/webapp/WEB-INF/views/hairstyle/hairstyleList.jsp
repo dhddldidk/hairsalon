@@ -104,14 +104,19 @@ li{
 }
 </style>
 	<div id="hairstyleContainer">
-		<div id="hairRegisterContainer">
-			<h2><a href="${pageContext.request.contextPath }/hairstyle/hairstyleRegister">[ 헤어스타일 등록 ]</a></h2>
-		</div>
+		<c:if test="${login.u_flag==0 }" >
+			<div id="hairRegisterContainer">
+				<h2><a href="${pageContext.request.contextPath }/hairstyle/hairstyleRegister">[ 헤어스타일 등록 ]</a></h2>
+			</div>
+		</c:if>
 		<div>
-			<%-- <c:set var="i" value="1"></c:set> --%>
 			<c:forEach var="list" items="${hairList}" end="${hairList.size() }">
-			<%-- <c:if test="${list.hair_no==i }" > --%>
-			<h3><a href="${pageContext.request.contextPath }/hairstyle/hairstyleUpdate?hair_no=${list.hair_no }">${list.hair_type }</a><span class="updateHair"> &nbsp;&nbsp;&lt;&#45;&#45;&nbsp;클릭하면 수정페이지로 전환됩니다.</span></h3>
+			<h3>
+				<a href="${pageContext.request.contextPath }/hairstyle/hairstyleUpdate?hair_no=${list.hair_no }">${list.hair_type }</a>
+				<c:if test="${login.u_flag==0 }" >
+					<span class="updateHair"> &nbsp;&nbsp;&lt;&#45;&#45;&nbsp;클릭하면 수정페이지로 전환됩니다.</span>
+				</c:if>
+			</h3>
 				<ul>
 					<c:set var="j" value="1"></c:set>
 					<c:forEach var="joinList" items="${hairJoinList}" > 
@@ -134,8 +139,6 @@ li{
 					</c:if>
 					</c:forEach>
 				</ul>
-				<%-- <c:set var ="i" value="${i+1 }"></c:set> --%>
-				<%-- </c:if>  --%>
 			</c:forEach>
 		</div>
 	</div>
