@@ -133,6 +133,9 @@
 					<button type="submit" class="btn btn-success" id="modifyBtn">수정하기</button>
 					<button type="submit" class="btn btn-danger" id="deleteBtn">삭제하기</button>
 				</c:if>
+				<c:if test="${login.u_flag==0 }">
+					<button type="submit" class="btn btn-danger" id="deleteBtn">삭제하기</button>
+				</c:if>
 				<button type="submit" class="btn btn-warning" id="returnListBtn">게시판 리스트로 돌아가기</button>
 			</div>
 		</div>
@@ -229,6 +232,11 @@
 			<a class="btn btn-danger">삭제하기</a>
 		</div>
 			{{/if}}
+			{{#ifadmin reply_writer}}
+		<div class="timeline-footer">
+			<a class="btn btn-danger">삭제하기</a>
+		</div>
+			{{/ifadmin}}
 	</div>
 </li>
 {{/each}}
@@ -241,6 +249,14 @@
   //댓글 단 사람만 수정할 수 있도록 처리하기
   Handlebars.registerHelper("if", function(reply_writer, options){
 	  if(reply_writer == "${login.u_id}"){
+		  return options.fn(this);// if문에 해당하는 div를 그대로 반환할 수 있음(수정, 삭제 버튼이 들어감) 
+	  }else{
+		  return '';
+	  }
+  })
+  
+  Handlebars.registerHelper("ifadmin", function(reply_writer, options){
+	  if(${login.u_flag}==0){
 		  return options.fn(this);// if문에 해당하는 div를 그대로 반환할 수 있음(수정, 삭제 버튼이 들어감) 
 	  }else{
 		  return '';
