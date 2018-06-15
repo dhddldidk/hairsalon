@@ -144,11 +144,12 @@ td:nth-child(8), td:nth-child(9){
 			<c:forEach var="item" items="${myList }">
 			<tr>
 				<td>${item.res_no }</td>
-				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
+				<fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm" var="resstart"/>
+				<td>${resstart }</td>
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
+				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }" data-resstart="${resstart }">예약취소</button></td>
 			</tr>
 			</c:forEach>
 		</c:if>
@@ -156,14 +157,15 @@ td:nth-child(8), td:nth-child(9){
 			<c:forEach var="item" items="${todayReservation }">
 			<tr>
 				<td>${item.res_no }</td>
-				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
+				<fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm" var="resstart"/>
+				<td>${resstart }</td>
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
+				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }" data-resstart="${resstart }">예약취소</button></td>
 				<td>${item.member.u_name }</td>
 				<td>${item.member.u_phone }</td>
-				<td><input type="checkbox" id="chkBox" value="${item.res_end }"></td>
+				<td><input type="checkbox" id="chkBox" value="${item.res_usage }" ${item.res_usage? 'checked="checked"':'' }></td>
 			</tr>
 		</c:forEach>
 		</c:if>
@@ -180,12 +182,45 @@ td:nth-child(8), td:nth-child(9){
 		})
 		
 		
-				//var res_no="";
+			var resdate="";
 			$(".cancel").click(function(){
-				
+	
 				var clickedVal = $(this).parent().parent();
-				res_no = $(this).attr("data-resno");        
-				//alert("res_no : "+$(this).attr("data-resno"));
+				var res_no = $(this).attr("data-resno");        
+				resdate = $(this).attr("data-resstart");
+				
+				var reservedDate = new Date(resdate);
+				var resDateOfYear = reservedDate.getFullYear()+"-"+(reservedDate.getMonth()+1)+"-"+reservedDate.getDate();
+				
+				var currDate = new Date();
+				var curDateOfYear = currDate.getFullYear()+"-"+(currDate.getMonth()+1)+"-"+currDate.getDate();
+				
+				/*var currDate2 = new Date();
+				 var curYear = currDate2.getFullYear();
+				var curMonth = currDate2.getMonth()+1;
+				var curDate = currDate2.getDate()-1;
+				var curTime = "23:59:59";
+				
+				currDate2 = curYear+"-"+curMonth+"-"+curDate+"-"+curTime;
+				var beforeDate = new Date(currDate2); */
+				
+				//일반회원이 예약 취소시 예약 하루 전 날 까지만 취소할 수 있음
+				if(${login.u_flag==1}){
+					if(resDateOfYear==curDateOfYear){
+						alert("예약 당일에는 취소할 수 없습니다.");
+						return false;
+					}
+				} 
+				
+				//관리자 로그인시 현재시간 이전의 예약은 취소 할 수 없음
+				if(${login.u_flag==0}){
+					if(reservedDate<currDate){
+						alert("예약을 취소할 수 없습니다.");
+						return false;
+					}
+				} 
+				
+				
 				var flag = confirm("선택된 예약을 취소 하시겠습니까?");
 				if(flag==true){
 					//$("input[name='res_no']").val(res_no);
