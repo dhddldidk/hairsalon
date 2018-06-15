@@ -108,8 +108,14 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	<div id="myPageContainer">
 		
 		<ul id="myPageMenu">
-			<li><h2>예약 내역 관리</h2></li>
-			<li><h2>이전 예약 리스트</h2></li>
+			<c:if test = "${login.u_flag==1 }">
+				<li><h2>예약 내역 관리</h2></li>
+				<li><h2>이전 예약 리스트</h2></li>
+			</c:if>
+			<c:if test = "${login.u_flag==0 }">
+				<li><h2>오늘의 예약 리스트</h2></li>
+				<li><h2>이전 예약 리스트</h2></li>
+			</c:if>
 		</ul>
 		<%-- <div id="myPageManagement">
 		<table class='table table-bordered'>
