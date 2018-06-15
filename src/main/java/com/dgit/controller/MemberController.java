@@ -106,21 +106,10 @@ public class MemberController {
 		logger.info("예약된 개수 : "+resService.myPageTotalCount(loginDTO.getU_id()));
 		model.addAttribute("pageMaker", pageMaker);
 		
-		//마이페이지에서 이전 예약내역 관리
-		List<ReservationVO> joinList = resService.beforeMyPageListCriteria(loginDTO.getU_id(), cri);
-		for(ReservationVO vo : joinList){
-			logger.info("이전예약 : "+vo.toString());
-		}
 		
-		model.addAttribute("joinList", joinList);
-		
-		PageMaker joinPageMaker = new PageMaker();
-		joinPageMaker.setCri(cri);
-		joinPageMaker.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
-		model.addAttribute("joinPageMaker", joinPageMaker);
 	}
 	
-	/*//마이페이지에서 이전 예약내역 관리
+	//마이페이지에서 이전 예약내역 관리
 		@RequestMapping(value="/beforeMyPage", method=RequestMethod.GET)
 		public void beforeMyPageGet(Model model, HttpServletRequest request,@ModelAttribute("cri")Criteria cri) throws Exception{
 			logger.info("myPage Get ......");
@@ -128,8 +117,20 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");
 			
+			//마이페이지에서 이전 예약내역 관리
+			List<ReservationVO> joinList = resService.beforeMyPageListCriteria(loginDTO.getU_id(), cri);
+			for(ReservationVO vo : joinList){
+				logger.info("이전예약 : "+vo.toString());
+			}
 			
-		}*/
+			model.addAttribute("joinList", joinList);
+			
+			PageMaker joinPageMaker = new PageMaker();
+			joinPageMaker.setCri(cri);
+			joinPageMaker.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
+			model.addAttribute("joinPageMaker", joinPageMaker);
+			
+		}
 	
 	//예약 취소
 	@ResponseBody
