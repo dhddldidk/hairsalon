@@ -48,7 +48,8 @@ input[type=checkbox]{
   -o-transform: scale(2.2);
 }
 td:nth-child(1), td:nth-child(2), td:nth-child(3),
-td:nth-child(4), td:nth-child(5), td:nth-child(7){
+td:nth-child(4), td:nth-child(5), td:nth-child(7),
+td:nth-child(8), td:nth-child(9){
 	padding-top: 16px !important; 
 }
 
@@ -152,7 +153,7 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 			</c:forEach>
 		</c:if>
 		<c:if test = "${login.u_flag==0 }">
-			<c:forEach var="item" items="${myList }">
+			<c:forEach var="item" items="${todayReservation }">
 			<tr>
 				<td>${item.res_no }</td>
 				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
@@ -160,9 +161,9 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
 				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
-				<td>고객명</td>
-				<td>연락처</td>
-				<td><input type="checkbox" id="chkBox"></td>
+				<td>${item.member.u_name }</td>
+				<td>${item.member.u_phone }</td>
+				<td><input type="checkbox" id="chkBox" value="${item.res_end }"></td>
 			</tr>
 		</c:forEach>
 		</c:if>
@@ -172,16 +173,9 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 		
 		var number = 1;
 		$("#myPageContainer #myPageMenu li:first-child").click(function(){
-			/* $("#myPageManagement").css("display", "block");
-			$("#beforeMyPage").css("display", "none"); */
-			
 			location.href="${pageContext.request.contextPath}/member/myPage";
 		})
 		$("#myPageContainer #myPageMenu li:last-child").click(function(){
-			/* $("#myPageManagement").css("display", "none");
-			$("#beforeMyPage").css("display", "block"); */
-			
-			
 			location.href="${pageContext.request.contextPath}/member/beforeMyPage?page="+number; 
 		})
 		
