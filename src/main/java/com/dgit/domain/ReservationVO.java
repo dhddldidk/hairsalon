@@ -7,6 +7,7 @@ public class ReservationVO {
 	private int res_no;
 	private Date res_start;
 	private Date res_end;
+	private boolean res_usage;// 이용여부
 	private HairStyleVO hairstyleVo;
 	private MemberVO member;
 
@@ -50,10 +51,18 @@ public class ReservationVO {
 		this.member = member;
 	}
 
+	public boolean isRes_usage() {
+		return res_usage;
+	}
+
+	public void setRes_usage(boolean res_usage) {
+		this.res_usage = res_usage;
+	}
+
 	@Override
 	public String toString() {
-		return "Reservation [res_no=" + res_no + ", res_start=" + res_start + ", res_end=" + res_end + ", hairstyleVo="
-				+ hairstyleVo + ", member=" + member + "]";
+		return "ReservationVO [res_no=" + res_no + ", res_start=" + res_start + ", res_end=" + res_end + ", res_usage="
+				+ res_usage + ", hairstyleVo=" + hairstyleVo + ", member=" + member + "]";
 	}
 
 }
