@@ -100,11 +100,21 @@
 		<th style="width:220px;">등록일</th>
 		<th style="width:75px;">조회수</th>
 	</tr>
-	<c:set var="no" value="0"></c:set>
+	
 	<c:forEach var="list" items="${boardList }">
 		
 		<tr>
 			<td>${list.rb_no }</td>
+			
+			<!-- 조회수 올릴 때 생각해야할 경우의 수는 2가지 
+								1. listPage에서 타이틀을 클릭하면 readPage로 넘어감
+									그때만 조회수가 올라가야 함!! 수정이나, 수정에서 취소 클릭시에는 올라가면 안됨
+								2. 그래서 클릭을 할 때 flag=true를 매개변수로 줘서 readPage에 
+									들어갔을 때만 조회수를 올려주고 
+								3. readPage에서 수정이나 수정에서 취소를 누르고 난 후 listPage로 
+									돌아왔을 때에는 flag=false가 되서 조회수를 올리면 안됨 -->
+			
+			
 			<td><a href="reviewReadPage?rb_no=${list.rb_no }&page=${pageMaker.cri.page}&searchType=${cri.searchType}&keyword=${cri.keyword}&flag=true">${list.rb_title } [${list.rb_replycnt }]</a></td>
 			<td>${list.rb_writer }</td>
 			<td><fmt:formatDate value="${list.rb_regdate }" pattern="yyyy-MM-dd"/></td>

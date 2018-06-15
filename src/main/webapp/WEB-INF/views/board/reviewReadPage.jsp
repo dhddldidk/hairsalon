@@ -62,6 +62,7 @@
 	}
 	#previewBox img{
 		width:100px;
+		height:100px;
 	}
 	.replyLi{
 		border:2px dotted #D5D5D5; 
@@ -128,8 +129,10 @@
 		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<button type="submit" class="btn btn-success" id="modifyBtn">수정하기</button>
-				<button type="submit" class="btn btn-danger" id="deleteBtn">삭제하기</button>
+				<c:if test="${login.u_id==reviewBoard.rb_writer }">
+					<button type="submit" class="btn btn-success" id="modifyBtn">수정하기</button>
+					<button type="submit" class="btn btn-danger" id="deleteBtn">삭제하기</button>
+				</c:if>
 				<button type="submit" class="btn btn-warning" id="returnListBtn">게시판 리스트로 돌아가기</button>
 			</div>
 		</div>
