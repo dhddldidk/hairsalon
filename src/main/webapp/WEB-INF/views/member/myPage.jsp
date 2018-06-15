@@ -51,6 +51,7 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3),
 td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	padding-top: 16px !important; 
 }
+
 #pagingList{
 		text-align: center;
 	}
@@ -59,7 +60,7 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	height:60px;
 	list-style: none;
 }
-#myPageContainer #myPageMenu li{
+#myPageContainer #myPageMenu li:first-child{
 	width:50%;
 	height:60px;
 	float:left;
@@ -70,11 +71,25 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	letter-spacing: 4px;
 	color: #493D26;
 }
+#myPageContainer #myPageMenu li:last-child{
+	width:50%;
+	height:60px;
+	float:left;
+	margin-bottom: 50px;
+	padding-left: 20px;
+	border-left: 20px solid #DDA0DD;
+	border-bottom: 2px solid #DDA0DD;
+	letter-spacing: 4px;
+	color: #493D26;
+}
 #myPageContainer #myPageMenu li h2{
 	font-size: 26px;	
 }
-#myPageContainer #myPageMenu li:hover{
+#myPageContainer #myPageMenu li:first-child:hover{
 	color: #669966;
+}
+#myPageContainer #myPageMenu li:last-child:hover{
+	color: #8B008B;
 }
 #myPageContainer #myPageMenu li h2:hover{
 	font-size: 28px;	
@@ -82,6 +97,9 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 }
 #beforeMyPage{
 	display: none;
+}
+#beforeMyPage td{
+	padding:17px !important;
 }
 
 </style>
@@ -121,14 +139,19 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 		
 		<script type="text/javascript">
 		
+		var number = 1;
 		$("#myPageContainer #myPageMenu li:first-child").click(function(){
 			$("#myPageManagement").css("display", "block");
-			//$("#myPageManagement #myPageMenu li:first-child").addClass("pointOut");
 			$("#beforeMyPage").css("display", "none");
+			
+			//location.href="${pageContext.request.contextPath}/member/myPage?page="+number;
 		})
 		$("#myPageContainer #myPageMenu li:last-child").click(function(){
 			$("#myPageManagement").css("display", "none");
 			$("#beforeMyPage").css("display", "block");
+			
+			
+			/* //location.href="${pageContext.request.contextPath}/member/myPage?page="+number; */
 		})
 		
 		
@@ -157,10 +180,6 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 						
 						clickedVal.remove();
 						
-						/* for(var i=2; i<result.length+1; i++){
-							$("table").find("tr:nth-child("+i+") td:first-child").html(i-1);
-							
-						} */
 					}
 				})
 			})
@@ -193,11 +212,11 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 				<th>예약 종료 시간</th>
 				<th>헤어 스타일</th>
 				<th>가격</th>
-				<th>예약 취소</th>
-				<th>이용 현황</th>
+				<!-- <th>예약 취소</th>
+				<th>이용 현황</th> -->
 			</tr>
 			
-			<c:set var="no" value="0" ></c:set>
+			
 		<c:forEach var="item" items="${joinList }">
 			
 			<tr>
@@ -206,8 +225,8 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
-				<td><input type="checkbox" id="chkBox"></td>
+				<%-- <td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td> 
+				<td><input type="checkbox" id="chkBox"></td> --%>
 			</tr>
 			
 		</c:forEach>
@@ -216,14 +235,14 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 		<div id="pagingList">
   	<div>
   		<ul class="pagination">
-  			<c:if test="${joinPageMager.prev }">
-  				<li><a href="myPage?page=${joinPageMager.startPage-1 }">&laquo;</a></li>
+  			<c:if test="${joinPageMaker.prev }">
+  				<li><a href="myPage?page=${joinPageMaker.startPage-1 }">&laquo;</a></li>
   			</c:if>
-  			<c:forEach begin="${joinPageMager.startPage }" end="${joinPageMager.endPage }" var="idx">
-  				<li ${joinPageMager.cri.page == idx? 'class="active"':'' }><a href="myPage?page=${idx }">${idx }</a></li>
+  			<c:forEach begin="${joinPageMaker.startPage }" end="${joinPageMaker.endPage }" var="idx">
+  				<li ${joinPageMaker.cri.page == idx? 'class="active"':'' }><a href="myPage?page=${idx }">${idx }</a></li>
   			</c:forEach>
-  			<c:if test="${joinPageMager.next }">
-  				<li><a href="myPage?page=${joinPageMager.endPage+1 }">&raquo;</a></li>
+  			<c:if test="${joinPageMaker.next }">
+  				<li><a href="myPage?page=${joinPageMaker.endPage+1 }">&raquo;</a></li>
   			</c:if>
   		</ul>
   	</div>
