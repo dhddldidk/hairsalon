@@ -4,6 +4,7 @@ public class LoginDTO {
 	// 회원이 로그인 했나 안했나 확인하기 위해
 	private String u_id;
 	private String u_name;
+	private int u_flag;
 
 	public String getU_id() {
 		return u_id;
@@ -21,9 +22,17 @@ public class LoginDTO {
 		this.u_name = u_name;
 	}
 
+	public int getU_flag() {
+		return u_flag;
+	}
+
+	public void setU_flag(int u_flag) {
+		this.u_flag = u_flag;
+	}
+
 	@Override
 	public String toString() {
-		return "LoginDTO [u_id=" + u_id + ", u_name=" + u_name + "]";
+		return "LoginDTO [u_id=" + u_id + ", u_name=" + u_name + ", u_flag=" + u_flag + "]";
 	}
 
 }
