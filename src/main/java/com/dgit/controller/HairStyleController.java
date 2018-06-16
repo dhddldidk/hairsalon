@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dgit.domain.HairStyleVO;
+import com.dgit.domain.LoginDTO;
 import com.dgit.service.HairStyleService;
 import com.dgit.util.MediaUtils;
 import com.dgit.util.UploadFileUtils;
@@ -41,8 +44,12 @@ public class HairStyleController {
 	private static final Logger logger = LoggerFactory.getLogger(HairStyleController.class);
 	
 	@RequestMapping(value="/hairstyleList", method=RequestMethod.GET)
-	public void hairstyleListGet(Model model) throws Exception{
+	public void hairstyleListGet(Model model, HttpServletRequest request) throws Exception{
 		logger.info("hairstyleList Get ......");
+		
+		/*HttpSession session = request.getSession();
+		LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");*/
+		
 		
 		List<HairStyleVO> hairJoinList = service.selectAllHairInfo();
 		List<HairStyleVO> hairList = service.selectHairStyle(); 

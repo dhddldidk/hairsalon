@@ -33,20 +33,20 @@
 	
 	
 	<beans:bean id="loginInterceptor" class="com.dgit.interceptor.LoginInterceptor"/>
-	<!-- <beans:bean id="authInterceptor" class="com.dgit.interceptor.AuthInterceptor"/> -->
+	<beans:bean id="authInterceptor" class="com.dgit.interceptor.AuthInterceptor"/>
 	
 	<interceptors>
 		<interceptor>
 			<mapping path="/user/loginPost"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
-		<!-- <interceptor>
-			<mapping path="/sboard/readPage"></mapping>
-			<mapping path="/sboard/modifyPage"></mapping>
-			<mapping path="/sboard/register"></mapping>
-			<mapping path="/sboard/removePage"></mapping>
+		<interceptor>
+			<mapping path="/board/reviewReadPage"></mapping>
+			<mapping path="/board/reviewUpdatePage"></mapping>
+			<mapping path="/board/reviewRegisterPage"></mapping>
+			<mapping path="/board/reviewDeletePage"></mapping>
 			<beans:ref bean="authInterceptor"/>
-		</interceptor> -->
+		</interceptor>
 	</interceptors>
 	
 	<context:component-scan base-package="com.dgit.controller" />

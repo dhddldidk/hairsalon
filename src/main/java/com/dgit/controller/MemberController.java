@@ -94,32 +94,27 @@ public class MemberController {
 		
 		List<ReservationVO> list = resService.myPageListCriteria(loginDTO.getU_id(), cri);
 		
-		for(ReservationVO vo : list){
-			logger.info("예약리스트 : "+vo.toString());
+		//관리자 예약현황 리스트
+		List<ReservationVO> todayReservation = resService.todayReservation();
+		
+		for(ReservationVO vo : todayReservation){
+			logger.info("관리자 예약리스트 : "+vo.toString());
 		}
 		
 		model.addAttribute("myList", list);
+		model.addAttribute("todayReservation", todayReservation);
 		
-		PageMaker pageMager = new PageMaker();
-		pageMager.setCri(cri);
-		pageMager.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id()));
-		model.addAttribute("pageMager", pageMager);
 		
-		//마이페이지에서 이전 예약내역 관리
-		List<ReservationVO> joinList = resService.beforeMyPageListCriteria(loginDTO.getU_id(), cri);
-		for(ReservationVO vo : joinList){
-			logger.info("이전예약 : "+vo.toString());
-		}
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(resService.myPageTotalCount(loginDTO.getU_id()));
+		logger.info("예약된 개수 : "+resService.myPageTotalCount(loginDTO.getU_id()));
+		model.addAttribute("pageMaker", pageMaker);
 		
-		model.addAttribute("joinList", joinList);
 		
-		PageMaker joinPageMager = new PageMaker();
-		joinPageMager.setCri(cri);
-		joinPageMager.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
-		model.addAttribute("joinPageMager", joinPageMager);
 	}
 	
-	/*//마이페이지에서 이전 예약내역 관리
+	//마이페이지에서 이전 예약내역 관리
 		@RequestMapping(value="/beforeMyPage", method=RequestMethod.GET)
 		public void beforeMyPageGet(Model model, HttpServletRequest request,@ModelAttribute("cri")Criteria cri) throws Exception{
 			logger.info("myPage Get ......");
@@ -127,21 +122,35 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");
 			
+			//마이페이지에서 이전 예약내역 관리
+			List<ReservationVO> joinList = resService.beforeMyPageListCriteria(loginDTO.getU_id(), cri);
+			for(ReservationVO vo : joinList){
+				logger.info("이전예약 : "+vo.toString());
+			}
 			
-		}*/
+			model.addAttribute("joinList", joinList);
+			
+			PageMaker joinPageMaker = new PageMaker();
+			joinPageMaker.setCri(cri);
+			joinPageMaker.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
+			model.addAttribute("joinPageMaker", joinPageMaker);
+			
+			/////////////////////
+			
+		}
 	
 	//예약 취소
 	@ResponseBody
 	@RequestMapping(value="/myPage", method=RequestMethod.POST)
 	public ResponseEntity<List<ReservationVO>> myPagePost(HttpServletRequest request, int res_no, Model model) throws Exception{
-		logger.info("myPage Post ......");
+		logger.info("myPage Post ......res_no"+res_no);
 		ResponseEntity<List<ReservationVO>> entity = null;
 		HttpSession session = request.getSession();
 		LoginDTO loginDTO = (LoginDTO) session.getAttribute("login");
 		
 		logger.info("loginDTO : "+loginDTO.getU_id());
 		try{
-			resService.myPageDeleteReg(loginDTO.getU_id(), res_no);
+			resService.myPageDeleteReg(res_no);
 			List<ReservationVO> list = resService.myPageReservation(loginDTO.getU_id());
 			
 			

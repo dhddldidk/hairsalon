@@ -102,8 +102,13 @@
     <ul class="nav navbar-nav navbar-right">
     	<c:if test="${login != null }">
     		<li><a href="#"><span class="glyphicon glyphicon-gift"></span> [${login.u_name }] 님 환영합니다.</a></li>
-    		<li><a href="${pageContext.request.contextPath }/user/logOut"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>    		
-      		<li><a href="${pageContext.request.contextPath }/member/myPage"><span class="glyphicon glyphicon-user"></span> 마이페이지</a></li>
+    		<li><a href="${pageContext.request.contextPath }/user/logOut"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
+    		<c:if test="${login.u_flag==1}"> 		
+      			<li><a href="${pageContext.request.contextPath }/member/myPage"><span class="glyphicon glyphicon-user"></span> 마이페이지</a></li>
+      		</c:if>
+      		<c:if test="${login.u_flag==0}"> 		
+      			<li><a href="${pageContext.request.contextPath }/member/myPage"><span class="glyphicon glyphicon-user"></span> 예약현황</a></li>
+      		</c:if>     
     	</c:if>
     
     	<c:if test="${login == null }">

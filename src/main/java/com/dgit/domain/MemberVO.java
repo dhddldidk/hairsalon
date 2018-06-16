@@ -11,20 +11,19 @@ public class MemberVO {
 	private String u_phone;
 	private String u_email;
 	private String u_address;
-	
+	private int u_flag;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
 	private Date u_regdate;
 
 	public MemberVO() {
-		
+
 	}
 
 	public MemberVO(String u_id) {
 		super();
 		this.u_id = u_id;
 	}
-
-
 
 	public MemberVO(String u_id, String u_name, String u_pw, String u_phone, String u_email, String u_address,
 			Date u_regdate) {
@@ -94,10 +93,19 @@ public class MemberVO {
 		this.u_regdate = u_regdate;
 	}
 
+	public int getU_flag() {
+		return u_flag;
+	}
+
+	public void setU_flag(int u_flag) {
+		this.u_flag = u_flag;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [u_id=" + u_id + ", u_name=" + u_name + ", u_pw=" + u_pw + ", u_phone=" + u_phone
-				+ ", u_email=" + u_email + ", u_address=" + u_address + ", u_regdate=" + u_regdate + "]";
+				+ ", u_email=" + u_email + ", u_address=" + u_address + ", u_flag=" + u_flag + ", u_regdate="
+				+ u_regdate + "]";
 	}
 
 }

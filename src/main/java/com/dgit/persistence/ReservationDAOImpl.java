@@ -41,12 +41,9 @@ public class ReservationDAOImpl implements ReservationDAO {
 	}
 
 	@Override
-	public void myPageDeleteReg(String u_id, int res_no) throws Exception {
-		Map<String, Object> map = new HashMap<>();
-		map.put("u_id", u_id);
-		map.put("res_no", res_no);
+	public void myPageDeleteReg(int res_no) throws Exception {
 		
-		session.delete(namespace+".myPageDeleteReg",map);
+		session.delete(namespace+".myPageDeleteReg",res_no);
 	}
 
 	@Override
@@ -78,6 +75,12 @@ public class ReservationDAOImpl implements ReservationDAO {
 	public int beforeMyPageTotalCount(String u_id) throws Exception {
 		
 		return session.selectOne(namespace+".beforeMyPageTotalCount", u_id);
+	}
+
+	@Override
+	public List<ReservationVO> todayReservation() throws Exception {
+		
+		return session.selectList(namespace+".todayReservation");
 	}
 
 }

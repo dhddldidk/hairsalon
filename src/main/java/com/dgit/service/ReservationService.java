@@ -18,9 +18,12 @@ public interface ReservationService {
 	public List<ReservationVO> myPageListCriteria(String u_id, Criteria cri) throws Exception;
 	public int myPageTotalCount(String u_id) throws Exception;
 	
-	public void myPageDeleteReg(String u_id, int res_no) throws Exception;
+	public void myPageDeleteReg(int res_no) throws Exception;
 	
 	//이전 예약내역 페이징
 	public List<ReservationVO> beforeMyPageListCriteria(String u_id, Criteria cri) throws Exception;
 	public int beforeMyPageTotalCount(String u_id) throws Exception;
+	
+	//관리자 오늘의 예약현황
+	public List<ReservationVO> todayReservation() throws Exception;
 }

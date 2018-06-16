@@ -34,9 +34,9 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public void myPageDeleteReg(String u_id, int res_no) throws Exception {
+	public void myPageDeleteReg(int res_no) throws Exception {
 		
-		dao.myPageDeleteReg(u_id, res_no);
+		dao.myPageDeleteReg(res_no);
 		
 	}
 
@@ -62,6 +62,12 @@ public class ReservationServiceImpl implements ReservationService {
 	public int beforeMyPageTotalCount(String u_id) throws Exception {
 		
 		return dao.beforeMyPageTotalCount(u_id);
+	}
+
+	@Override
+	public List<ReservationVO> todayReservation() throws Exception {
+		
+		return dao.todayReservation();
 	}
 
 	

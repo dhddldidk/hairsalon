@@ -48,8 +48,7 @@ input[type=checkbox]{
   -o-transform: scale(2.2);
 }
 td:nth-child(1), td:nth-child(2), td:nth-child(3),
-td:nth-child(4), td:nth-child(5), td:nth-child(7),
-td:nth-child(8), td:nth-child(9){
+td:nth-child(4), td:nth-child(5), td:nth-child(7){
 	padding-top: 16px !important; 
 }
 
@@ -102,6 +101,10 @@ td:nth-child(8), td:nth-child(9){
 }
 
 </style>
+<script>
+
+
+</script>
 	<div id="myPageContainer">
 		
 		<ul id="myPageMenu">
@@ -114,113 +117,58 @@ td:nth-child(8), td:nth-child(9){
 				<li><h2>이전 예약 리스트</h2></li>
 			</c:if>
 		</ul>
-		<div id="myPageManagement">
+		<%-- <div id="myPageManagement">
 		<table class='table table-bordered'>
 			<tr class='active'>
-			
-				<!-- <th>번호</th>
-				<th>예약 날짜</th>
-				<th>예약 종료 시간</th>
-				<th>헤어 스타일</th>
-				<th>가격</th>
-				<th>예약 취소</th>
-				<th>이용 현황</th>
-			 -->
-			
 				<th>번호</th>
 				<th>예약 날짜</th>
 				<th>예약 종료 시간</th>
 				<th>헤어 스타일</th>
 				<th>가격</th>
 				<th>예약 취소</th>
-			<c:if test = "${login.u_flag==0 }">
-				<th>고객명</th>
-				<th>연락처</th>
-				<th>No Show</th>
-			</c:if>	
+				<th>이용 현황</th>
 			</tr>
 			
-		<c:if test = "${login.u_flag==1 }">	
-			<c:forEach var="item" items="${myList }">
+			
+		<c:forEach var="item" items="${myList }">
+			
 			<tr>
 				<td>${item.res_no }</td>
-				<fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm" var="resstart"/>
-				<td>${resstart }</td>
+				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }" data-resstart="${resstart }">예약취소</button></td>
+				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
+				<td><input type="checkbox" id="chkBox"></td>
 			</tr>
-			</c:forEach>
-		</c:if>
-		<c:if test = "${login.u_flag==0 }">
-			<c:forEach var="item" items="${todayReservation }">
-			<tr>
-				<td>${item.res_no }</td>
-				<fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm" var="resstart"/>
-				<td>${resstart }</td>
-				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
-				<td>${item.hairstyleVo.hair_type }</td>
-				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }" data-resstart="${resstart }">예약취소</button></td>
-				<td>${item.member.u_name }</td>
-				<td>${item.member.u_phone }</td>
-				<td><input type="checkbox" id="chkBox" value="${item.res_usage }" ${item.res_usage? 'checked="checked"':'' }></td>
-			</tr>
+			
 		</c:forEach>
-		</c:if>
-		</table>
+		</table> --%>
 		
 		<script type="text/javascript">
 		
 		var number = 1;
 		$("#myPageContainer #myPageMenu li:first-child").click(function(){
+			/* $("#myPageManagement").css("display", "block");
+			$("#beforeMyPage").css("display", "none"); */
+			
 			location.href="${pageContext.request.contextPath}/member/myPage";
 		})
 		$("#myPageContainer #myPageMenu li:last-child").click(function(){
+			/* $("#myPageManagement").css("display", "none");
+			$("#beforeMyPage").css("display", "block"); */
+			
+			
 			location.href="${pageContext.request.contextPath}/member/beforeMyPage?page="+number; 
 		})
 		
 		
-			var resdate="";
-			$(".cancel").click(function(){
-	
+				//var res_no="";
+			/* $(".cancel").click(function(){
+				
 				var clickedVal = $(this).parent().parent();
-				var res_no = $(this).attr("data-resno");        
-				resdate = $(this).attr("data-resstart");
-				
-				var reservedDate = new Date(resdate);
-				var resDateOfYear = reservedDate.getFullYear()+"-"+(reservedDate.getMonth()+1)+"-"+reservedDate.getDate();
-				
-				var currDate = new Date();
-				var curDateOfYear = currDate.getFullYear()+"-"+(currDate.getMonth()+1)+"-"+currDate.getDate();
-				
-				/*var currDate2 = new Date();
-				 var curYear = currDate2.getFullYear();
-				var curMonth = currDate2.getMonth()+1;
-				var curDate = currDate2.getDate()-1;
-				var curTime = "23:59:59";
-				
-				currDate2 = curYear+"-"+curMonth+"-"+curDate+"-"+curTime;
-				var beforeDate = new Date(currDate2); */
-				
-				//일반회원이 예약 취소시 예약 하루 전 날 까지만 취소할 수 있음
-				if(${login.u_flag==1}){
-					if(resDateOfYear==curDateOfYear){
-						alert("예약 당일에는 취소할 수 없습니다.");
-						return false;
-					}
-				} 
-				
-				//관리자 로그인시 현재시간 이전의 예약은 취소 할 수 없음
-				if(${login.u_flag==0}){
-					if(reservedDate<currDate){
-						alert("예약을 취소할 수 없습니다.");
-						return false;
-					}
-				} 
-				
-				
+				res_no = $(this).attr("data-resno");        
+				//alert("res_no : "+$(this).attr("data-resno"));
 				var flag = confirm("선택된 예약을 취소 하시겠습니까?");
 				if(flag==true){
 					//$("input[name='res_no']").val(res_no);
@@ -242,9 +190,9 @@ td:nth-child(8), td:nth-child(9){
 						
 					}
 				})
-			})
+			}) */
 		</script>
-		<!-- 페이징 -->
+		<!-- 페이징 
 		<div id="pagingList">
   	<div>
   		<ul class="pagination">
@@ -260,10 +208,10 @@ td:nth-child(8), td:nth-child(9){
   		</ul>
   	</div>
   </div> 
-  </div>       
+  </div>     -->  
 	
 	
-<%-- <!-- 이전 예약 리스트 -->
+<!-- 이전 예약 리스트 -->
 <div id="beforeMyPage">
 		<table class='table table-bordered'>
 			<tr class='active'>
@@ -285,8 +233,8 @@ td:nth-child(8), td:nth-child(9){
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
 				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td> 
-				<td><input type="checkbox" id="chkBox"></td>
+				<%-- <td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td> 
+				<td><input type="checkbox" id="chkBox"></td> --%>
 			</tr>
 			
 		</c:forEach>
@@ -296,17 +244,17 @@ td:nth-child(8), td:nth-child(9){
   	<div>
   		<ul class="pagination">
   			<c:if test="${joinPageMaker.prev }">
-  				<li><a href="myPage?page=${joinPageMaker.startPage-1 }">&laquo;</a></li>
+  				<li><a href="beforeMyPage?page=${joinPageMaker.startPage-1 }">&laquo;</a></li>
   			</c:if>
   			<c:forEach begin="${joinPageMaker.startPage }" end="${joinPageMaker.endPage }" var="idx">
-  				<li ${joinPageMaker.cri.page == idx? 'class="active"':'' }><a href="myPage?page=${idx }">${idx }</a></li>
+  				<li ${joinPageMaker.cri.page == idx? 'class="active"':'' }><a href="beforeMyPage?page=${idx }">${idx }</a></li>
   			</c:forEach>
   			<c:if test="${joinPageMaker.next }">
-  				<li><a href="myPage?page=${joinPageMaker.endPage+1 }">&raquo;</a></li>
+  				<li><a href="beforeMyPage?page=${joinPageMaker.endPage+1 }">&raquo;</a></li>
   			</c:if>
   		</ul>
   	</div>
   </div>
-		</div> --%> 
+		</div> 
 </div>
 <%@ include file="../common/footer.jsp"%>
