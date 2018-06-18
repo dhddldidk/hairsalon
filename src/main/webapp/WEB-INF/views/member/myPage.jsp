@@ -169,7 +169,7 @@ td:nth-child(8), td:nth-child(9){
 				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }" data-resstart="${resstart }">예약취소</button></td>
 				<td>${item.member.u_name }</td>
 				<td>${item.member.u_phone }</td>
-				<td><input type="checkbox" id="chkBox" value="${item.res_usage }" ${item.res_usage? 'checked="checked"':'' }></td>
+				<td><input type="checkbox" class="chkBox" name="res_usage" ${item.res_usage? 'checked="checked"':'' }></td>
 			</tr>
 		</c:forEach>
 			<tr>
@@ -211,14 +211,7 @@ td:nth-child(8), td:nth-child(9){
 				var currDate = new Date();
 				var curDateOfYear = currDate.getFullYear()+"-"+(currDate.getMonth()+1)+"-"+currDate.getDate();
 				
-				/*var currDate2 = new Date();
-				 var curYear = currDate2.getFullYear();
-				var curMonth = currDate2.getMonth()+1;
-				var curDate = currDate2.getDate()-1;
-				var curTime = "23:59:59";
 				
-				currDate2 = curYear+"-"+curMonth+"-"+curDate+"-"+curTime;
-				var beforeDate = new Date(currDate2); */
 				
 				//일반회원이 예약 취소시 예약 하루 전 날 까지만 취소할 수 있음
 				if(${login.u_flag==1}){
@@ -255,6 +248,20 @@ td:nth-child(8), td:nth-child(9){
 						console.log(clickedVal);
 						
 						clickedVal.remove();
+						
+					}
+				})
+			})
+			
+			$(document).on("click",".chkBox",function(){
+				var chkFlag = $('input[name="res_usage"]:checked').val();
+				
+				$.ajax({
+					type:"get",
+					url:"${pageContext.request.contextPath}/member/checkBoxFlag?flag="+chkFlag,
+					dataType:"text",
+					success:function(result){
+						console.log(result);
 						
 					}
 				})

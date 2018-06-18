@@ -116,7 +116,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 
 		/* var row = Math.ceil(theDay + last[m]) / 7; */
 		var span = document.getElementsByTagName("span");
-		span[0].innerHTML = y + "." + (m + 1);
+		/* span[0].innerHTML = y + "." + (m + 1); */
 
 		var calendar = "<table class='table table-bordered'>";
 		

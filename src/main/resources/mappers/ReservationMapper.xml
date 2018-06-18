@@ -80,4 +80,19 @@
 		between date_format(now(),'%Y-%m-%d 00:00:00') 
 		and date_format(now(),'%Y-%m-%d 23:59:59')
 	</select>
+	
+	<!-- 관리자 차트 시간대별 월별 매출 -->
+	<select id="monthlyChartByTime" resultType="ChartVO">
+	<![CDATA[
+select 
+		sum(if(date_format(r.res_start,'%H')<13, h.hair_price, 0)) as morning,
+		sum(if(date_format(r.res_start,'%H')>=13 and date_format(r.res_start,'%H')<17, h.hair_price, 0)) as afternoon,
+		sum(if(date_format(r.res_start,'%H')>=17, h.hair_price, 0)) as evening,
+		date_format(r.res_start,'%m') as month
+from reservation r 
+	left join hair_style h on r.hair_no=h.hair_no 
+	left join user u on r.u_id=u.u_id
+where date_format(r.res_start,'%m')=#{month}
+]]>
+	</select>
 </mapper>

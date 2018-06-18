@@ -1,5 +1,6 @@
 package com.dgit.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dgit.domain.ChartVO;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.LoginDTO;
 import com.dgit.domain.MemberVO;
@@ -163,4 +165,33 @@ public class MemberController {
 		return entity;
 		
 	}
+	
+	//차트 화면
+		@RequestMapping(value="/myChart", method=RequestMethod.GET)
+		public void myChartGet(Model model) throws Exception{
+			logger.info("myChart Get ......");
+			logger.info("시간별 월 매출현황 : ");
+			List<ChartVO> chartVO = new ArrayList<>();
+			for(int i=1; i<13; i++){
+				if(i<10){
+					logger.info("시간별 월 매출현황 : "+ resService.monthlyChartByTime("0"+i));
+					ChartVO chart = resService.monthlyChartByTime("0"+i);
+					chartVO.add(chart);
+				}else if(i>9){
+					logger.info("시간별 월 매출현황 : "+ resService.monthlyChartByTime(""+i));
+					ChartVO chart = resService.monthlyChartByTime(""+i);
+					chartVO.add(chart);
+				}
+			}
+			model.addAttribute("chartVO", chartVO);
+		}
+		
+		//noshow처리
+		@ResponseBody
+		@RequestMapping(value="/checkBoxFlag", method=RequestMethod.GET)
+		public void checkBoxFlagrGet(boolean flag){
+			logger.info("checkBoxFlag Get ......"+flag);
+			
+			
+		}
 }

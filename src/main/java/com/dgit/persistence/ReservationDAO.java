@@ -1,7 +1,9 @@
 package com.dgit.persistence;
 
 import java.util.List;
+import java.util.Map;
 
+import com.dgit.domain.ChartVO;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.ReservationVO;
 
@@ -26,4 +28,7 @@ public interface ReservationDAO {
 	
 	//관리자 오늘의 예약현황
 	public List<ReservationVO> todayReservation() throws Exception;
+	
+	//관리자 시간별 월 매출 현황
+	public ChartVO monthlyChartByTime(String month) throws Exception;
 }
