@@ -108,6 +108,7 @@
       		</c:if>
       		<c:if test="${login.u_flag==0}"> 		
       			<li><a href="${pageContext.request.contextPath }/member/myPage"><span class="glyphicon glyphicon-user"></span> 예약현황</a></li>
+      			<li><a href="${pageContext.request.contextPath }/member/myChart"><span class="glyphicon glyphicon-usd"></span> 월 매출현황</a></li>
       		</c:if>     
     	</c:if>
     
