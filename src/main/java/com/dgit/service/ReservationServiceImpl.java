@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dgit.domain.ChartVO;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.ReservationVO;
 import com.dgit.persistence.ReservationDAO;
@@ -68,6 +69,12 @@ public class ReservationServiceImpl implements ReservationService {
 	public List<ReservationVO> todayReservation() throws Exception {
 		
 		return dao.todayReservation();
+	}
+
+	@Override
+	public ChartVO monthlyChartByTime(String month) throws Exception {
+		
+		return dao.monthlyChartByTime(month);
 	}
 
 	
