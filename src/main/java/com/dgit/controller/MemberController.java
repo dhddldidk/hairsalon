@@ -185,4 +185,13 @@ public class MemberController {
 			}
 			model.addAttribute("chartVO", chartVO);
 		}
+		
+		//noshow처리
+		@ResponseBody
+		@RequestMapping(value="/checkBoxFlag", method=RequestMethod.GET)
+		public void checkBoxFlagrGet(boolean flag){
+			logger.info("checkBoxFlag Get ......"+flag);
+			
+			
+		}
 }
