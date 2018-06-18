@@ -154,7 +154,11 @@ td:nth-child(8), td:nth-child(9){
 			</c:forEach>
 		</c:if>
 		<c:if test = "${login.u_flag==0 }">
+		<c:set var="total" value="0"></c:set>
 			<c:forEach var="item" items="${todayReservation }">
+			
+			<c:set var="price" value="${item.hairstyleVo.hair_price }"></c:set>
+			<c:set var="total" value="${total=total+price }"></c:set> 
 			<tr>
 				<td>${item.res_no }</td>
 				<fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm" var="resstart"/>
@@ -168,6 +172,18 @@ td:nth-child(8), td:nth-child(9){
 				<td><input type="checkbox" id="chkBox" value="${item.res_usage }" ${item.res_usage? 'checked="checked"':'' }></td>
 			</tr>
 		</c:forEach>
+			<tr>
+				<td>총매출</td>
+				<td colspan="3"></td>
+				<!-- <td></td>
+				<td></td>  -->
+				<fmt:formatNumber value="${total }" type="number" var="total"/> 
+				<td>${total }</td>
+				<td colspan="4"></td>
+				<!-- <td></td>
+				<td></td>
+				<td></td> -->
+			</tr>
 		</c:if>
 		</table>
 		
