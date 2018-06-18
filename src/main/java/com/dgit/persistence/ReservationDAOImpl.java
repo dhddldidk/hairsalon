@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dgit.domain.ChartVO;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.ReservationVO;
 
@@ -81,6 +82,12 @@ public class ReservationDAOImpl implements ReservationDAO {
 	public List<ReservationVO> todayReservation() throws Exception {
 		
 		return session.selectList(namespace+".todayReservation");
+	}
+
+	@Override
+	public ChartVO monthlyChartByTime(String month) throws Exception {
+		
+		return session.selectOne(namespace+".monthlyChartByTime", month);
 	}
 
 }
