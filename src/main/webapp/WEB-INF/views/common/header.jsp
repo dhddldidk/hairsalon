@@ -80,6 +80,7 @@
 		background: white;
 		/* border:1px solid red; */
 	}
+	
 </style>
 <body>
 <div id="mainLogo">
