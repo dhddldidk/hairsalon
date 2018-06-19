@@ -169,7 +169,7 @@ td:nth-child(8), td:nth-child(9){
 				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }" data-resstart="${resstart }">예약취소</button></td>
 				<td>${item.member.u_name }</td>
 				<td>${item.member.u_phone }</td>
-				<td><input type="checkbox" class="chkBox" value="${item.res_usage}" name="res_usage" ${item.res_usage? 'checked="checked"':'' }></td>
+				<td><input type="checkbox" class="chkBox" value="${item.res_usage}" name="res_usage" ${item.res_usage? 'checked="checked"':'' } data-resno="${item.res_no }"></td>
 			</tr>
 		</c:forEach>
 			<tr>
@@ -255,10 +255,12 @@ td:nth-child(8), td:nth-child(9){
 			
 			$(document).on("click",".chkBox",function(){
 				var chkFlag = $(this).is(':checked');
+				var res_no = $(this).attr("data-resno");    
+				
 				
 				$.ajax({
 					type:"get",
-					url:"${pageContext.request.contextPath}/member/checkBoxFlag?flag="+chkFlag,
+					url:"${pageContext.request.contextPath}/member/checkBoxFlag?flag="+chkFlag+"&res_no="+res_no,
 					dataType:"text",
 					success:function(result){
 						console.log(result);
