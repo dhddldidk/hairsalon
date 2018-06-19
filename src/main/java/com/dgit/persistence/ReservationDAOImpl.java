@@ -90,4 +90,12 @@ public class ReservationDAOImpl implements ReservationDAO {
 		return session.selectOne(namespace+".monthlyChartByTime", month);
 	}
 
+	@Override
+	public void updateNoshow(boolean res_usage, int res_no) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("res_no", res_no);
+		map.put("res_usage", res_usage);
+		session.update(namespace+".updateNoshow",map);
+	}
+
 }
