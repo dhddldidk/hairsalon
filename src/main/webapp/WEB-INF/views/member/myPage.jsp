@@ -169,7 +169,7 @@ td:nth-child(8), td:nth-child(9){
 				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }" data-resstart="${resstart }">예약취소</button></td>
 				<td>${item.member.u_name }</td>
 				<td>${item.member.u_phone }</td>
-				<td><input type="checkbox" class="chkBox" name="res_usage" ${item.res_usage? 'checked="checked"':'' }></td>
+				<td><input type="checkbox" class="chkBox" value="${item.res_usage}" name="res_usage" ${item.res_usage? 'checked="checked"':'' }></td>
 			</tr>
 		</c:forEach>
 			<tr>
@@ -254,7 +254,7 @@ td:nth-child(8), td:nth-child(9){
 			})
 			
 			$(document).on("click",".chkBox",function(){
-				var chkFlag = $('input[name="res_usage"]:checked').val();
+				var chkFlag = $(this).is(':checked');
 				
 				$.ajax({
 					type:"get",
