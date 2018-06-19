@@ -95,4 +95,9 @@ from reservation r
 where date_format(r.res_start,'%m')=#{month}
 ]]>
 	</select>
+	
+	<!-- 관리자 예약현황 noshow 체크박스처리 -->
+	<update id="updateNoshow">
+		update reservation set res_usage=#{res_usage} where res_no=#{res_no}
+	</update>
 </mapper>
