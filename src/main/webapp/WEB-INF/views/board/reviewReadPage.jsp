@@ -232,6 +232,12 @@
 			<a class="btn btn-danger">삭제하기</a>
 		</div>
 			{{/if}}
+			{{#ifModify reply_writer}}
+		<div class="timeline-footer">
+			<a class="btn btn-success" data-toggle="modal" data-target="#modifyModal">수정하기</a>
+			<a class="btn btn-danger">삭제하기</a>
+		</div>
+			{{/ifModify}}
 			{{#ifadmin reply_writer}}
 		<div class="timeline-footer">
 			<a class="btn btn-danger">삭제하기</a>
@@ -248,16 +254,25 @@
   //보통 매개변수 하나만 받음 그데 매개변수 처리하기 위해서 하나 더 받음
   //댓글 단 사람만 수정할 수 있도록 처리하기
   Handlebars.registerHelper("if", function(reply_writer, options){
-	  if(reply_writer == "${login.u_id}"){
+	  if(reply_writer == "${login.u_id}" && ${login.u_flag}==1){
 		  return options.fn(this);// if문에 해당하는 div를 그대로 반환할 수 있음(수정, 삭제 버튼이 들어감) 
 	  }else{
 		  return '';
 	  }
   })
   
-  Handlebars.registerHelper("ifadmin", function(reply_writer, options){
-	  if(${login.u_flag}==0){
+  Handlebars.registerHelper("ifModify", function(reply_writer, options){
+	  if(reply_writer == "${login.u_id}" && ${login.u_flag}==0){
 		  return options.fn(this);// if문에 해당하는 div를 그대로 반환할 수 있음(수정, 삭제 버튼이 들어감) 
+	  }else{
+		  return '';
+	  }
+  })
+  
+  
+  Handlebars.registerHelper("ifadmin", function(reply_writer, options){
+	  if(reply_writer != "${login.u_id}" && ${login.u_flag}==0){
+		  return options.fn(this);// if문에 해당하는 div를 그대로 반환할 수 있음(삭제 버튼이 들어감) 
 	  }else{
 		  return '';
 	  }
