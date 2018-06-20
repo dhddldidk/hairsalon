@@ -19,4 +19,5 @@ public interface ReplyDAO {
 	
 	public void updateReply(ReplyVO vo) throws Exception;
 	
+	public int getRbno(int reply_no) throws Exception;
 }
