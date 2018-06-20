@@ -129,15 +129,20 @@ public class MemberController {
 			for(ReservationVO vo : joinList){
 				logger.info("이전예약 : "+vo.toString());
 			}
+			List<ReservationVO> memberList = resService.selectAllMemberList(cri);
 			
 			model.addAttribute("joinList", joinList);
+			model.addAttribute("memberList", memberList);
 			
 			PageMaker joinPageMaker = new PageMaker();
 			joinPageMaker.setCri(cri);
 			joinPageMaker.setTotalCount(resService.beforeMyPageTotalCount(loginDTO.getU_id()));
 			model.addAttribute("joinPageMaker", joinPageMaker);
 			
-			/////////////////////
+			PageMaker memberPageMaker = new PageMaker();
+			memberPageMaker.setCri(cri);
+			memberPageMaker.setTotalCount(resService.numberOfTotalMember());
+			model.addAttribute("memberPageMaker",memberPageMaker);
 			
 		}
 	
@@ -189,11 +194,20 @@ public class MemberController {
 		//noshow처리
 		@ResponseBody
 		@RequestMapping(value="/checkBoxFlag", method=RequestMethod.GET)
-		public void checkBoxFlagrGet(boolean flag, int res_no) throws Exception{
+		public ResponseEntity<String> checkBoxFlagrGet(boolean flag, int res_no) throws Exception{
 			logger.info("checkBoxFlag Get ......"+flag);
 			logger.info("checkBoxFlag Get ......"+res_no);
 			
-			resService.updateNoshow(flag, res_no);
 			
+			ResponseEntity<String> entity = null;
+			try{
+				resService.updateNoshow(flag, res_no);
+				
+				entity = new ResponseEntity<>("success", HttpStatus.OK);
+			}catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return entity;
 		}
 }
