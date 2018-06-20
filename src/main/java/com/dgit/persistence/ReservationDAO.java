@@ -10,7 +10,11 @@ import com.dgit.domain.SearchCriteria;
 
 public interface ReservationDAO {
 
+	//예약 일주일의 모든 리스트
 	public List<ReservationVO> selectAllReservation(String res_start, String res_end) throws Exception;
+	
+	//관리자 예약 일주일의 모든 리스트
+	public List<ReservationVO> selectAllReservationAdmin(String res_start, String res_end) throws Exception;
 	
 	public void insertReservation(ReservationVO vo) throws Exception;
 	
