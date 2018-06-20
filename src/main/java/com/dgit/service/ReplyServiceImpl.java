@@ -41,10 +41,15 @@ public class ReplyServiceImpl implements ReplyService {
 		return replyDao.replyTotalCount(rb_no);
 	}
 
+	@Transactional
 	@Override
 	public void deleteReply(int reply_no) throws Exception {
-		replyDao.deleteReply(reply_no);
 		
+		//getBno-게시판 번호를 알 수 있음
+		int rb_no = replyDao.getRbno(reply_no);
+		
+		replyDao.deleteReply(reply_no);
+		boardDao.updateReplyCnt(rb_no, -1);
 	}
 
 	@Override
