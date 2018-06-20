@@ -114,121 +114,52 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 			</c:if>
 			<c:if test = "${login.u_flag==0 }">
 				<li><h2>오늘의 예약 리스트</h2></li>
-				<li><h2>이전 예약 리스트</h2></li>
+				<li><h2>회원 리스트</h2></li>
 			</c:if>
 		</ul>
-		<%-- <div id="myPageManagement">
-		<table class='table table-bordered'>
-			<tr class='active'>
-				<th>번호</th>
-				<th>예약 날짜</th>
-				<th>예약 종료 시간</th>
-				<th>헤어 스타일</th>
-				<th>가격</th>
-				<th>예약 취소</th>
-				<th>이용 현황</th>
-			</tr>
-			
-			
-		<c:forEach var="item" items="${myList }">
-			
-			<tr>
-				<td>${item.res_no }</td>
-				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
-				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
-				<td>${item.hairstyleVo.hair_type }</td>
-				<td><fmt:formatNumber value="${item.hairstyleVo.hair_price }" type="number"/></td>
-				<td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td>
-				<td><input type="checkbox" id="chkBox"></td>
-			</tr>
-			
-		</c:forEach>
-		</table> --%>
 		
 		<script type="text/javascript">
 		
 		var number = 1;
 		$("#myPageContainer #myPageMenu li:first-child").click(function(){
-			/* $("#myPageManagement").css("display", "block");
-			$("#beforeMyPage").css("display", "none"); */
 			
 			location.href="${pageContext.request.contextPath}/member/myPage";
 		})
 		$("#myPageContainer #myPageMenu li:last-child").click(function(){
-			/* $("#myPageManagement").css("display", "none");
-			$("#beforeMyPage").css("display", "block"); */
-			
 			
 			location.href="${pageContext.request.contextPath}/member/beforeMyPage?page="+number; 
 		})
 		
-		
-				//var res_no="";
-			/* $(".cancel").click(function(){
-				
-				var clickedVal = $(this).parent().parent();
-				res_no = $(this).attr("data-resno");        
-				//alert("res_no : "+$(this).attr("data-resno"));
-				var flag = confirm("선택된 예약을 취소 하시겠습니까?");
-				if(flag==true){
-					//$("input[name='res_no']").val(res_no);
-					$("#f1").attr("action","myPage");
-					$("#f1").submit();
-				}else{
-					return false;
-				}
-				
-				$.ajax({
-					type:"post",
-					url:"${pageContext.request.contextPath}/member/myPage?res_no="+res_no,
-					dataType:"text",
-					success:function(result){
-						console.log(result);
-						console.log(clickedVal);
-						
-						clickedVal.remove();
-						
-					}
-				})
-			}) */
 		</script>
-		<!-- 페이징 
-		<div id="pagingList">
-  	<div>
-  		<ul class="pagination">
-  			<c:if test="${pageMaker.prev }">
-  				<li><a href="myPage?page=${pageMaker.startPage-1 }">&laquo;</a></li>
-  			</c:if>
-  			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-  				<li ${pageMaker.cri.page == idx? 'class="active"':'' }><a href="myPage?page=${idx }">${idx }</a></li>
-  			</c:forEach>
-  			<c:if test="${pageMaker.next }">
-  				<li><a href="myPage?page=${pageMaker.endPage+1 }">&raquo;</a></li>
-  			</c:if>
-  		</ul>
-  	</div>
-  </div> 
-  </div>     -->  
+	 
 	
 	
 <!-- 이전 예약 리스트 -->
 <div id="beforeMyPage">
 		<table class='table table-bordered'>
 			<tr class='active'>
+			<c:if test = "${login.u_flag==1 }">
 				<th>번호</th>
 				<th>예약 날짜</th>
 				<th>예약 종료 시간</th>
 				<th>헤어 스타일</th>
 				<th>가격</th>
-				<!-- <th>예약 취소</th>
-				<th>이용 현황</th> -->
+			</c:if>	
+			<c:if test = "${login.u_flag==0 }">
+				<th>번호</th>
+				<th>이름</th>
+				<th>아이디</th>
+				<th>연락처</th>
+				<th>이메일</th>
+				<th>No Show</th>
+				
+			</c:if>
 			</tr>
 			
-			
+		<c:if test = "${login.u_flag==1 }">		
 		<c:forEach var="item" items="${joinList }">
-			
 			<tr>
-				<td>${item.res_no }</td>
+				<td>${item.res_no }</td> 
 				<td><fmt:formatDate value="${item.res_start }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td><fmt:formatDate value="${item.res_end }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td>${item.hairstyleVo.hair_type }</td>
@@ -238,8 +169,27 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
 			</tr>
 			
 		</c:forEach>
+		</c:if>
+		<c:set var="no" value="${(memberPageMaker.cri.page-1)*10 }"></c:set>
+		<c:if test = "${login.u_flag==0 }">		                     
+		<c:forEach var="item" items="${memberList }">
+			
+			<tr>
+				<td>${no=no+1 }</td> 
+				<td>${item.member.u_name}</td>
+				<td>${item.member.u_id }</td>
+				<td>${item.member.u_phone }</td>
+				<td>${item.member.u_email }</td>
+				<td>${item.member.u_noshow }</td>
+				<%-- <td><button class="btn btn-danger cancel" data-resno="${item.res_no }">예약취소</button></td> 
+				<td><input type="checkbox" id="chkBox"></td> --%>
+			</tr>
+			
+		</c:forEach>
+		</c:if>
 		</table>
 				<!-- 페이징 -->
+				<c:if test = "${login.u_flag==1 }">
 		<div id="pagingList">
   	<div>
   		<ul class="pagination">
@@ -255,6 +205,26 @@ td:nth-child(4), td:nth-child(5), td:nth-child(7){
   		</ul>
   	</div>
   </div>
+  </c:if>
+  
+  <!-- 페이징 -->
+				<c:if test = "${login.u_flag==0 }">
+		<div id="pagingList">
+  	<div>
+  		<ul class="pagination">
+  			<c:if test="${memberPageMaker.prev }">
+  				<li><a href="beforeMyPage?page=${memberPageMaker.startPage-1 }">&laquo;</a></li>
+  			</c:if>
+  			<c:forEach begin="${memberPageMaker.startPage }" end="${memberPageMaker.endPage }" var="idx">
+  				<li ${memberPageMaker.cri.page == idx? 'class="active"':'' }><a href="beforeMyPage?page=${idx }">${idx }</a></li>
+  			</c:forEach>
+  			<c:if test="${memberPageMaker.next }">
+  				<li><a href="beforeMyPage?page=${memberPageMaker.endPage+1 }">&raquo;</a></li>
+  			</c:if>
+  		</ul>
+  	</div>
+  </div>
+  </c:if>
 		</div> 
 </div>
 <%@ include file="../common/footer.jsp"%>
