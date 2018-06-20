@@ -83,6 +83,18 @@ public class ReservationServiceImpl implements ReservationService {
 		
 	}
 
+	@Override
+	public List<ReservationVO> selectAllMemberList(Criteria cri) throws Exception {
+		
+		return dao.selectAllMemberList(cri);
+	}
+
+	@Override
+	public int numberOfTotalMember() throws Exception {
+		
+		return dao.numberOfTotalMember();
+	}
+
 	
 
 }
