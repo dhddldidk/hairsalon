@@ -189,9 +189,11 @@ public class MemberController {
 		//noshow처리
 		@ResponseBody
 		@RequestMapping(value="/checkBoxFlag", method=RequestMethod.GET)
-		public void checkBoxFlagrGet(boolean flag){
+		public void checkBoxFlagrGet(boolean flag, int res_no) throws Exception{
 			logger.info("checkBoxFlag Get ......"+flag);
+			logger.info("checkBoxFlag Get ......"+res_no);
 			
+			resService.updateNoshow(flag, res_no);
 			
 		}
 }

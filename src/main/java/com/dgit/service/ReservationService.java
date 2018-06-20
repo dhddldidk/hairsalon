@@ -30,4 +30,7 @@ public interface ReservationService {
 	
 	//관리자 시간별 월 매출 현황
 	public ChartVO monthlyChartByTime(String month) throws Exception;
+	
+	//관리자 예약현황 체크박스 noshow
+	public void updateNoshow(boolean res_usage,int res_no) throws Exception;
 }

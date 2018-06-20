@@ -77,6 +77,12 @@ public class ReservationServiceImpl implements ReservationService {
 		return dao.monthlyChartByTime(month);
 	}
 
+	@Override
+	public void updateNoshow(boolean res_usage,int res_no) throws Exception {
+		dao.updateNoshow(res_usage,res_no);
+		
+	}
+
 	
 
 }
