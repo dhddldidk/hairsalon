@@ -98,4 +98,16 @@ public class ReservationDAOImpl implements ReservationDAO {
 		session.update(namespace+".updateNoshow",map);
 	}
 
+	@Override
+	public List<ReservationVO> selectAllMemberList(Criteria cri) throws Exception {
+		
+		return session.selectList(namespace+".selectAllMemberList", cri);
+	}
+
+	@Override
+	public int numberOfTotalMember() throws Exception {
+		
+		return session.selectOne(namespace+".numberOfTotalMember");
+	}
+
 }
