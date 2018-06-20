@@ -25,6 +25,15 @@
 		and  res_end between #{res_start} and #{res_end}
 	</select>
 	
+	<!-- 관리자 예약된 리스트들 가져오기 -->
+	<select id="selectAllReservationAdmin" parameterType="map" resultMap="resHairStyleAndMember">
+		select * from user u 
+		left join reservation r 
+		on r.u_id=u.u_id
+		where res_start between #{res_start} and #{res_end}
+		and  res_end between #{res_start} and #{res_end}
+	</select>
+	
 	<!-- 예약 insert -->
 	<insert id="insertReservation">
 		insert into reservation(res_start, res_end, hair_no, u_id) values
