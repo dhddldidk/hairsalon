@@ -125,4 +125,10 @@ public class ReviewBoardServiceimpl implements ReviewBoardService {
 		
 	}
 
+	@Override
+	public List<ReviewBoardVO> selectMainReview() throws Exception {
+		
+		return dao.selectMainReview();
+	}
+
 }
