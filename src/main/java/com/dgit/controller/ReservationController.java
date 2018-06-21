@@ -44,6 +44,16 @@ public class ReservationController {
 		HttpSession session = request.getSession();
 		LoginDTO loginDTO = (LoginDTO)session.getAttribute("login");
 		
+		
+		logger.info("destt..........................."+session.getAttribute("dest"));
+		
+		//로그인을 하지 않았을 경우 
+		//로그인을 하게 되면 예약페이지로 가도록 그 경로를 지정
+		//(interceptor에 후기게시판 dest만 저장되어 있기 때문에)
+		
+		session.getAttribute("dest");
+		session.setAttribute("dest", "/hairsalon/reservation/reservation");
+		logger.info("destt..변경 후 ......................."+session.getAttribute("dest"));
 		//select 박스
 		List<HairStyleVO> hairList = hairService.selectHairStyle();
 		
