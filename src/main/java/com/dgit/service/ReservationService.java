@@ -10,6 +10,9 @@ public interface ReservationService {
 	
 	public List<ReservationVO> selectAllReservation(String res_start, String res_end) throws Exception;
 	
+	//관리자 예약 일주일의 모든 리스트
+	public List<ReservationVO> selectAllReservationAdmin(String res_start, String res_end) throws Exception;
+	
 	public void insertReservation(ReservationVO vo) throws Exception;
 	
 	//마이페이지
@@ -33,4 +36,10 @@ public interface ReservationService {
 	
 	//관리자 예약현황 체크박스 noshow
 	public void updateNoshow(boolean res_usage,int res_no) throws Exception;
+	
+	//관리자 예약현황 모든회원 리스트
+	public List<ReservationVO> selectAllMemberList(Criteria cri) throws Exception;
+	
+	//모든회원 수 
+	public int numberOfTotalMember() throws Exception;
 }

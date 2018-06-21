@@ -53,4 +53,11 @@
 	<insert id="replaceHairAttach">
 		insert into hair_attach(hair_filename, hair_no) values (#{hair_filename},#{hair_no})
 	</insert>
+	
+	<!-- 헤어스타일 메인화면 -->
+	<select id="selectMainHairStyle">
+		select * from hair_style hs
+		left join hair_attach ha
+		on hs.hair_no=ha.hair_no
+	</select>
 </mapper>

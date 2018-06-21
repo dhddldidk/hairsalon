@@ -101,4 +101,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update review set rb_replycnt = rb_replycnt + #{amount}
 		where rb_no = #{rb_no}
 	</update>
+	
+	<!-- 메인화면  최신 후기 4개-->
+	<select id="selectMainReview" resultType="ReviewBoardVO">
+		select * from review order by rb_no desc limit 4
+	</select>
 </mapper>

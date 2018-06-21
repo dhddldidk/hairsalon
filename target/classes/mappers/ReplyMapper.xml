@@ -20,4 +20,9 @@
 	<update id="updateReply">
 		update reply set reply_content = #{reply_content}, reply_update = now() where reply_no=#{reply_no}
 	</update>
+	
+	<!-- 댓글 번호로 게시글 번호 가져오기 -->
+	<select id="getRbno" resultType="int">
+		select rb_no from reply where reply_no=#{reply_no}                
+	</select>
 </mapper>

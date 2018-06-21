@@ -85,7 +85,7 @@
 <body>
 <div id="mainLogo">
 	<div id="mainHeader">
-		<h1><a href="${pageContext.request.contextPath }/board/mainPage"><span>Neko</span>Salon</a></h1>
+		<h1><a href="${pageContext.request.contextPath }/main/mainPage"><span>Neko</span>Salon</a></h1>
 	</div>
 	
 </div>
@@ -95,10 +95,24 @@
       <a class="navbar-brand" href="#"></a>
     </div>
     <ul class="nav navbar-nav" id="introLi">
-      <li><a href="${pageContext.request.contextPath }/board/mainPage">HairSalon 소개</a></li>
+    <c:if test="${login == null }">
+      <li><a href="${pageContext.request.contextPath }/main/mainPage">HairSalon 소개</a></li>
       <li><a href="${pageContext.request.contextPath }/reservation/reservation">예약</a></li>
       <li><a href="${pageContext.request.contextPath }/hairstyle/hairstyleList">헤어스타일</a></li>
       <li><a href="${pageContext.request.contextPath }/board/reviewListPage">고객센터</a></li>
+     </c:if>
+     
+     <c:if test="${login != null }">
+      <li><a href="${pageContext.request.contextPath }/main/mainPage">HairSalon 소개</a></li>
+      <c:if test="${login.u_flag==1}"> 
+      <li><a href="${pageContext.request.contextPath }/reservation/reservation">예약</a></li>
+      </c:if>
+      <c:if test="${login.u_flag==0}"> 
+      <li><a href="${pageContext.request.contextPath }/reservation/reservationAdmin">예약</a></li>
+      </c:if>
+      <li><a href="${pageContext.request.contextPath }/hairstyle/hairstyleList">헤어스타일</a></li>
+      <li><a href="${pageContext.request.contextPath }/board/reviewListPage">고객센터</a></li>
+     </c:if>
     </ul>
     <ul class="nav navbar-nav navbar-right">
     	<c:if test="${login != null }">

@@ -97,7 +97,7 @@ public class UploadFileUtils {
 		//뽑은 이미지로 작은 이미지를 만듬 - 파일이 아니라 데이터로만 존재가 됨
 		BufferedImage destImg = Scalr.resize(sourceImg, 
 											Scalr.Method.AUTOMATIC,
-											Scalr.Mode.FIT_TO_HEIGHT,100);//Thumbnail의 높이 100px고정
+											Scalr.Mode.FIT_TO_HEIGHT,200);//Thumbnail의 높이 100px고정
 	
 		
 		//작은 이미지로 파일을 만듬

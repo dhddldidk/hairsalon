@@ -41,4 +41,7 @@ public interface ReviewBoardDAO {
 	//파일 수정-삭제 후 다시 업로드
 	public void deleteAttach(int rb_no, String att_filename) throws Exception;
 	public void replaceAttach(String att_filename, int rb_no) throws Exception;
+	
+	//메인화면 최신 리뷰 4개
+	public List<ReviewBoardVO> selectMainReview() throws Exception;
 }

@@ -33,4 +33,7 @@ public interface ReviewBoardService {
 	
 	//후기게시판 댓글 개수
 	public void updateReplyCnt(int rb_no, int amount) throws Exception;
+	
+	//메인화면 최신 리뷰 4개
+	public List<ReviewBoardVO> selectMainReview() throws Exception;
 }

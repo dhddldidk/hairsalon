@@ -111,7 +111,7 @@ td:nth-child(8), td:nth-child(9){
 			</c:if>
 			<c:if test = "${login.u_flag==0 }">
 				<li><h2>오늘의 예약 리스트</h2></li>
-				<li><h2>이전 예약 리스트</h2></li>
+				<li><h2>회원 리스트</h2></li>
 			</c:if>
 		</ul>
 		<div id="myPageManagement">

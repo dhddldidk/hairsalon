@@ -53,4 +53,10 @@ public class ReplyDAOImpl implements ReplyDAO {
 		
 	}
 
+	@Override
+	public int getRbno(int reply_no) throws Exception {
+		return session.selectOne(namespace+".getRbno", reply_no);
+		
+	}
+
 }

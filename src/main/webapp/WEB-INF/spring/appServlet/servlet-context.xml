@@ -45,6 +45,7 @@
 			<mapping path="/board/reviewUpdatePage"></mapping>
 			<mapping path="/board/reviewRegisterPage"></mapping>
 			<mapping path="/board/reviewDeletePage"></mapping>
+			<!-- <mapping path="/reservation/reservation"></mapping> -->
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>

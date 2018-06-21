@@ -40,6 +40,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			session.setAttribute("login", loginDTO);
 			
 			Object dest = session.getAttribute("dest");
+			logger.info("dest"+dest);
 			String path = "";
 			
 			if(dest != null){

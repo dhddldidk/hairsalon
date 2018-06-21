@@ -116,7 +116,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 
 		/* var row = Math.ceil(theDay + last[m]) / 7; */
 		var span = document.getElementsByTagName("span");
-		span[0].innerHTML = y + "." + (m + 1);
+		/* span[0].innerHTML = y + "." + (m + 1); */
 
 		var calendar = "<table class='table table-bordered'>";
 		
@@ -331,7 +331,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		//예약된 리스트들 가져오기
 		$.ajax({
 			type:"get",
-			url:"${pageContext.request.contextPath}/reservation/resAll",
+			url:"${pageContext.request.contextPath}/reservation/resAllAdmin",
 			data:sendData,
 			dataType:"json",
 			headers:{"Content-Type":"application/json"},
@@ -382,23 +382,32 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					//시간이 속해 있는 th의 부모인 tr을 찾은 후
 					//그 자식인 td를 찾아 css처리
 					//$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","red"); 
+					
+					var name = obj.member.u_name+"<br>";
+					var phone = obj.member.u_phone;
+					
 					if(hairHours/30==1){
 						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FF7F50").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).html(name+"&nbsp;"+phone);
+					
 					}
 					if(hairHours/30==2){
 						
 						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#A23BEC").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).html(name+"&nbsp;"+phone);
 						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#A23BEC").attr("data-check","reserved");
 					}
 					
 					if(hairHours/30==4){
 						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).html(name+"&nbsp;"+phone);
 						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
 						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
 						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#FFD801").attr("data-check","reserved");
 					}
 					if(hairHours/30==6){
 						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
+						$("th:contains('"+resTime+"')").parent().find("td").eq(index-1).html(name+"&nbsp;"+phone);
 						$("th:contains('"+resTime+"')").parent().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
 						$("th:contains('"+resTime+"')").parent().next().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
 						$("th:contains('"+resTime+"')").parent().next().next().next().find("td").eq(index-1).css("background","#1589FF").attr("data-check","reserved");
@@ -416,7 +425,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 </script>
 
 <body>
-
+관리자 화면입니다 
 	<div id="regContainer">
 		<div id="notice">
 			<h4>주의사항</h4>
@@ -449,165 +458,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 			<div id="draw"></div>
 		</div>
 		
-		<script type="text/javascript">
-					//예약을 하려고 table을 눌렀을 때 
-					$(document).on("click", "td", function(){
-						
-						//예약이 된 시간에는 예약 못하도록
-						var colorBg = $(this).css("background");
-						
-						alert("${login}");
-						
-						//var flag=${login==null};
-						//예약을 하려고 테이블을 눌렀을 때 로그인 정보가 없으면
-						if(${login==null}){
-							var flag = confirm("로그인을 해야 예약을 할 수 있습니다. \n 로그인 페이지로 이동하겠습니까?");
-							if(flag){
-								location.href="${pageContext.request.contextPath}/user/login";
-								return false;
-							}else{
-								return false;
-							}
-						}
-						
-						//alert("colorBg"+colorBg);
-						
-						//"rgb(0, 128, 0) none repeat scroll 0% 0% / auto padding-box border-box"
-						//colorBg.startsWith("rgb(0, 128, 0)")
-						//이 값이 있냐 없냐를 true or false로 반환함
-						if(!colorBg.startsWith("rgb(76, 196, 23)")){
-							
-							alert("이미 예약되었습니다.");
-							return false;
-						} 
-						
-						/* $(this).each(function(i, obj){ */
-						
-							var hairTime = Number($("#sWidth option:selected").val());
-							var hairType = $("#sWidth option:selected").html();
-							var hairNo = $("#sWidth option:selected").attr("data-hairno");
-							alert("hariNo : "+hairNo);
-							alert("hairTime : "+hairTime);
-							//td index찾기
-							var tdIndex = $(this).index();
-							
-							//td 시간찾기
-							var tdTime = $(this).parent().find("th").html();
-							
-							//th td에 해당하는 th 속성찾기
-							var thObj =  $(this).parents("table").find("th").eq(tdIndex).attr("data-thisyear");
-							
-							//선택된 td의 예약날짜와 시간
-							var startDate = thObj+" "+tdTime;
-							alert("startDate : "+startDate);
-							
-							const selectedDate = new Date(startDate);
-							const modifiedDate = new Date(selectedDate.valueOf());
-							
-							//현재시간 이전의 날은 선택 못하게 처리
-							const todayDate = new Date().getTime();
-							const preDate = new Date(startDate).getTime();
-							alert("todayDate : "+todayDate);
-							alert("preDate : "+preDate);
-							
-							if(preDate<todayDate){
-								alert("이미 지난 날은 예약할 수 없습니다.\n 날짜를 다시 확인해주세요.");
-								return false;
-							}
-							
-							modifiedDate.setMinutes(modifiedDate.getMinutes()+hairTime);
-							
-							var modYear = modifiedDate.getFullYear();
-							var modMonth = modifiedDate.getMonth()+1;
-							var modDate = modifiedDate.getDate();
-							var modHours = modifiedDate.getHours();
-							var modMins = modifiedDate.getMinutes();
-							alert("hours : "+modHours+"minutes : "+modMins);
-							
-							//정각이면 시간과 분이 11:0으로 나오기 때문에 0을 붙여줌
-							if(modMins==0){
-								modMins = modMins+"0";
-							}
-							
-							var closeTime = modHours +":"+modMins;
-							//마감시간에 가까우면 예약 못하게 처리
-							if(closeTime>'20:00'){
-								alert("선택한 시간이 마감시간에 가깝습니다. \n좀 더 이른 시간을 선택해주세요.");
-								return false;
-							}
-							
-							//중복예약 에러처리
-							//함수에서 보내준 return 값에서 내가 받은게 true인지 false인지 판단해 주면 됨
-							var tdIndex = $(this).index();
-							var trFind = $(this).parent("tr").next();
-							
-							/* if(doubleResCheck(tdIndex, trFind)){//doubleResCheck()함수가 return false를 반환하면
-								return false;//예약하는 곳에서 return false해서 밑으로 못 내려 가게 막음
-							} */
-							//선택한 td의 부모tr
-							var hairTime = Number($("#sWidth option:selected").val());
-							
-							
-							
-							//alert("tdIndex"+tdIndex);
-							
-							
-							//30분은 비교할 필요가 없으므로 (30/30=1) 한칸은 색칠할 수 있음
-							//var i를 1부터 시작함(두번째 칸부터 비교하겠음)
-							 for(var i =1; i<(hairTime/30); i++){
-								
-								//선택한 td의 바로 밑에 칸(선택한 td와 같은 인덱스)
-								var comparingTd = trFind.find("td:nth-child("+(tdIndex+1)+")");
-								//comparingTd.css("background","red");
-								trFind = trFind.next();
-								var comparingTdBg = comparingTd.css("background");
-								alert("????????????????????"+comparingTdBg);
-								if(!comparingTdBg.startsWith("rgba(0, 0, 0, 0)")){
-									
-									alert("중복예약입니다. 다시 예약해주세요.");
-									return false;
-								} 
-							 } 
-							
-							
-							
-							//종료시간
-							var endDate = modYear+"-"+(modMonth>9? modMonth:"0"+modMonth)+"-"+(modDate>9? modDate:"0"+modDate)+" "+modHours+":"+modMins;
-							
-							alert(endDate);
-							
-							var reservedInfo = confirm("예약날짜 : "+startDate+"\n예상 종료시간 : "+endDate+"\n헤어종류 : "+hairType+"\n해당 날짜에 예약 하시겠습니까?");
-							
-							var formObj = $('<form id="f1" method="post">');
-							var SDate = $("<input type='hidden' name='res_sDate' value='"+startDate+"'>");
-							var eDate = $("<input type='hidden' name='res_eDate' value='"+endDate+"'>");
-							var hairno = $("<input type='hidden' name='hair_no' value='"+hairNo+"'>");
-							var uId = $("<input type='hidden' name='user_id' value='${login.u_id }'>");
-				
-							alert("헤어번호"+hairno.val());
-							alert("헤어번호"+uId.val());
-							formObj.append(SDate).append(eDate).append(hairno).append(uId);
-							$("#sendData").append(formObj);
-							
-							if(reservedInfo==true){
-								
-								$("#f1").attr("action", "reservation");
-								$("#f1").submit();
-								
-							}
-							
-						/* }) */
-					})
-					
-					
-					</script>
-					<script>
-					//중복예약 처리 
-					/* function doubleResCheck(tdIndex, trFind){
-					
-						
-					} */
-					</script>
+
 		<div id="sendData"></div>
 	</div>
 </body>

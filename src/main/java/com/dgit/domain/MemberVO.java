@@ -12,6 +12,7 @@ public class MemberVO {
 	private String u_email;
 	private String u_address;
 	private int u_flag;
+	private int u_noshow;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
 	private Date u_regdate;
@@ -101,11 +102,19 @@ public class MemberVO {
 		this.u_flag = u_flag;
 	}
 
+	public int getU_noshow() {
+		return u_noshow;
+	}
+
+	public void setU_noshow(int u_noshow) {
+		this.u_noshow = u_noshow;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [u_id=" + u_id + ", u_name=" + u_name + ", u_pw=" + u_pw + ", u_phone=" + u_phone
-				+ ", u_email=" + u_email + ", u_address=" + u_address + ", u_flag=" + u_flag + ", u_regdate="
-				+ u_regdate + "]";
+				+ ", u_email=" + u_email + ", u_address=" + u_address + ", u_flag=" + u_flag + ", u_noshow=" + u_noshow
+				+ ", u_regdate=" + u_regdate + "]";
 	}
 
 }

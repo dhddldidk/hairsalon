@@ -15,11 +15,22 @@
 		<result property="member.u_id" column="u_id"></result>
 		<result property="member.u_name" column="u_name"></result>
 		<result property="member.u_phone" column="u_phone"></result>
+		<result property="member.u_email" column="u_email"></result>
+		<result property="member.u_noshow" column="u_noshow"></result>
 	</resultMap>
 	
 	<!-- 예약된 리스트들 가져오기 -->
 	<select id="selectAllReservation" parameterType="map" resultMap="resHairStyleAndMember">
 		select * from reservation where res_start between #{res_start} and #{res_end}
+		and  res_end between #{res_start} and #{res_end}
+	</select>
+	
+	<!-- 관리자 예약된 리스트들 가져오기 -->
+	<select id="selectAllReservationAdmin" parameterType="map" resultMap="resHairStyleAndMember">
+		select * from user u 
+		left join reservation r 
+		on r.u_id=u.u_id
+		where res_start between #{res_start} and #{res_end}
 		and  res_end between #{res_start} and #{res_end}
 	</select>
 	
@@ -100,4 +111,16 @@ where date_format(r.res_start,'%m')=#{month}
 	<update id="updateNoshow">
 		update reservation set res_usage=#{res_usage} where res_no=#{res_no}
 	</update>
+	
+	<!-- 관리자 예약현황 모든 회원 리스트 -->
+	<select id="selectAllMemberList" resultMap="resHairStyleAndMember">
+		select *, ifnull(sum(r.res_usage),0) as u_noshow from
+		user u
+		left join reservation r on u.u_id=r.u_id
+		where u.u_id not like '%admin%'
+		group by u.u_id limit #{pageStart}, #{perPageNum}
+	</select>
+	<select id="numberOfTotalMember" resultType="int">
+		select count(u_id) from user
+	</select>
 </mapper>

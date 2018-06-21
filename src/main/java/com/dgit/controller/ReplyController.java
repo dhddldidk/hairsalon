@@ -79,6 +79,7 @@ public class ReplyController {
 			ResponseEntity<String> entity = null;
 			logger.info("[delete] reply_no : "+ reply_no);
 			
+			
 			try{
 				service.deleteReply(reply_no);
 				entity = new ResponseEntity<String>("success", HttpStatus.OK);

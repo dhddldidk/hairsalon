@@ -121,4 +121,10 @@ public class ReviewBoardDAOImpl implements ReviewBoardDAO {
 		session.update(namespace+".updateReplyCnt", map);
 	}
 
+	@Override
+	public List<ReviewBoardVO> selectMainReview() throws Exception {
+		
+		return session.selectList(namespace+".selectMainReview");
+	}
+
 }
