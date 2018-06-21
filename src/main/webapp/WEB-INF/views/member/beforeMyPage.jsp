@@ -19,7 +19,7 @@
 	min-height: 700px;
 	margin: 0 auto;
 	margin-top: 15px;
-}
+}   
 
 #myPageContainer h1 {
 	width: 1200px;
