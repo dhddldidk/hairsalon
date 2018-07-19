@@ -128,15 +128,15 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		calendar += "<th></th>";
 		//일요일부터 시작하는 날짜
 		start = dNum - date.getDay();
-		alert("6월1일임  " + m);
+		//alert("6월1일임  " + m);
 
 		if(start < 1){
 			start = last[m-1]+start;
 			m=m-1;
 		}
-		alert("6월1일임  " + m);
+		//alert("6월1일임  " + m);
 
-		alert("넘어온 30일이 " + start);
+		//alert("넘어온 30일이 " + start);
 
 		//다음달의 말일이 몇일
 		var currMonth = m + 1;
@@ -170,7 +170,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 				//7일씩 찍는 동안 달이 바뀔경우 일자를 1일로 변경시키고
 				//달+1해서 찍어줌					
 			} else if (start > last[m]) {
-				alert("??????????????????????????"+m);
+				//alert("??????????????????????????"+m);
 				start = 1;
 
 				currMonth++;
@@ -242,7 +242,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		// 시작일이 말일보다 클 경우 처리 
 		if (start > last[m]) {
 			start = start - Number(last[m]);
-			alert("if start" + start);
+			//alert("if start" + start);
 			nDate = new Date(y, m + 1, start);
 		} else if (start <= last[m]) {
 			//10이 넘어옴
@@ -256,7 +256,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		
 		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
 		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
-		alert("달력 그리기 전 start" + start);
+		//alert("달력 그리기 전 start" + start);
 		printCalendar(nDate);
 		reservedListDraw(ssDate,eeDate);
 	}
@@ -265,15 +265,15 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		/* var nDate = null; */
 		//다음 버튼을 눌렀을 때
 		// 시작일이 말일보다 클 경우 처리 
-		alert("계산하기 전 start"+start);
+		//alert("계산하기 전 start"+start);
 			start = start - 14;
-		alert("돌아오는 start"+start);
+		//alert("돌아오는 start"+start);
 		if (start > 0) {
 			alert("if start" + start);
 		var	nDate = new Date(y, m, start);
 		} else if (start <= 0) {
 			//10이 넘어옴
-			alert("왼쪽이동m "+m);
+			//alert("왼쪽이동m "+m);
 			
 			if((m-1)<0){
 				m=last.length;
@@ -283,7 +283,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 				start = last[m-1]+start;
 			}
 			
-			alert("왼쪽이동"+start);
+			//alert("왼쪽이동"+start);
 			
 			
 			//m이 0인 경우는 1월달
@@ -299,7 +299,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
 		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
 		
-		alert("달력 그리기 전 start" + start);
+		//alert("달력 그리기 전 start" + start);
 		
 		printCalendar(nDate);
 		reservedListDraw(ssDate,eeDate);
@@ -318,7 +318,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 		
 		var ssDate = sDate.getFullYear()+"-"+((sDate.getMonth()+1) > 9? (sDate.getMonth()+1):"0"+(sDate.getMonth()+1))+"-"+((sDate.getDate()) > 9? (sDate.getDate()):"0"+(sDate.getDate()))+" 00:00";
 		var eeDate = eDate.getFullYear()+"-"+((eDate.getMonth()+1) > 9? (eDate.getMonth()+1):"0"+(eDate.getMonth()+1))+"-"+((eDate.getDate()) > 9? (eDate.getDate()):"0"+(eDate.getDate()))+" 23:59";
-		alert("달력달력달력달력달겨"+sDate);
+		//alert("달력달력달력달력달겨"+sDate);
 		//달력 그려서 div에 넣어주기 
 		calen = printCalendar(dateToday);
 		reservedListDraw(ssDate, eeDate);
@@ -347,13 +347,13 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					
 					//예약종료시간
 					var resEndDate = new Date(obj.res_end);
-					alert("resEndDate : "+resEndDate);
+					//alert("resEndDate : "+resEndDate);
 					//예약시작시간
 					var resStartDate = new Date(obj.res_start);
-					alert("resStartDate : "+resStartDate);
+					//alert("resStartDate : "+resStartDate);
 					//헤어시간 만들기
 					var hairHours = (resEndDate-resStartDate)/(60*1000); //분이나옴 
-					alert("헤어시간 계산하기 "+hairHours);
+					//alert("헤어시간 계산하기 "+hairHours);
 					
 					
 					
@@ -371,7 +371,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 					
 					//시간 만들기 11:00
 					var resTime = resHour+":"+resMin;
-					alert("시작시간 :  "+resTime);
+					//alert("시작시간 :  "+resTime);
 					
 					//월 만들기 6월1일
 					var resFullDate = resMonth+"월"+resDate+"일";
@@ -456,7 +456,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 						//예약이 된 시간에는 예약 못하도록
 						var colorBg = $(this).css("background");
 						
-						alert("${login}");
+						//alert("${login}");
 						
 						//var flag=${login==null};
 						//예약을 하려고 테이블을 눌렀을 때 로그인 정보가 없으면
@@ -486,8 +486,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							var hairTime = Number($("#sWidth option:selected").val());
 							var hairType = $("#sWidth option:selected").html();
 							var hairNo = $("#sWidth option:selected").attr("data-hairno");
-							alert("hariNo : "+hairNo);
-							alert("hairTime : "+hairTime);
+							//alert("hariNo : "+hairNo);
+							//alert("hairTime : "+hairTime);
 							//td index찾기
 							var tdIndex = $(this).index();
 							
@@ -499,7 +499,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							
 							//선택된 td의 예약날짜와 시간
 							var startDate = thObj+" "+tdTime;
-							alert("startDate : "+startDate);
+							//alert("startDate : "+startDate);
 							
 							const selectedDate = new Date(startDate);
 							const modifiedDate = new Date(selectedDate.valueOf());
@@ -507,8 +507,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							//현재시간 이전의 날은 선택 못하게 처리
 							const todayDate = new Date().getTime();
 							const preDate = new Date(startDate).getTime();
-							alert("todayDate : "+todayDate);
-							alert("preDate : "+preDate);
+							//alert("todayDate : "+todayDate);
+							//alert("preDate : "+preDate);
 							
 							if(preDate<todayDate){
 								alert("이미 지난 날은 예약할 수 없습니다.\n 날짜를 다시 확인해주세요.");
@@ -522,7 +522,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							var modDate = modifiedDate.getDate();
 							var modHours = modifiedDate.getHours();
 							var modMins = modifiedDate.getMinutes();
-							alert("hours : "+modHours+"minutes : "+modMins);
+							//alert("hours : "+modHours+"minutes : "+modMins);
 							
 							//정각이면 시간과 분이 11:0으로 나오기 때문에 0을 붙여줌
 							if(modMins==0){
@@ -561,7 +561,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 								//comparingTd.css("background","red");
 								trFind = trFind.next();
 								var comparingTdBg = comparingTd.css("background");
-								alert("????????????????????"+comparingTdBg);
+								//alert("????????????????????"+comparingTdBg);
 								if(!comparingTdBg.startsWith("rgba(0, 0, 0, 0)")){
 									
 									alert("중복예약입니다. 다시 예약해주세요.");
@@ -574,7 +574,7 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							//종료시간
 							var endDate = modYear+"-"+(modMonth>9? modMonth:"0"+modMonth)+"-"+(modDate>9? modDate:"0"+modDate)+" "+modHours+":"+modMins;
 							
-							alert(endDate);
+							//alert(endDate);
 							
 							var reservedInfo = confirm("예약날짜 : "+startDate+"\n예상 종료시간 : "+endDate+"\n헤어종류 : "+hairType+"\n해당 날짜에 예약 하시겠습니까?");
 							
@@ -584,8 +584,8 @@ tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child t
 							var hairno = $("<input type='hidden' name='hair_no' value='"+hairNo+"'>");
 							var uId = $("<input type='hidden' name='user_id' value='${login.u_id }'>");
 				
-							alert("헤어번호"+hairno.val());
-							alert("헤어번호"+uId.val());
+							//alert("헤어번호"+hairno.val());
+							//alert("헤어번호"+uId.val());
 							formObj.append(SDate).append(eDate).append(hairno).append(uId);
 							$("#sendData").append(formObj);
 							
